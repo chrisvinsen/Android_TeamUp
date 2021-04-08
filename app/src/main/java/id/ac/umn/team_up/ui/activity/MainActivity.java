@@ -1,0 +1,80 @@
+package id.ac.umn.team_up.ui.activity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.ui.fragment.HomeFragment;
+import id.ac.umn.team_up.ui.fragment.NotificationFragment;
+import id.ac.umn.team_up.ui.fragment.PostFragment;
+import id.ac.umn.team_up.ui.fragment.ProfileFragment;
+import id.ac.umn.team_up.ui.fragment.ProjectFragment;
+
+public class MainActivity extends AppCompatActivity {
+    BottomNavigationView bottomNavigation;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        initView();
+    }
+
+    private void initView() {
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
+        openFragment(HomeFragment.newInstance("", ""));
+        bottomNavigation.setSelectedItemId(R.id.navigation_home);
+    }
+
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_home:
+                            Log.d("menu", "home");
+                            openFragment(HomeFragment.newInstance("", ""));
+                            return true;
+                        case R.id.navigation_projects:
+                            Log.d("menu", "projects");
+                            openFragment(ProjectFragment.newInstance("", ""));
+                            return true;
+                        case R.id.navigation_posts:
+                            Log.d("menu", "posts");
+                            openFragment(PostFragment.newInstance("", ""));
+                            return true;
+                        case R.id.navigation_notifications:
+                            Log.d("menu", "notif");
+                            openFragment(NotificationFragment.newInstance("", ""));
+                            return true;
+                        case R.id.navigation_profile:
+                            Log.d("menu", "profile");
+                            openFragment(ProfileFragment.newInstance("", ""));
+                            return true;
+                    }
+                    return false;
+                }
+            };
+}
