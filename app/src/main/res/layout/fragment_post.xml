@@ -4,60 +4,105 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.PostFragment">
-
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
-        <GridLayout
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="2">
-            <TextView
-                android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp">
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="fill_horizontal"
-                android:textSize="30dp"
-                android:text="Share Post"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="fill_horizontal|center_vertical|end"
-                android:text="Post"
-                android:textAlignment="textEnd"/>
-        </GridLayout>
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="2">
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/profile_image"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:src="@drawable/crop"
-                app:civ_border_width="2dp"
-                app:civ_border_color="#FF000000"/>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical"
-                android:layout_marginLeft="20dp">
+                android:columnCount="2">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
+                    android:layout_gravity="fill_horizontal"
                     android:textStyle="bold"
-                    android:text="Christianto Vinsen"/>
+                    android:textSize="30dp"
+                    android:text="Share Post"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Public Post"/>
-            </LinearLayout>
-        </GridLayout>
-    </LinearLayout>
+                    android:layout_gravity="fill_horizontal|center_vertical|end"
+                    android:textStyle="bold"
+                    android:text="Post"
+                    android:textAlignment="textEnd"/>
+            </GridLayout>
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:layout_marginVertical="15dp">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/crop"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="#FF000000"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:text="Christianto Vinsen"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Public Post"/>
+                </LinearLayout>
+            </GridLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Project Title:"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/input_box"
+                android:hint="E-Commerce Startup"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Project Description:"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="10dp"
+                android:padding="10dp"
+                android:gravity="top"
+                android:background="@drawable/input_box"
+                android:hint="This project aims to make it easier for conventional sellers to sell goods online"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/smaller_ic_image"
+                android:layout_gravity="center_vertical"
+                android:gravity="left"
+                android:padding="10dp"
+                android:drawablePadding="10dp"
+                android:textAllCaps="false"
+                android:text="Insert Image"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </ScrollView>
+
 
 </FrameLayout>
