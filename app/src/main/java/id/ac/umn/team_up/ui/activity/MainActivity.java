@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
@@ -21,9 +22,12 @@ import id.ac.umn.team_up.ui.fragment.NotificationFragment;
 import id.ac.umn.team_up.ui.fragment.PostFragment;
 import id.ac.umn.team_up.ui.fragment.ProfileFragment;
 import id.ac.umn.team_up.ui.fragment.ProjectFragment;
+import id.ac.umn.team_up.ui.fragment.RegisterFragment;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         case R.id.navigation_profile:
                             Log.d("menu", "profile");
-                            openFragment(ProfileFragment.newInstance("", ""));
+                            openFragment(new ProfileFragment());
                             return true;
                     }
                     return false;

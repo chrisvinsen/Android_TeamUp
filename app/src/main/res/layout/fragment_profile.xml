@@ -1,196 +1,315 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.ProfileFragment"
-    android:padding="20dp"
+    android:orientation="vertical"
     >
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imgBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:src="@drawable/img_bg_profile"
+        />
+
+    <ImageView
+        android:id="@+id/imgProfile"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/img_profile_default"
+        android:layout_marginTop="-75dp"
+        android:layout_marginStart="15dp"
+        android:layout_gravity="top"
+        />
+
+
+    <ScrollView
+        android:id="@+id/svContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
         >
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingVertical="10dp"
-            >
-            <TextView
-                android:id="@+id/tvFullname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextView.Title"
-                android:text="Christianto Vinsen"
-                android:textStyle="bold"
-                />
-            <TextView
-                android:id="@+id/tvHeadline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextView"
-                android:text="Website Developer"
-                />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingVertical="10dp"
-            >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="About"
-                style="@style/TextView.Small"
-                android:textStyle="bold"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextView.Paragraph"
-                android:text="6th semester majoring in Informatics at Multimedia Nusantara University"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingVertical="10dp"
-            >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Project History"
-                style="@style/TextView.Small"
-                android:textStyle="bold"
-                />
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
+                android:paddingVertical="10dp"
                 >
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/img_logo_up"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <TextView
+                        android:id="@+id/tvFullname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/TextView.Title"
+                        android:text="Christianto Vinsen Budijanto Margono awdkoakdwa"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/llRatings"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        />
+                    <LinearLayout
+                        android:id="@+id/llRatings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:paddingStart="10dp"
+                        >
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_star_rate"
+                            app:tint="@color/orange"
+                            />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_star_rate"
+                            app:tint="@color/orange"
+                            />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_star_rate"
+                            app:tint="@color/orange"
+                            />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_star_rate"
+                            app:tint="@color/orange"
+                            />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_star_rate"
+                            />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tvHeadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextView"
+                    android:text="Mobile Developer"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingVertical="10dp"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="About"
+                    style="@style/TextView.Small"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextView.Paragraph"
+                    android:text="6th semester majoring in Informatics at Multimedia Nusantara University"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingVertical="10dp"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Project History"
+                    style="@style/TextView.Small"
+                    android:textStyle="bold"
                     />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center"
-                    android:paddingStart="6dp"
+                    android:orientation="horizontal"
                     >
-                    <TextView
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/img_logo_up"
+                        />
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/TextView.Small"
-                        android:text="Software House Startup"
-                        android:textStyle="bold"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:paddingStart="6dp"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/TextView.Small"
+                            android:text="Software House Startup"
+                            android:textStyle="bold"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/TextView.Small"
+                            android:text="Aug 2020 - Present (8 mos)"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/img_logo_up"
                         />
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/TextView.Small"
-                        android:text="Aug 2020 - Present (8 mos)"
-                        />
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:paddingStart="6dp"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/TextView.Small"
+                            android:text="Software House Startup"
+                            android:textStyle="bold"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/TextView.Small"
+                            android:text="Aug 2020 - Present (8 mos)"
+                            />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:paddingVertical="10dp"
+                android:orientation="vertical"
                 >
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/img_logo_up"
-                    />
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center"
-                    android:paddingStart="6dp"
+                    android:text="Skills"
+                    style="@style/TextView.Small"
+                    android:textStyle="bold"
+                    />
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:flexWrap="wrap"
                     >
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/TextView.Small"
-                        android:text="Software House Startup"
+                        android:text="Java Language"
+                        android:paddingHorizontal="14dp"
+                        android:paddingBottom="1dp"
+                        android:textColor="@color/white"
                         android:textStyle="bold"
+                        android:layout_margin="3dp"
+                        android:background="@drawable/bg_orange_rounded"
+                        style="@style/TextView.White.Small"
                         />
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/TextView.Small"
-                        android:text="Aug 2020 - Present (8 mos)"
+                        android:text="Python Language"
+                        android:paddingHorizontal="14dp"
+                        android:paddingBottom="1dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_margin="3dp"
+                        android:background="@drawable/bg_orange_rounded"
+                        style="@style/TextView.White.Small"
                         />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Skills"
-                style="@style/TextView.Small"
-                android:textStyle="bold"
-                />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PHP"
-                    android:paddingHorizontal="20dp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_marginHorizontal="3dp"
-                    android:background="@drawable/bg_orange_rounded"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CSS"
-                    android:paddingHorizontal="20dp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_marginHorizontal="3dp"
-                    android:background="@drawable/bg_orange_rounded"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="JS"
-                    android:paddingHorizontal="20dp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_marginHorizontal="3dp"
-                    android:background="@drawable/bg_orange_rounded"
-                    />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Java Language"
+                        android:paddingHorizontal="14dp"
+                        android:paddingBottom="1dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_margin="3dp"
+                        android:background="@drawable/bg_orange_rounded"
+                        style="@style/TextView.White.Small"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Python Language"
+                        android:paddingHorizontal="14dp"
+                        android:paddingBottom="1dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_margin="3dp"
+                        android:background="@drawable/bg_orange_rounded"
+                        style="@style/TextView.White.Small"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Java Language"
+                        android:paddingHorizontal="14dp"
+                        android:paddingBottom="1dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_margin="3dp"
+                        android:background="@drawable/bg_orange_rounded"
+                        style="@style/TextView.White.Small"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Python Language"
+                        android:paddingHorizontal="14dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_margin="3dp"
+                        android:background="@drawable/bg_orange_rounded"
+                        style="@style/TextView.White.Small"
+                        />
+                </com.google.android.flexbox.FlexboxLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>

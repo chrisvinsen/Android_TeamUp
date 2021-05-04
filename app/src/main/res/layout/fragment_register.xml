@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_black_rounded_border"
-                android:paddingVertical="10dp"
+                android:padding="10dp"
+                android:inputType="textPersonName"
                 />
 
         </LinearLayout>
@@ -54,7 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_black_rounded_border"
-                android:paddingVertical="10dp"
+                android:padding="10dp"
+                android:inputType="textPersonName"
                 />
 
         </LinearLayout>
