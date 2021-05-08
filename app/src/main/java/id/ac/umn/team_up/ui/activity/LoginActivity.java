@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.Utils;
+import id.ac.umn.team_up.controllers.UserController;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etEmail, etPassword;
@@ -44,13 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("data", "email: " + etEmail.getText().toString());
                     Log.d("data", "password: " + etPassword.getText().toString());
 
-                    if (email.equalsIgnoreCase("sen") && password.equalsIgnoreCase("sen")) {
-                        final Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        etPassword.setText("");
-                        Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
-                    }
+                    UserController.login(LoginActivity.this, email, Utils.sha256(password));
                 } else {
                     Toast.makeText(LoginActivity.this, "Please fill all required data", Toast.LENGTH_SHORT).show();
                 }
