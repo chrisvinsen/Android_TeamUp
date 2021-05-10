@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import id.ac.umn.team_up.R;
 
-public class NotificationItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
+public class  NotificationItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     private String notifFrom, notifHead, notifDate;
     private LayoutInflater mInflater;
 
