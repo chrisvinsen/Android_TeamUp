@@ -2,6 +2,7 @@
     <string name="app_name">Team-Up</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ongoing_projects">Ongoing Projects</string>
     <string name="quote_1">Every<font color="#000000"> Productivity</font>\nBegins with a small steps\n\nStart yours <font color="#000000">now</font>.</string>
     <string name="welcome_back">Welcome\nBack.</string>
 </resources>
