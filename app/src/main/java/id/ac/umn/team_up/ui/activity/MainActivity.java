@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         case R.id.navigation_projects:
                             Log.d("menu", "projects");
-                            openFragment(ProjectFragment.newInstance("", ""));
+                            openFragment(new ProjectFragment());
                             return true;
                         case R.id.navigation_posts:
                             Log.d("menu", "posts");
