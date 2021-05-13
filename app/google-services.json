@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "860201973089",
+    "firebase_url": "https://team-up-solib-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "team-up-solib",
+    "storage_bucket": "team-up-solib.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860201973089:android:bb49c492780034d2f60120",
+        "android_client_info": {
+          "package_name": "id.ac.umn.team_up"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860201973089-p5peelkmdcoub403ffu0670jdv28q2tu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6e5bc-3ejWEVZHRQPppzIww_9PDREKpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860201973089-p5peelkmdcoub403ffu0670jdv28q2tu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

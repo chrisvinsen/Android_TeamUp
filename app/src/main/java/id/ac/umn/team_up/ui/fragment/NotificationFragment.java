@@ -3,6 +3,8 @@ package id.ac.umn.team_up.ui.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.ui.activity.notification.NotificationItemAdapter;
+import id.ac.umn.team_up.ui.activity.notification.RecyclerViewHolder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +26,11 @@ public class NotificationFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+
+    // RecyclerView
+    private RecyclerView rvNotification;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -56,12 +65,24 @@ public class NotificationFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+        //return inflater.inflate(R.layout.fragment_notification, container, false);
+
+        //inflate NotificationFragment
+        View view = inflater.inflate(R.layout.fragment_notification, container, false);
+
+        rvNotification = view.findViewById(R.id.rvNotificationItem);
+        rvNotification.setHasFixedSize(true);
+        rvNotification.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rvNotification.setAdapter(new NotificationItemAdapter(view.getContext()));
+        return view;
     }
 }
