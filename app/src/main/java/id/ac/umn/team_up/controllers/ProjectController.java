@@ -39,7 +39,6 @@ public class ProjectController {
     private static final String KEY_TITLE = "name";
     private static final String KEY_DESCRIPTION = "description";
 
-    private static DatabaseReference db ;
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static ArrayList<Project> dataProject;
 

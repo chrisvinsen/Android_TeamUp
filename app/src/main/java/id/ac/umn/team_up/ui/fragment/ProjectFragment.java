@@ -31,7 +31,7 @@ public class ProjectFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_project, container, false);
         rvProjectList = view.findViewById(R.id.rvProject);
-        ProjectController.getProjectList(rvProjectList,view, (AppCompatActivity)  getActivity());
+        ProjectController.getProjectList(rvProjectList,view, (AppCompatActivity) getActivity());
 
         return view;
     }
