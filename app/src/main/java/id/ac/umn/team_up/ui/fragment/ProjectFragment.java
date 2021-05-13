@@ -1,8 +1,11 @@
 package id.ac.umn.team_up.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,8 +34,11 @@ public class ProjectFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_project, container, false);
         rvProjectList = view.findViewById(R.id.rvProject);
-        ProjectListController.getProjectList(rvProjectList,view);
+        ProjectListController.getProjectList(rvProjectList,view,(AppCompatActivity) getActivity());
 
         return view;
     }
+
+
+
 }

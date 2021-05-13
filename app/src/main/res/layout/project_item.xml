@@ -35,7 +35,7 @@
                     android:id="@+id/tvProjectListName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="ProjectName"
+                    android:text="ProjectName"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:maxLines="1"

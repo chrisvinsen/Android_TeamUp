@@ -1,4 +1,4 @@
-package id.ac.umn.team_up.controllers;
+ package id.ac.umn.team_up.controllers;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,23 +26,30 @@ import id.ac.umn.team_up.ui.activity.notification.NotificationItemAdapter;
 import id.ac.umn.team_up.ui.activity.project.ProjectListAdapter;
 
 public class ProjectListController {
-    private static FirebaseAuth auth;
-    private static DatabaseReference db ;
 
+    private static DatabaseReference db ;
+    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static ArrayList<Project> dataProject;
 
-    public static void getProjectList(RecyclerView rv, View view){
+    public static void getProjectList(RecyclerView rv, View view, AppCompatActivity app){
        db = FirebaseDatabase.getInstance().getReference();
        db.child("ProjectDetail").addValueEventListener(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot snapshot) {
                dataProject = new ArrayList<Project>();
+
                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
 
                    Project projects = dataSnapshot.getValue(Project.class);
-
                    projects.setKey(snapshot.getKey());
-                   dataProject.add(projects);
+
+                   for(String id : projects.getMember()){
+
+                       if(mAuth.getUid().equals(id)){
+                           Log.d("idTest",id);
+                           dataProject.add(projects);
+                       }
+                   }
 
                }
 
@@ -50,7 +58,7 @@ public class ProjectListController {
 
                 rv.setHasFixedSize(true);
                 rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                rv.setAdapter(new ProjectListAdapter(view.getContext(),dataProject));
+                rv.setAdapter(new ProjectListAdapter(view.getContext(),dataProject, app));
 
            }
 
@@ -59,7 +67,6 @@ public class ProjectListController {
                Log.d("Error","Please try again letter");
            }
        });
-
     }
 
 
