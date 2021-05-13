@@ -35,8 +35,10 @@ public class ProjectController {
     private static DatabaseReference db ;
     private static FirebaseFirestore db_firestore = FirebaseFirestore.getInstance();
 
-    private static final String KEY_TITLE = "name";
+    private static final String KEY_TITLE = "title";
     private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_ADMIN = "adminId";
+    private static final String KEY_ADMIN_NAME = "adminName";
 
     private static ArrayList<Project> dataProject;
 

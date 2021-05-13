@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Project implements Serializable {
-    private String key, adminId, adminName;
+    private String adminId, adminName;
     private String groupIcon;
     private List<String> member;
-    private String name;
+    private String title;
     private String _id;
     private Map<String,String> recentMessage;
 
@@ -18,13 +18,13 @@ public class Project implements Serializable {
         //empty constructor
     }
 
-    public Project( String adminName,String adminId,Map<String,String> recentMessage, List<String> member, String name, String _id, String groupIcon){
+    public Project( String adminName,String adminId,Map<String,String> recentMessage, List<String> member, String title, String _id, String groupIcon){
         this.groupIcon = "";
         this.adminId = adminId;
         this.adminName = adminName;
         this.member = member;
         this._id = _id;
-        this.name = name;
+        this.title = title;
         this.recentMessage = recentMessage;
         this.groupIcon = groupIcon;
     }
@@ -46,8 +46,8 @@ public class Project implements Serializable {
         this.member = member;
     }
 
-    public void setProjectName(String projectName) {
-        this.name = projectName;
+    public void setProjectTitle(String projectTitle) {
+        this.title = projectTitle;
     }
 
 
@@ -67,18 +67,13 @@ public class Project implements Serializable {
         return member;
     }
 
-    public String getProjectName() {
-        return name;
+    public String getProjectTitle() {
+        return title;
     }
 
     @Override
     public String toString(){
-        return getProjectName();
-    }
-
-    @Exclude
-    public String getKey(){
-        return key;
+        return getProjectTitle();
     }
 
     public String get_id() {
@@ -105,8 +100,4 @@ public class Project implements Serializable {
         return this.recentMessage.get("message");
     }
 
-    @Exclude
-    public void setKey(String key){
-        this.key = key;
-    }
 }
