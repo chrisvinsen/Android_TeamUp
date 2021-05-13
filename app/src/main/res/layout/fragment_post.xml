@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.PostFragment">
+    tools:context=".ui.fragment.PostFragment"
+    android:layout_marginTop="15dp">
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
@@ -24,13 +25,14 @@
                     android:textStyle="bold"
                     android:textSize="30dp"
                     android:text="Share Post"/>
-                <TextView
-                    android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/post_button"
+                    android:background="@drawable/bg_orange_rounded"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="fill_horizontal|center_vertical|end"
+                    android:layout_gravity="center_vertical|end"
                     android:textStyle="bold"
-                    android:text="Post"
-                    android:textAlignment="textEnd"/>
+                    android:text="Post"/>
             </GridLayout>
             <GridLayout
                 android:layout_width="match_parent"
@@ -69,6 +71,7 @@
                 android:textStyle="bold"
                 android:text="Project Title:"/>
             <EditText
+                android:id="@+id/project_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -81,6 +84,7 @@
                 android:textStyle="bold"
                 android:text="Project Description:"/>
             <EditText
+                android:id="@+id/project_description"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginVertical="10dp"

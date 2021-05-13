@@ -8,8 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Button;
+import android.widget.Toast;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.controllers.ProjectController;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +30,12 @@ public class PostFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    //
+    private EditText project_title;
+    private EditText project_description;
+    private Button post_button;
 
     public PostFragment() {
         // Required empty public constructor
@@ -62,6 +72,39 @@ public class PostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_post, container, false);
+        View view =  inflater.inflate(R.layout.fragment_post, container, false);
+
+        project_title = (EditText) view.findViewById(R.id.project_title);
+        project_description = (EditText) view.findViewById(R.id.project_description);
+        post_button = (Button) view.findViewById(R.id.post_button);
+
+        post_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String title = project_title.getText().toString();
+                final String description = project_description.getText().toString();
+                boolean isAllFilled = true;
+
+                if (title.isEmpty()) {
+                    project_title.setError("Project title must be filled");
+                    isAllFilled = false;
+                }
+                if (description.isEmpty()) {
+                    project_description.setError("Project description must be filled");
+                    isAllFilled = false;
+                }
+
+                if (isAllFilled) {
+                    Log.d("data", "title: " + project_title.getText().toString());
+                    Log.d("data", "description: " + project_description.getText().toString());
+
+                    ProjectController.postProject(title, description);
+                } else {
+                    Toast.makeText(getActivity(), "Please fill all required data", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        return view;
     }
 }
