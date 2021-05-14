@@ -12,7 +12,7 @@ public class Project implements Serializable {
     private List<String> member;
     private String title;
     private String _id;
-    private Map<String,String> recentMessage;
+    //private Map<String,String> recentMessage;
 
     public Project(){
         //empty constructor
@@ -25,7 +25,7 @@ public class Project implements Serializable {
         this.member = member;
         this._id = _id;
         this.title = title;
-        this.recentMessage = recentMessage;
+        //this.recentMessage = recentMessage;
         this.groupIcon = groupIcon;
     }
 
@@ -84,20 +84,20 @@ public class Project implements Serializable {
         this._id = _id;
     }
 
-    public void setRecentMessage(Map<String, String> recentMessage) {
-        this.recentMessage = recentMessage;
-    }
-
-    public Map<String, String> getRecentMessage() {
-        return recentMessage;
-    }
-
-    public String getRecentMessageFrom(){
-        return this.recentMessage.get("fromId");
-    }
-
-    public String getRecentMessageMessage(){
-        return this.recentMessage.get("message");
-    }
+//    public void setRecentMessage(Map<String, String> recentMessage) {
+//        this.recentMessage = recentMessage;
+//    }
+//
+//    public Map<String, String> getRecentMessage() {
+//        return recentMessage;
+//    }
+//
+//    public String getRecentMessageFrom(){
+//        return this.recentMessage.get("fromId");
+//    }
+//
+//    public String getRecentMessageMessage(){
+//        return this.recentMessage.get("message");
+//    }
 
 }

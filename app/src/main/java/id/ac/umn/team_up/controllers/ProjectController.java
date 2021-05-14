@@ -1,6 +1,7 @@
  package id.ac.umn.team_up.controllers;
 
 import android.content.Context;
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -10,15 +11,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +40,6 @@ import id.ac.umn.team_up.ui.activity.project.ProjectListAdapter;
 
 public class ProjectController {
     private static FirebaseAuth auth;
-    private static DatabaseReference db ;
     private static FirebaseFirestore db_firestore = FirebaseFirestore.getInstance();
 
     private static final String KEY_TITLE = "title";
@@ -45,42 +51,56 @@ public class ProjectController {
     private static ArrayList<Project> dataProject;
 
     public static void getProjectList(RecyclerView rv, View view, AppCompatActivity app){
-       db = FirebaseDatabase.getInstance().getReference();
-       db.child("ProjectDetail").addValueEventListener(new ValueEventListener() {
+       CollectionReference colRef = db_firestore.collection("ProjectDetails");
+       colRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
            @Override
-           public void onDataChange(@NonNull DataSnapshot snapshot) {
-               dataProject = new ArrayList<Project>();
-
-               for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-
-                   Project projects = dataSnapshot.getValue(Project.class);
-                   projects.setKey(snapshot.getKey());
-
-                   for(String id : projects.getMember()){
-
-                       if(mAuth.getUid().equals(id)){
-                           Log.d("idTest",id);
-                           dataProject.add(projects);
-                       }
-                   }
-
-               }
-
-               Log.d("size data", String.valueOf(dataProject.size()));
-               Log.d("recentmessage message", dataProject.get(0).getRecentMessageMessage());
-
-                rv.setHasFixedSize(true);
-                rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                rv.setAdapter(new ProjectListAdapter(view.getContext(),dataProject, app));
-
-           }
-
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
-               Log.d("Error","Please try again letter");
+           public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(DocumentSnapshot document : task.getResult()){
+                        Project project = document.toObject(Project.class);
+                        Log.d("target",project.getProjectTitle());
+                    }
+                }else{
+                    Toast.makeText(app, "Query failed", Toast.LENGTH_SHORT).show();
+                }
            }
        });
+
+
+//       db.child("ProjectDetail").addValueEventListener(new ValueEventListener() {
+//           @Override
+//           public void onDataChange(@NonNull DataSnapshot snapshot) {
+//               dataProject = new ArrayList<Project>();
+//
+//               for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+//
+//                   Project projects = dataSnapshot.getValue(Project.class);
+//
+//                   for(String id : projects.getMember()){
+//
+//                       if(mAuth.getUid().equals(id)){
+//                           Log.d("idTest",id);
+//                           dataProject.add(projects);
+//                       }
+//                   }
+//
+//               }
+//
+//               Log.d("size data", String.valueOf(dataProject.size()));
+//
+//                rv.setHasFixedSize(true);
+//                rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+//                rv.setAdapter(new ProjectListAdapter(view.getContext(),dataProject, app));
+//
+//           }
+//
+//           @Override
+//           public void onCancelled(@NonNull DatabaseError error) {
+//               Log.d("Error","Please try again letter");
+//           }
+//       });
     }
+
 
     public static void postProject(String project_title, String project_description){
         Map<String, Object> project = new HashMap<>();
