@@ -25,7 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -57,7 +59,6 @@ public class ProjectController {
     private static final String KEY_IMAGES = "images";
     private static String fullname;
 
-    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static ArrayList<Project> dataProject;
 
     public static void getProjectList(RecyclerView rv, View view, AppCompatActivity app){

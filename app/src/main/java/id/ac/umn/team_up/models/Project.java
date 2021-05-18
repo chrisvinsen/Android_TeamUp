@@ -14,13 +14,23 @@ public class Project implements Serializable {
     private List<String> members;
     private String title;
     private String _id;
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    private List<String> images;
     //private Map<String,String> recentMessage;
 
     public Project(){
         //empty constructor
     }
 
-    public Project( String adminName,String adminId,Map<String,String> recentMessage, List<String> member, String title, String _id, String groupIcon){
+    public Project(List<String> images, String adminName,String adminId,Map<String,String> recentMessage, List<String> member, String title, String _id, String groupIcon){
         this.groupIcon = "";
         this.adminId = adminId;
         this.adminName = adminName;
@@ -29,8 +39,8 @@ public class Project implements Serializable {
         this.title = title;
         //this.recentMessage = recentMessage;
         this.groupIcon = groupIcon;
+        this.images = images;
     }
-
 
     public void setAdminId(String adminId) {
         this.adminId = adminId;
