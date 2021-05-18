@@ -102,7 +102,13 @@ public class ProjectController {
         project.put(KEY_ADMIN, mAuth.getUid());
         project.put(KEY_ADMIN_NAME, fullname);
         project.put(KEY_MEMBER, member);
-        project.put(KEY_ICON, upload_url);
+        if(upload_url.isEmpty()){
+            project.put(KEY_ICON, "");
+        }
+        else{
+            project.put(KEY_ICON, upload_url.get(0));
+        }
+        project.put(KEY_IMAGES, upload_url);
 
         // Set map into collection
         noteRef.document().set(project)

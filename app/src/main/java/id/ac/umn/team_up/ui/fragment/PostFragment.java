@@ -38,7 +38,6 @@ import java.util.List;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.ProjectController;
-import id.ac.umn.team_up.models.ImageUpload;
 import id.ac.umn.team_up.models.Project;
 
 /**
