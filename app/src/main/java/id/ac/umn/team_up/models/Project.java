@@ -3,13 +3,15 @@ package id.ac.umn.team_up.models;
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Project implements Serializable {
     private String adminId, adminName;
     private String groupIcon;
-    private List<String> member;
+    private List<String> members;
     private String title;
     private String _id;
     //private Map<String,String> recentMessage;
@@ -22,7 +24,7 @@ public class Project implements Serializable {
         this.groupIcon = "";
         this.adminId = adminId;
         this.adminName = adminName;
-        this.member = member;
+        this.members = member;
         this._id = _id;
         this.title = title;
         //this.recentMessage = recentMessage;
@@ -42,14 +44,10 @@ public class Project implements Serializable {
         this.groupIcon = groupIcon;
     }
 
-    public void setMember(List<String> member) {
-        this.member = member;
-    }
 
-    public void setProjectTitle(String projectTitle) {
-        this.title = projectTitle;
+    public void setMembers(List<String> member) {
+        this.members = member;
     }
-
 
     public String getAdminId() {
         return adminId;
@@ -63,17 +61,16 @@ public class Project implements Serializable {
         return groupIcon;
     }
 
-    public List<String> getMember() {
-        return member;
+    public List<String> getMembers() {
+        return members;
     }
 
-    public String getProjectTitle() {
+    public String getTitle() {
         return title;
     }
 
-    @Override
-    public String toString(){
-        return getProjectTitle();
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String get_id() {

@@ -51,6 +51,7 @@ public class ProjectController {
     private static ArrayList<Project> dataProject;
 
     public static void getProjectList(RecyclerView rv, View view, AppCompatActivity app){
+       dataProject = new ArrayList<Project>();
        CollectionReference colRef = db_firestore.collection("ProjectDetails");
        colRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
            @Override
@@ -58,8 +59,14 @@ public class ProjectController {
                 if(task.isSuccessful()){
                     for(DocumentSnapshot document : task.getResult()){
                         Project project = document.toObject(Project.class);
-                        Log.d("target",project.getProjectTitle());
+                        //project.setMembers((List<String>)document.get("members"));
+                        for(String id : project.getMembers()){
+                            if(mAuth.getUid().equals(id)){
+                                Log.d("Name", mAuth.getCurrentUser().toString());
+                            }
+                        }
                     }
+
                 }else{
                     Toast.makeText(app, "Query failed", Toast.LENGTH_SHORT).show();
                 }
