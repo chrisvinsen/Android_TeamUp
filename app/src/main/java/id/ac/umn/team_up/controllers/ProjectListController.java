@@ -28,41 +28,10 @@ public class ProjectListController {
     private static FirebaseAuth auth;
     private static DatabaseReference db ;
 
-    private static ArrayList<Project> dataProject;
+    private static List<Project> dataProject;
 
     public static void getProjectList(RecyclerView rv, View view){
-       db = FirebaseDatabase.getInstance().getReference();
-       db.child("ProjectDetail").addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot snapshot) {
-               dataProject = new ArrayList<Project>();
-               for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-
-                   Project projects = dataSnapshot.getValue(Project.class);
-
-                   projects.setKey(snapshot.getKey());
-                   dataProject.add(projects);
-
-               }
-
-               Log.d("size data", String.valueOf(dataProject.size()));
-               Log.d("recentmessage message", dataProject.get(0).getRecentMessageMessage());
-
-                rv.setHasFixedSize(true);
-                rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                rv.setAdapter(new ProjectListAdapter(view.getContext(),dataProject));
-
-           }
-
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
-               Log.d("Error","Please try again letter");
-           }
-       });
 
     }
-
-
-
 
 }
