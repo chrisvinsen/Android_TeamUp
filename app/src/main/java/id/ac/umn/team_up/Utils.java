@@ -127,6 +127,8 @@ public class Utils {
         } catch (Exception e) {
             show(context, "overrideFont Error!");
         }
+    }
+
     public static SharedPreferences getSharedPref(Context c) {
         return c.getSharedPreferences(c.getPackageName(), Context.MODE_PRIVATE);
     }
