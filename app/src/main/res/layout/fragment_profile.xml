@@ -7,6 +7,7 @@
     tools:context=".ui.fragment.ProfileFragment"
     android:orientation="vertical"
     >
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,25 +21,88 @@
             android:src="@drawable/img_bg_profile"
             />
 
-        <ImageView
-            android:id="@+id/btnLogout"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_logout"
+        <ImageButton
+            android:id="@+id/btnMenu"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/ic_menu"
             android:layout_gravity="top|right"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:backgroundTint="@color/transparent"
+            android:layout_margin="4dp"
+            />
+
     </FrameLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="12"
+        android:orientation="horizontal"
+        android:layout_marginTop="-60dp"
+        >
 
-    <ImageView
-        android:id="@+id/imgProfile"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/img_profile_default"
-        android:layout_marginTop="-75dp"
-        android:layout_marginStart="15dp"
-        android:layout_gravity="top"
-        />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/img_profile_default"
+                android:layout_marginStart="15dp"
+                android:adjustViewBounds="true"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llRatings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:gravity="right"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="30dp"
+            android:layout_weight="6"
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_star_rate"
+                app:tint="@color/orange"
+                />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_star_rate"
+                app:tint="@color/orange"
+                />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_star_rate"
+                app:tint="@color/orange"
+                />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_star_rate"
+                app:tint="@color/orange"
+                />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_star_rate"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
     <ScrollView
@@ -61,60 +125,44 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
-                    <TextView
-                        android:id="@+id/tvFullname"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        style="@style/TextView.Title"
-                        android:text="Your Name"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/llRatings"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        />
                     <LinearLayout
-                        android:id="@+id/llRatings"
+                        android:id="@+id/llFullname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:paddingStart="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
                         >
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_star_rate"
-                            app:tint="@color/orange"
+                        <TextView
+                            android:id="@+id/tvFullname"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            style="@style/TextView.Title"
+                            android:text="Your Name is very long long long"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             />
-                        <ImageView
+                        <ImageButton
+                            android:id="@+id/btnEditMain"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ic_star_rate"
-                            app:tint="@color/orange"
-                            />
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_star_rate"
-                            app:tint="@color/orange"
-                            />
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_star_rate"
-                            app:tint="@color/orange"
-                            />
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_star_rate"
+                            android:src="@drawable/ic_edit"
+                            app:layout_constraintStart_toEndOf="@id/tvFullname"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:tint="@color/orange"
+                            android:background="@color/transparent"
+                            android:layout_marginStart="6dp"
+                            android:layout_gravity="center_vertical"
                             />
                     </LinearLayout>
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -134,18 +182,37 @@
                 android:orientation="vertical"
                 android:paddingVertical="10dp"
                 >
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="About"
-                    style="@style/TextView.Small"
-                    android:textStyle="bold"
-                    />
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About"
+                        style="@style/TextView.Paragraph"
+                        android:textStyle="bold"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btnEditAbout"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_edit"
+                        android:tint="@color/orange"
+                        android:background="@color/transparent"
+                        android:layout_marginStart="8dp"
+                        />
+                </LinearLayout>
+
                 <TextView
+                    android:id="@+id/tvAbout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextView.Paragraph"
-                    android:text="6th semester majoring in Informatics at Multimedia Nusantara University"
+                    android:text="Default text"
                     />
             </LinearLayout>
 
@@ -155,13 +222,32 @@
                 android:orientation="vertical"
                 android:paddingVertical="10dp"
                 >
-                <TextView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Project History"
-                    style="@style/TextView.Small"
-                    android:textStyle="bold"
-                    />
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Project History"
+                        style="@style/TextView.Paragraph"
+                        android:textStyle="bold"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/btnEditProject"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_edit"
+                        android:tint="@color/orange"
+                        android:background="@color/transparent"
+                        android:layout_marginStart="8dp"
+                        />
+
+                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -233,13 +319,30 @@
                 android:paddingVertical="10dp"
                 android:orientation="vertical"
                 >
-                <TextView
-                    android:layout_width="match_parent"
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Skills"
-                    style="@style/TextView.Small"
-                    android:textStyle="bold"
-                    />
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Skills"
+                        style="@style/TextView.Paragraph"
+                        android:textStyle="bold"
+                        />
+                    <ImageButton
+                        android:id="@+id/btnEditSkill"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_edit"
+                        android:tint="@color/orange"
+                        android:background="@color/transparent"
+                        android:layout_marginStart="8dp"
+                        />
+                </LinearLayout>
+
                 <com.google.android.flexbox.FlexboxLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -1,7 +1,9 @@
 package id.ac.umn.team_up;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -111,5 +113,9 @@ public class Utils {
         } catch(Exception ex){
             throw new RuntimeException(ex);
         }
+    }
+
+    public static SharedPreferences getSharedPref(Context c) {
+        return c.getSharedPreferences(c.getPackageName(), Context.MODE_PRIVATE);
     }
 }

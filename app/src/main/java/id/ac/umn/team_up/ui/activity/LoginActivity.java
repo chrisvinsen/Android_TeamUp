@@ -2,7 +2,6 @@ package id.ac.umn.team_up.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;

@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TeamUp">
         <activity android:name=".ui.activity.ChatActivity"></activity>
+        <activity android:name=".ui.activity.ProfileSettingActivity"></activity>
+        <activity android:name=".ui.activity.ProfileSettingSkillActivity" />
+        <activity android:name=".ui.activity.ProfileSettingProjectActivity" />
+        <activity android:name=".ui.activity.ProfileSettingAboutActivity" />
+        <activity android:name=".ui.activity.ProfileSettingMainActivity" />
         <activity
             android:name=".ui.activity.SplashScreenActivity"
             android:screenOrientation="portrait"
