@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="id.ac.umn.team_up">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,11 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TeamUp">
+        <activity android:name=".ui.activity.ProfileSettingActivity"></activity>
+        <activity android:name=".ui.activity.ProfileSettingSkillActivity" />
+        <activity android:name=".ui.activity.ProfileSettingProjectActivity" />
+        <activity android:name=".ui.activity.ProfileSettingAboutActivity" />
+        <activity android:name=".ui.activity.ProfileSettingMainActivity" />
         <activity
             android:name=".ui.activity.SplashScreenActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.TeamUp.White"
-            >
+            android:theme="@style/Theme.TeamUp.White">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,20 +29,16 @@
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.TeamUp.White"
-            />
+            android:theme="@style/Theme.TeamUp.White" />
         <activity
             android:name=".ui.activity.RegisterActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextView.Orange.Title"
-                android:text="First Name"
+                android:text="First Name*"
                 />
 
             <EditText
