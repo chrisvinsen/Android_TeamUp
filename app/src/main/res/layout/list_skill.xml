@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    >
+
+    <TextView
+        android:id="@+id/tvIndex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1."
+        android:padding="16dp"
+        style="@style/TextView.Subtitle"
+        />
+
+    <TextView
+        android:id="@+id/tvSkill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Here is a skill"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="16dp"
+        style="@style/TextView.Subtitle"
+        />
+
+    <ImageButton
+        android:id="@+id/btnRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/transparent"
+        android:tint="@color/orange"
+        android:padding="16dp"
+        />
+
+</LinearLayout>

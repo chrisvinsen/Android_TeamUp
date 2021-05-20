@@ -17,13 +17,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 
 import id.ac.umn.team_up.R;
-import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.User;
-import id.ac.umn.team_up.ui.RegisterCommunicator;
-import id.ac.umn.team_up.ui.activity.LoginActivity;
-import id.ac.umn.team_up.ui.activity.MainActivity;
-import id.ac.umn.team_up.ui.activity.RegisterActivity;
 
 public class RegisterContdFragment extends Fragment {
     final String FIRSTNAME = "first_name";

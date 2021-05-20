@@ -1,8 +1,10 @@
 package id.ac.umn.team_up;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -125,5 +127,7 @@ public class Utils {
         } catch (Exception e) {
             show(context, "overrideFont Error!");
         }
+    public static SharedPreferences getSharedPref(Context c) {
+        return c.getSharedPreferences(c.getPackageName(), Context.MODE_PRIVATE);
     }
 }

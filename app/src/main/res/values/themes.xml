@@ -40,6 +40,9 @@
     <style name="TextView.Paragraph" parent="TextView">
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="TextView.Subtitle" parent="TextView">
+        <item name="android:textSize">16sp</item>
+    </style>
     <style name="TextView.Title" parent="TextView">
         <item name="android:textSize">20sp</item>
     </style>
@@ -67,6 +70,9 @@
     <style name="TextView.Orange.Paragraph" parent="TextView.Orange">
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="TextView.Orange.Subtitle" parent="TextView.Orange">
+        <item name="android:textSize">16sp</item>
+    </style>
     <style name="TextView.Orange.Title" parent="TextView.Orange">
         <item name="android:textSize">20sp</item>
     </style>
@@ -93,6 +99,9 @@
     </style>
     <style name="TextView.White.Paragraph" parent="TextView.White">
         <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextView.White.Subtitle" parent="TextView.White">
+        <item name="android:textSize">16sp</item>
     </style>
     <style name="TextView.White.Title" parent="TextView.White">
         <item name="android:textSize">20sp</item>

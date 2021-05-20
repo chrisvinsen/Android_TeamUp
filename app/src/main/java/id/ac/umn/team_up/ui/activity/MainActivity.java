@@ -41,15 +41,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/roboto.xml");
 
-        initView();
-    }
-
-    private void initView() {
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        openFragment(HomeFragment.newInstance("", ""));
-        bottomNavigation.setSelectedItemId(R.id.navigation_home);
+        // Get the extras (if there are any)
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            switch (extras.getString("frgToLoad")){
+                case "profile":
+                    Log.d("open", "profile");
+                    openFragment(new ProfileFragment());
+                    bottomNavigation.setSelectedItemId(R.id.navigation_profile);
+                    break;
+            }
+        } else {
+            openFragment(HomeFragment.newInstance("", ""));
+            bottomNavigation.setSelectedItemId(R.id.navigation_home);
+        }
     }
 
     public void openFragment(Fragment fragment) {
@@ -85,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                             openFragment(new ProfileFragment());
                             return true;
                     }
+
                     return false;
                 }
             };
