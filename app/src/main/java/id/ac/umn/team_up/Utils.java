@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -131,5 +133,10 @@ public class Utils {
 
     public static SharedPreferences getSharedPref(Context c) {
         return c.getSharedPreferences(c.getPackageName(), Context.MODE_PRIVATE);
+    }
+
+    public static void delayForSomeSeconds(int milliseconds, Runnable function){
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(function, milliseconds);
     }
 }

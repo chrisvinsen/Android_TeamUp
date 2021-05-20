@@ -4,49 +4,50 @@ import androidx.annotation.Nullable;
 
 import com.google.firebase.Timestamp;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class Message {
-    private String fromId;
+    private String from;
 
-    @Nullable
+
     private String message;
 
 //    @Nullable
 //    private String image;
 
-    private Date sentAt;
+    private Timestamp sentAt;
 
     public Message() {
     }
 
-    public Message(String fromId, String messages, Timestamp sentAt){
-        this.fromId = fromId;
+    public Message(String from, String messages, Timestamp sentAt){
+        this.from = from;
         this.message = messages;
-        this.sentAt = sentAt.toDate();
+        this.sentAt = sentAt;
     }
 
-    public String getFromId() {
-        return fromId;
+    public String getFrom() {
+        return from;
     }
 
-    public String getMessages() {
+    public String getMessage() {
         return message;
     }
 
-    public void setFromId(String fromId) {
-        this.fromId = fromId;
+    public void setFrom(String from) {
+        this.from = from;
     }
 
     public void setMessages(String messages) {
         this.message = messages;
     }
 
-    public Date getSentAt() {
+    public Timestamp getSentAt() {
         return sentAt;
     }
 
-    public void setSentAt(Date sentAt) {
+    public void setSentAt(Timestamp sentAt) {
         this.sentAt = sentAt;
     }
 }

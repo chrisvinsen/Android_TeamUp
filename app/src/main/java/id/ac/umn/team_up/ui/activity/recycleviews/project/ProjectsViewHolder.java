@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import id.ac.umn.team_up.R;
 
 public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    private TextView tvProjectListName, tvProjectListTime, tvProjectListRecent;
+    private TextView tvProjectListName, tvProjectListChatTime, tvProjectListRecentChatText;
     private ProjectListAdapter.itemClickListener itemClickListener;
 
     public ProjectsViewHolder(@NonNull View itemView) {
         super(itemView);
-        this.tvProjectListName = itemView.findViewById(R.id.tvProjectListName);
-        this.tvProjectListTime = itemView.findViewById(R.id.tvProjectListTime);
-        this.tvProjectListRecent = itemView.findViewById(R.id.tvProjectListRecent);
+        this.tvProjectListName = itemView.findViewById(R.id.project_list_name);
+        this.tvProjectListChatTime = itemView.findViewById(R.id.project_list_chat_time);
+        this.tvProjectListRecentChatText = itemView.findViewById(R.id.project_list_chat_text);
         itemView.setOnClickListener(this);
     }
 
@@ -25,24 +25,24 @@ public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.
         this.tvProjectListName.setText( tvProjectListName);
     }
 
-    public void setTvProjectListTime(String tvProjectListTime) {
-        this.tvProjectListTime.setText(tvProjectListTime);
+    public void setTvProjectListChatTime(String tvProjectListChatTime) {
+        this.tvProjectListChatTime.setText(tvProjectListChatTime);
     }
 
-    public void setTvProjectListRecent(String tvProjectListRecent) {
-        this.tvProjectListRecent.setText(tvProjectListRecent);
+    public void setTvProjectListRecentChatText(String tvProjectListRecentChatText) {
+        this.tvProjectListRecentChatText.setText(tvProjectListRecentChatText);
     }
 
     public TextView getTvProjectListName() {
         return tvProjectListName;
     }
 
-    public TextView getTvProjectListTime() {
-        return tvProjectListTime;
+    public TextView getTvProjectListChatTime() {
+        return tvProjectListChatTime;
     }
 
-    public TextView getTvProjectListRecent() {
-        return tvProjectListRecent;
+    public TextView getTvProjectListRecentChatText() {
+        return tvProjectListRecentChatText;
     }
 
     @Override

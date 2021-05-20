@@ -6,6 +6,8 @@ import com.google.firebase.database.Exclude;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 public class Project implements Serializable {
     private String documentId;
     private String adminId;
@@ -15,6 +17,12 @@ public class Project implements Serializable {
     private Timestamp createdAt;
     private boolean isOngoing;
     private int memberCapacity;
+
+    @Nullable
+    private Timestamp endedAt;
+
+    @Nullable
+    private String recentMessage;
 
     public Project(){
         //empty constructor
@@ -103,5 +111,23 @@ public class Project implements Serializable {
 
     public void setMemberCapacity(int memberCapacity) {
         this.memberCapacity = memberCapacity;
+    }
+
+    @Nullable
+    public Timestamp getEndedAt() {
+        return endedAt;
+    }
+
+    public void setEndedAt(@Nullable Timestamp endedAt) {
+        this.endedAt = endedAt;
+    }
+
+    @Nullable
+    public String getRecentMessage() {
+        return recentMessage;
+    }
+
+    public void setRecentMessage(@Nullable String recentMessage) {
+        this.recentMessage = recentMessage;
     }
 }
