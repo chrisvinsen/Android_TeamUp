@@ -1,4 +1,4 @@
-package id.ac.umn.team_up.ui.activity.notification;
+package id.ac.umn.team_up.ui.activity.recycleviews.notification;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import id.ac.umn.team_up.R;
 
-public class  NotificationItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
+public class  NotificationItemAdapter extends RecyclerView.Adapter<NotificationViewHolder> {
     private String notifFrom, notifHead, notifDate;
     private LayoutInflater mInflater;
 
@@ -29,13 +29,13 @@ public class  NotificationItemAdapter extends RecyclerView.Adapter<RecyclerViewH
 
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NotificationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(viewType, parent, false);
-        return new RecyclerViewHolder(view);
+        return new NotificationViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
         holder.getNameFrom().setText(this.notifFrom);
         holder.getNotifHead().setText(this.notifHead);
         holder.getNotifTime().setText(this.notifDate);

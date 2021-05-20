@@ -1,4 +1,4 @@
-package id.ac.umn.team_up.ui.activity.project;
+package id.ac.umn.team_up.ui.activity.recycleviews.project;
 
 import android.util.Log;
 import android.view.View;
@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import id.ac.umn.team_up.R;
 
-public class ProjectViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private TextView tvProjectListName, tvProjectListTime, tvProjectListRecent;
     private ProjectListAdapter.itemClickListener itemClickListener;
 
-    public ProjectViewHolder(@NonNull View itemView) {
+    public ProjectsViewHolder(@NonNull View itemView) {
         super(itemView);
         this.tvProjectListName = itemView.findViewById(R.id.tvProjectListName);
         this.tvProjectListTime = itemView.findViewById(R.id.tvProjectListTime);

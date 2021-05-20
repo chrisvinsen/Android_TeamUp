@@ -1,4 +1,4 @@
-package id.ac.umn.team_up.ui.activity.project;
+package id.ac.umn.team_up.ui.activity.recycleviews.project;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,12 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.models.Project;
 
-public class ProjectListAdapter extends RecyclerView.Adapter<ProjectViewHolder> {
+public class ProjectListAdapter extends RecyclerView.Adapter<ProjectsViewHolder> {
     private final Context c;
     public ArrayList<Project> projects;
 
@@ -30,16 +29,16 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectViewHolder> 
 
     @NonNull
     @Override
-    public ProjectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ProjectsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(c).inflate(R.layout.project_item,parent,false);
-        return new ProjectViewHolder(view);
+        return new ProjectsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProjectViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ProjectsViewHolder holder, int position) {
         //final Project p = projects.get(position);
         holder.setTvProjectListName(this.projects.get(position).getProjectName());
-        holder.setTvProjectListRecent(this.projects.get(position).getRecentMessageMessage());
+//        holder.setTvProjectListRecent(this.projects.get(position).getRecentMessageMessage());
     }
 
     @Override
