@@ -42,7 +42,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectViewHolder> 
     public void onBindViewHolder(@NonNull ProjectViewHolder holder, int position) {
         //final Project p = projects.get(position);
         holder.setTvProjectListName(this.projects.get(position).getTitle());
-        //holder.setTvProjectListRecent(this.projects.get(position).getRecentMessageMessage());
+
     }
 
     @Override

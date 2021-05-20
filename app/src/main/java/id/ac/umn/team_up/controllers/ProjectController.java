@@ -73,10 +73,16 @@ public class ProjectController {
                         //project.setMembers((List<String>)document.get("members"));
                         for(String id : project.getMembers()){
                             if(mAuth.getUid().equals(id)){
-                                Log.d("Name", mAuth.getCurrentUser().toString());
+                                dataProject.add(project);
                             }
                         }
+
+
                     }
+
+                    rv.setHasFixedSize(true);
+                    rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                    rv.setAdapter(new ProjectListAdapter(view.getContext(),dataProject, app));
 
                 }else{
                     Toast.makeText(app, "Query failed", Toast.LENGTH_SHORT).show();
@@ -121,7 +127,6 @@ public class ProjectController {
 
     public static void postProject(final AppCompatActivity app, String project_title, String project_description, List<String> upload_url){
         // Get fullname of user
-
 
         // Put input into map
         Map<String, Object> project = new HashMap<>();

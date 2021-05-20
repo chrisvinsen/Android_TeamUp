@@ -14,6 +14,10 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        //setting fragment for chat and todo list
+        
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
