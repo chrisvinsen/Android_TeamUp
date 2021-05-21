@@ -34,37 +34,50 @@ public class ProjectFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_project, container, false);
 
+        mAdapter = new ProjectListAdapter(ProjectListController.getLoadUsersProjectOptions(UserController.getUserId()));
         rvProjectList = view.findViewById(R.id.rvProject);
+        rvProjectList.setHasFixedSize(true);
+        rvProjectList.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvProjectList.setAdapter(mAdapter);
 
-        // get user's project list
-        listOfProject = ProjectListController.loadUsersProjects(UserController.getUserId());
-
-        Utils.delayForSomeSeconds(1000, new Runnable() {
-            @Override
-            public void run() {
-                Log.e("LISTPROJECTSIZE", String.valueOf(listOfProject.size()));
-                Log.e("USERID", UserController.getUserId());
-
-                // get recent messages of each project
-                for (Project project : listOfProject) {
-                    Log.e("PROJECTID", project.getDocumentId());
-                    Message recentMessage = ProjectListController.getRecentMessage(project.getDocumentId());
-                    Log.e("RECENTMESSAGELOADING", recentMessage.getMessage());
-                    listOfRecentMessage.add(recentMessage);
-                }
-
-                if(!(listOfProject.size() < 1)){
-                    mAdapter = new ProjectListAdapter(getContext(), listOfProject, listOfRecentMessage);
-                    rvProjectList.setAdapter(mAdapter);
-                    rvProjectList.setLayoutManager(new LinearLayoutManager(getContext()));
-                }
-                else{
-                    Utils.show(getContext(), "You have no projects at the moment.");
-                }
-            }
-        });
+//        Utils.delayForSomeSeconds(1000, new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.e("LISTPROJECTSIZE", String.valueOf(listOfProject.size()));
+//                Log.e("USERID", UserController.getUserId());
+//
+//                // get recent messages of each project
+//                for (Project project : listOfProject) {
+//                    Log.e("PROJECTID", project.getDocumentId());
+//                    Message recentMessage = ProjectListController.getRecentMessage(project.getDocumentId());
+//                    Log.e("RECENTMESSAGELOADING", recentMessage.getMessage());
+//                    listOfRecentMessage.add(recentMessage);
+//                }
+//
+//                if(!(listOfProject.size() < 1)){
+//                    mAdapter = new ProjectListAdapter(getContext(), listOfProject, listOfRecentMessage);
+//                    rvProjectList.setAdapter(mAdapter);
+//                    rvProjectList.setLayoutManager(new LinearLayoutManager(getContext()));
+//                }
+//                else{
+//                    Utils.show(getContext(), "You have no projects at the moment.");
+//                }
+//            }
+//        });
 //        ProjectListController.getProjectList(rvProjectList,view);
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mAdapter.stopListening();
     }
 }

@@ -22,6 +22,7 @@ public class User implements Serializable {
     private String attachment;
     private Date createdAt;
 
+
     public User() {
         this.skills = new ArrayList<>();
         this.createdAt = new Date(System.currentTimeMillis());

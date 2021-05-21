@@ -60,6 +60,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    //firebase ui
+    implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
+
     implementation 'com.google.firebase:firebase-database:19.7.0'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
