@@ -1,78 +1,78 @@
 package id.ac.umn.team_up.models;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import javax.annotation.Nullable;
 
 public class Project implements Serializable {
-    private String adminId, adminName;
+    private String id;
+    private String adminId;
+    private String description;
     private String groupIcon;
-    private List<String> members;
     private String title;
-    private String _id;
+    private Timestamp createdAt;
+    private boolean isOngoing;
+    private List<String> members;
 
-    public List<String> getImages() {
-        return images;
-    }
+    @Nullable
+    private Timestamp endedAt;
 
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
+    @Nullable
+    private String recentMessage;
 
-    private List<String> images;
-    //private Map<String,String> recentMessage;
+    @Nullable
+    private Timestamp sentAt;
 
     public Project(){
         //empty constructor
     }
 
-    public Project(List<String> members,List<String> images, String adminName,String adminId,Map<String,String> recentMessage, String title, String _id, String groupIcon){
-        this.groupIcon = "";
+    public Project(String adminId, String description, String groupIcon, String title, Timestamp createdAt, boolean isOngoing, List<String> members) {
         this.adminId = adminId;
-        this.adminName = adminName;
-        this.members = members;
-        this._id = _id;
+        this.description = description;
+        this.groupIcon = groupIcon;
         this.title = title;
-        //this.recentMessage = recentMessage;
-        this.groupIcon = groupIcon;
-        this.images = images;
+        this.createdAt = createdAt;
+        this.isOngoing = isOngoing;
+        this.members = members;
     }
 
-    public void setAdminId(String adminId) {
-        this.adminId = adminId;
+    @Exclude
+    public String getId() {
+        return id;
     }
 
-    public void setAdminName(String adminName) {
-        this.adminName = adminName;
-    }
-
-    public void setGroupIcon(String groupIcon) {
-        this.groupIcon = groupIcon;
-    }
-
-
-    public void setMembers(List<String> member) {
-        this.members = member;
+    @Exclude
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAdminId() {
         return adminId;
     }
 
-    public String getAdminName() {
-        return adminName;
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getGroupIcon() {
         return groupIcon;
     }
 
-    public List<String> getMembers() {
-        return members;
+    public void setGroupIcon(String groupIcon) {
+        this.groupIcon = groupIcon;
     }
 
     public String getTitle() {
@@ -83,28 +83,54 @@ public class Project implements Serializable {
         this.title = title;
     }
 
-    public String get_id() {
-        return _id;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
-//    public void setRecentMessage(Map<String, String> recentMessage) {
-//        this.recentMessage = recentMessage;
-//    }
-//
-//    public Map<String, String> getRecentMessage() {
-//        return recentMessage;
-//    }
-//
-//    public String getRecentMessageFrom(){
-//        return this.recentMessage.get("fromId");
-//    }
-//
-//    public String getRecentMessageMessage(){
-//        return this.recentMessage.get("message");
-//    }
+    public boolean isOngoing() {
+        return isOngoing;
+    }
 
+    public void setOngoing(boolean ongoing) {
+        isOngoing = ongoing;
+    }
+
+    @Nullable
+    public Timestamp getEndedAt() {
+        return endedAt;
+    }
+
+    public void setEndedAt(@Nullable Timestamp endedAt) {
+        this.endedAt = endedAt;
+    }
+
+    @Nullable
+    public String getRecentMessage() {
+        return recentMessage;
+    }
+
+    public void setRecentMessage(@Nullable String recentMessage) {
+        this.recentMessage = recentMessage;
+    }
+
+    @Nullable
+    public Timestamp getSentAt() {
+        return sentAt;
+    }
+
+    public void setSentAt(@Nullable Timestamp sentAt) {
+        this.sentAt = sentAt;
+    }
+
+    public List<String> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<String> members) {
+        this.members = members;
+    }
 }

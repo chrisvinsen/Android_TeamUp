@@ -6,14 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import id.ac.umn.team_up.R;
-import id.ac.umn.team_up.ui.activity.notification.NotificationItemAdapter;
-import id.ac.umn.team_up.ui.activity.notification.RecyclerViewHolder;
+import id.ac.umn.team_up.ui.activity.recycleviews.notification.NotificationItemAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

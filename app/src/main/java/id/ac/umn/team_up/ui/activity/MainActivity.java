@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.User;
 import id.ac.umn.team_up.ui.fragment.HomeFragment;
@@ -26,6 +27,8 @@ import id.ac.umn.team_up.ui.fragment.PostFragment;
 import id.ac.umn.team_up.ui.fragment.ProfileFragment;
 import id.ac.umn.team_up.ui.fragment.ProjectFragment;
 import id.ac.umn.team_up.ui.fragment.RegisterFragment;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/roboto.xml");
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);

@@ -14,6 +14,7 @@ public class Message {
         this.attachment = attachment;
         this.fromId = fromId;
         this.message = messages;
+        this.sentAt = sentAt;
     }
 
     public String get_id() {
@@ -50,5 +51,13 @@ public class Message {
 
     public void setMessages(String messages) {
         this.message = messages;
+    }
+
+    public Timestamp getSentAt() {
+        return sentAt;
+    }
+
+    public void setSentAt(Timestamp sentAt) {
+        this.sentAt = sentAt;
     }
 }

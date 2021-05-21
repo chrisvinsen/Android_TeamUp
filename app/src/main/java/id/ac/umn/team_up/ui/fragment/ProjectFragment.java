@@ -15,32 +15,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.firebase.ui.firestore.ObservableSnapshotArray;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
+import java.util.List;
 
 import id.ac.umn.team_up.R;
-import id.ac.umn.team_up.controllers.ProjectController;
+import id.ac.umn.team_up.Utils;
+import id.ac.umn.team_up.controllers.ProjectListController;
 import id.ac.umn.team_up.controllers.UserController;
+import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.models.Project;
-import id.ac.umn.team_up.ui.activity.project.ProjectListAdapter;
-import okhttp3.internal.cache.DiskLruCache;
+import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
+import okhttp3.internal.Util;
 
 public class ProjectFragment extends Fragment {
-    //private RecyclerView rvProjectList;
-    private String docCol = "ProjectNael";
-    private ArrayList<Project> listProject;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference projectRef = db.collection(docCol);
-    public static ProjectListAdapter adapter;
-
+    private RecyclerView rvProjectList;
+    private List<Project> listOfProject;
+    private ProjectListAdapter mAdapter;
+    private List<Message> listOfRecentMessage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,41 +38,50 @@ public class ProjectFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_project, container, false);
 
-        //ProjectController.getProjectList(rvProjectList,view, (AppCompatActivity) getActivity());
+        mAdapter = new ProjectListAdapter(ProjectListController.getLoadUsersProjectOptions(UserController.getUserId()));
+        rvProjectList = view.findViewById(R.id.rvProject);
+        rvProjectList.setHasFixedSize(true);
+        rvProjectList.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvProjectList.setAdapter(mAdapter);
 
-        setUpRecyclerView(view);
-
+//        Utils.delayForSomeSeconds(1000, new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.e("LISTPROJECTSIZE", String.valueOf(listOfProject.size()));
+//                Log.e("USERID", UserController.getUserId());
+//
+//                // get recent messages of each project
+//                for (Project project : listOfProject) {
+//                    Log.e("PROJECTID", project.getDocumentId());
+//                    Message recentMessage = ProjectListController.getRecentMessage(project.getDocumentId());
+//                    Log.e("RECENTMESSAGELOADING", recentMessage.getMessage());
+//                    listOfRecentMessage.add(recentMessage);
+//                }
+//
+//                if(!(listOfProject.size() < 1)){
+//                    mAdapter = new ProjectListAdapter(getContext(), listOfProject, listOfRecentMessage);
+//                    rvProjectList.setAdapter(mAdapter);
+//                    rvProjectList.setLayoutManager(new LinearLayoutManager(getContext()));
+//                }
+//                else{
+//                    Utils.show(getContext(), "You have no projects at the moment.");
+//                }
+//            }
+//        });
+//        ProjectListController.getProjectList(rvProjectList,view);
 
         return view;
-    }
-
-    private void setUpRecyclerView(View view){
-        Query query = projectRef;
-        FirestoreRecyclerOptions<Project> options  = new FirestoreRecyclerOptions.Builder<Project>()
-                .setQuery(query, Project.class)
-                .build();
-
-
-        if (options.getSnapshots().isEmpty()){
-            Log.d("query","Empty");
-        }
-
-        adapter = new ProjectListAdapter(options, (AppCompatActivity) getActivity());
-        RecyclerView rvProjectList = view.findViewById(R.id.rvProject);
-        rvProjectList.setHasFixedSize(true);
-        rvProjectList.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        rvProjectList.setAdapter(adapter);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
+        mAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
+        mAdapter.stopListening();
     }
 }

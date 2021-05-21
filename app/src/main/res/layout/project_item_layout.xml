@@ -7,32 +7,41 @@
     >
 
     <ImageView
-        android:id="@+id/songImageBox"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:id="@+id/project_list_group_icon_box"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="10dp"
-        android:background="@mipmap/ic_launcher_round"/>
+        android:background="@drawable/ic_profile"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="vertical">
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        android:layout_weight="2"
+        android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/project_name"
+            android:id="@+id/project_list_name"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:text="Project Name"
             android:textStyle="bold"
             android:textAppearance=
                 "@style/TextAppearance.AppCompat.Medium"
             android:gravity="bottom"/>
         <TextView
-            android:id="@+id/chat_text"
+            android:id="@+id/project_list_chat_text"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:text="chat text" />
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/project_list_chat_time"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="19:21"
+        android:gravity="center_vertical"
+        android:layout_weight="5"/>
 </LinearLayout>

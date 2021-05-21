@@ -8,12 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp"
         >
         <ImageView
             android:id="@+id/ivProjectListIcon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="47dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:elevation="5dp"
             />
@@ -46,7 +45,7 @@
                     android:id="@+id/tvProjectListTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Oct 9, jun 2020"
+                    android:text="Oct 9, jun 2020"
                     android:gravity="right"
                     android:textSize="10dp"
                     android:textStyle="bold"
@@ -62,7 +61,7 @@
                 android:id="@+id/tvProjectListRecent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Send you a message"
+                android:text="Send you a message"
                 android:textSize="15dp"
                 android:maxLines="1"
                 android:maxLength="20"

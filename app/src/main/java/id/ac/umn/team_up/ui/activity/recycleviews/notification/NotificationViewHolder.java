@@ -1,4 +1,4 @@
-package id.ac.umn.team_up.ui.activity.notification;
+package id.ac.umn.team_up.ui.activity.recycleviews.notification;
 
 import android.view.View;
 import android.widget.TextView;
@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import id.ac.umn.team_up.R;
 
-public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+public class NotificationViewHolder extends RecyclerView.ViewHolder {
     private TextView tvNameFrom, tvNotifHead, tvNotifTime;
 
-    public RecyclerViewHolder(@NonNull View itemView) {
+    public NotificationViewHolder(@NonNull View itemView) {
         super(itemView);
 
         tvNameFrom = itemView.findViewById(R.id.tvNameFrom);
