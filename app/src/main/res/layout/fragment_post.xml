@@ -106,7 +106,13 @@
                 android:textAllCaps="false"
                 android:text="Insert Image ( 5 Remaining )"
                 android:textColor="@color/black"/>
-
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="16dp" />
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,13 +140,6 @@
                     android:layout_height="100dp"/>
 
             </GridLayout>
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="16dp" />
 
         </LinearLayout>
     </ScrollView>
