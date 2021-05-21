@@ -30,11 +30,11 @@ public class Project implements Serializable {
         //empty constructor
     }
 
-    public Project(List<String> images, String adminName,String adminId,Map<String,String> recentMessage, List<String> member, String title, String _id, String groupIcon){
+    public Project(List<String> members,List<String> images, String adminName,String adminId,Map<String,String> recentMessage, String title, String _id, String groupIcon){
         this.groupIcon = "";
         this.adminId = adminId;
         this.adminName = adminName;
-        this.members = member;
+        this.members = members;
         this._id = _id;
         this.title = title;
         //this.recentMessage = recentMessage;

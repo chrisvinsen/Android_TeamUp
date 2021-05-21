@@ -40,6 +40,7 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.project.ProjectViewHolder" />
     </application>
 
 </manifest>

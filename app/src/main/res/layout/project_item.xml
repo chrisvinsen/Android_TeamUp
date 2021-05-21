@@ -16,7 +16,6 @@
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:elevation="5dp"
-            android:background="@drawable/ic_profile"
             />
         <LinearLayout
             android:layout_width="match_parent"

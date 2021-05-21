@@ -1,12 +1,15 @@
 package id.ac.umn.team_up.models;
 
+import androidx.annotation.Nullable;
+
 public class Message {
     private String fromId;
     private String _id;
+    @Nullable
     private String attachment;
     private String message;
 
-    public Message(String _id, String attachment,String fromId, String messages){
+    public Message(String _id, @Nullable String attachment, String fromId, String messages){
         this._id = _id;
         this.attachment = attachment;
         this.fromId = fromId;

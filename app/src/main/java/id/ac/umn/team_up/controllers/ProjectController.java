@@ -1,54 +1,40 @@
- package id.ac.umn.team_up.controllers;
+package id.ac.umn.team_up.controllers;
 
-import android.content.Context;
+
 import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.StorageReference;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.Project;
-import id.ac.umn.team_up.models.User;
-import id.ac.umn.team_up.ui.activity.LoginActivity;
 import id.ac.umn.team_up.ui.activity.MainActivity;
-import id.ac.umn.team_up.ui.activity.notification.NotificationItemAdapter;
-import id.ac.umn.team_up.ui.activity.project.ProjectListAdapter;
 
 public class ProjectController {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private static DatabaseReference db ;
     private static FirebaseFirestore db_firestore = FirebaseFirestore.getInstance();
-    private static CollectionReference noteRef = db_firestore.collection("ProjectDetails");
+    private static CollectionReference noteRef = db_firestore.collection("ProjectNael");
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private static final String KEY_TITLE = "title";
     private static final String KEY_DESCRIPTION = "description";
@@ -60,35 +46,32 @@ public class ProjectController {
     private static String fullname;
 
     private static ArrayList<Project> dataProject;
-
-    public static void getProjectList(RecyclerView rv, View view, AppCompatActivity app){
-       dataProject = new ArrayList<Project>();
-       CollectionReference colRef = db_firestore.collection("ProjectDetails");
-       colRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-           @Override
-           public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for(DocumentSnapshot document : task.getResult()){
-                        Project project = document.toObject(Project.class);
-                        //project.setMembers((List<String>)document.get("members"));
-                        for(String id : project.getMembers()){
-                            if(mAuth.getUid().equals(id)){
-                                dataProject.add(project);
-                            }
-                        }
+    //public static void getProjectList(RecyclerView rv, View view, AppCompatActivity app){
 
 
-                    }
 
-                    rv.setHasFixedSize(true);
-                    rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                    rv.setAdapter(new ProjectListAdapter(view.getContext(),dataProject, app));
 
-                }else{
-                    Toast.makeText(app, "Query failed", Toast.LENGTH_SHORT).show();
-                }
-           }
-       });
+//       dataProject = new ArrayList<Project>();
+//       CollectionReference colRef = db_firestore.collection("ProjectNael");
+//       colRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//           @Override
+//           public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if(task.isSuccessful()){
+//                    for(DocumentSnapshot document : task.getResult()){
+//                        Project project = document.toObject(Project.class);
+//                        //project.setMembers((List<String>)document.get("members"));
+//                        Log.d("project", document.toString());
+//                    }
+//
+//                    rv.setHasFixedSize(true);
+//                    rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+//                    rv.setAdapter(new ProjectListAdapter(view.getContext(),dataProject, app));
+//
+//                }else{
+//                    Toast.makeText(app, "Query failed", Toast.LENGTH_SHORT).show();
+//                }
+//           }
+//       });
 
 
 //       db.child("ProjectDetail").addValueEventListener(new ValueEventListener() {
@@ -123,7 +106,37 @@ public class ProjectController {
 //               Log.d("Error","Please try again letter");
 //           }
 //       });
+  //  }
+
+
+    public static ArrayList<DocumentSnapshot> queryMember(String docCol, String docDoc, String subCol){
+        Log.d("docCol", docCol);
+        CollectionReference memberRef = db.collection(docCol).document(docDoc).collection(subCol);
+        ArrayList<DocumentSnapshot> memberQuery = new ArrayList<>();
+        memberRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+            }
+        });
+
+        //        memberRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                for(DocumentSnapshot document : task.getResult()){
+//                    memberQuery.add(document);
+//                }
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d("queryMember", "fail to get member collection");
+//            }
+//        });
+
+        return memberQuery;
     }
+
 
     public static void postProject(final AppCompatActivity app, String project_title, String project_description, List<String> upload_url){
         // Get fullname of user
@@ -162,8 +175,5 @@ public class ProjectController {
                     }
                 });
     }
-
-
-
 
 }
