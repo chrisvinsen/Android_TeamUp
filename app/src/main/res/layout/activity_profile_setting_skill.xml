@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.ProfileSettingSkillActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+            android:background="@color/white"
+            android:minHeight="?attr/actionBarSize">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:orientation="horizontal"
+                >
+
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/ic_back"
+                    android:layout_marginRight="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="backActivity"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Edit Skills"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    android:textFontWeight="700"
+                    android:textColor="@color/black"
+                    />
+
+                <ImageButton
+                    android:id="@+id/saveButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_check"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="saveData"
+                    />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="25dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            >
+            <EditText
+                android:id="@+id/etSkill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_black_rounded_border"
+                android:padding="10dp"
+                android:inputType="text"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:hint="Add New Skill"
+                />
+            <Button
+                android:id="@+id/btnAddSkill"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_add"
+                android:adjustViewBounds="true"
+                android:tint="@color/orange"
+                android:autofillHints="Your skills"
+                android:layout_gravity="center_vertical"
+                />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button1"
+            android:layout_centerHorizontal="true"
+            android:paddingVertical="30dp"
+            >
+        </ListView>
+
+
+<!--        <com.google.android.flexbox.FlexboxLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:flexWrap="wrap"-->
+<!--            >-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Java Language"-->
+<!--                android:paddingHorizontal="14dp"-->
+<!--                android:paddingBottom="1dp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_margin="3dp"-->
+<!--                android:background="@drawable/bg_orange_rounded"-->
+<!--                style="@style/TextView.White"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Python Language"-->
+<!--                android:paddingHorizontal="14dp"-->
+<!--                android:paddingBottom="1dp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_margin="3dp"-->
+<!--                android:background="@drawable/bg_orange_rounded"-->
+<!--                style="@style/TextView.White"-->
+<!--                />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="PHP"-->
+<!--                android:paddingHorizontal="14dp"-->
+<!--                android:paddingBottom="1dp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_margin="3dp"-->
+<!--                android:background="@drawable/bg_orange_rounded"-->
+<!--                style="@style/TextView.White"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="PHP"-->
+<!--                android:paddingHorizontal="14dp"-->
+<!--                android:paddingBottom="1dp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_margin="3dp"-->
+<!--                android:background="@drawable/bg_orange_rounded"-->
+<!--                style="@style/TextView.White"-->
+<!--                />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Java Language"-->
+<!--                android:paddingHorizontal="14dp"-->
+<!--                android:paddingBottom="1dp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_margin="3dp"-->
+<!--                android:background="@drawable/bg_orange_rounded"-->
+<!--                style="@style/TextView.White"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Python Language"-->
+<!--                android:paddingHorizontal="14dp"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_margin="3dp"-->
+<!--                android:background="@drawable/bg_orange_rounded"-->
+<!--                style="@style/TextView.White"-->
+<!--                />-->
+<!--        </com.google.android.flexbox.FlexboxLayout>-->
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

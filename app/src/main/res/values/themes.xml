@@ -1,10 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.TeamUp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
+
+        <!-- Primary brand color. g ada di master -->
         <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryVariant">@color/orange</item>
         <item name="colorOnPrimary">@color/white</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/white</item>
         <item name="colorOnSecondary">@color/black</item>
@@ -12,6 +14,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/orange</item>
         <item name="textAppearanceButton">@style/Button</item>
         <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/roboto</item>
     </style>
     <style name="Theme.TeamUp.White" parent="Theme.TeamUp">
         <!-- Primary brand color. -->
@@ -32,6 +35,9 @@
     </style>
     <style name="TextView.Paragraph" parent="TextView">
         <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextView.Subtitle" parent="TextView">
+        <item name="android:textSize">16sp</item>
     </style>
     <style name="TextView.Title" parent="TextView">
         <item name="android:textSize">20sp</item>
@@ -60,6 +66,9 @@
     <style name="TextView.Orange.Paragraph" parent="TextView.Orange">
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="TextView.Orange.Subtitle" parent="TextView.Orange">
+        <item name="android:textSize">16sp</item>
+    </style>
     <style name="TextView.Orange.Title" parent="TextView.Orange">
         <item name="android:textSize">20sp</item>
     </style>
@@ -86,6 +95,9 @@
     </style>
     <style name="TextView.White.Paragraph" parent="TextView.White">
         <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextView.White.Subtitle" parent="TextView.White">
+        <item name="android:textSize">16sp</item>
     </style>
     <style name="TextView.White.Title" parent="TextView.White">
         <item name="android:textSize">20sp</item>
