@@ -3,6 +3,7 @@ package id.ac.umn.team_up.ui.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -32,40 +35,18 @@ public class ProjectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_project, container, false);
-
-        mAdapter = new ProjectListAdapter(ProjectListController.getLoadUsersProjectOptions(UserController.getUserId()));
+        View view;
+        if(this.getArguments().getBoolean("isOngoing")) {
+            view = inflater.inflate(R.layout.fragment_project, container, false);
+            mAdapter = new ProjectListAdapter(ProjectListController.getLoadUsersProjectOptions(UserController.getUserId(), true));
+        } else {
+            view = inflater.inflate(R.layout.fragment_project_history, container, false);
+            mAdapter = new ProjectListAdapter(ProjectListController.getLoadUsersProjectOptions(UserController.getUserId(), false));
+        }
         rvProjectList = view.findViewById(R.id.rvProject);
         rvProjectList.setHasFixedSize(true);
         rvProjectList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvProjectList.setAdapter(mAdapter);
-
-//        Utils.delayForSomeSeconds(1000, new Runnable() {
-//            @Override
-//            public void run() {
-//                Log.e("LISTPROJECTSIZE", String.valueOf(listOfProject.size()));
-//                Log.e("USERID", UserController.getUserId());
-//
-//                // get recent messages of each project
-//                for (Project project : listOfProject) {
-//                    Log.e("PROJECTID", project.getDocumentId());
-//                    Message recentMessage = ProjectListController.getRecentMessage(project.getDocumentId());
-//                    Log.e("RECENTMESSAGELOADING", recentMessage.getMessage());
-//                    listOfRecentMessage.add(recentMessage);
-//                }
-//
-//                if(!(listOfProject.size() < 1)){
-//                    mAdapter = new ProjectListAdapter(getContext(), listOfProject, listOfRecentMessage);
-//                    rvProjectList.setAdapter(mAdapter);
-//                    rvProjectList.setLayoutManager(new LinearLayoutManager(getContext()));
-//                }
-//                else{
-//                    Utils.show(getContext(), "You have no projects at the moment.");
-//                }
-//            }
-//        });
-//        ProjectListController.getProjectList(rvProjectList,view);
-
         return view;
     }
 

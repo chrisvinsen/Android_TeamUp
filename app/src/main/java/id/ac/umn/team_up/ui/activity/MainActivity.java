@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.controllers.UserController;
+import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.models.User;
 import id.ac.umn.team_up.ui.fragment.HomeFragment;
 import id.ac.umn.team_up.ui.fragment.NotificationFragment;
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         case R.id.navigation_projects:
                             Log.d("menu", "projects");
-                            openFragment(new ProjectFragment());
+                            goToProjectList(true);
                             return true;
                         case R.id.navigation_posts:
                             Log.d("menu", "posts");
@@ -97,4 +99,20 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             };
+
+    public void goToProjectHistory(View view) {
+        goToProjectList(false);
+    }
+
+    public void goToOngoingProject(View view) {
+        goToProjectList(true);
+    }
+
+    public void goToProjectList(boolean isOngoing){
+        Fragment fragment = new ProjectFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isOngoing", isOngoing);
+        fragment.setArguments(bundle);
+        openFragment(fragment);
+    }
 }

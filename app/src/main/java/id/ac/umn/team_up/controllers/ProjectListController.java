@@ -30,31 +30,16 @@ public class ProjectListController {
     private static List<Project> listOfProject = new ArrayList<Project>();
     private static Message recentMessage;
 
-//    public static List<Project> loadUsersProjects(String userId){
-//        projectsRef.whereEqualTo("adminId", userId).get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-//                            Project project = documentSnapshot.toObject(Project.class);
-//                            project.setId(documentSnapshot.getId());
-//                            listOfProject.add(project);
-//                            Log.e("PROJECTLOADING", project.getId());
-//                        }
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.e("LOADPROJECTS", "loadUsersProjects failed");
-//                    }
-//                });
-//
-//        return listOfProject;
-//    }
+    public static FirestoreRecyclerOptions<Project> getLoadUsersProjectOptions(String userId, boolean isOngoing){
+        Query query;
 
-    public static FirestoreRecyclerOptions<Project> getLoadUsersProjectOptions(String userId){
-        Query query =  projectsRef.whereArrayContains("members", userId);
+        if(isOngoing){
+            query =  projectsRef.whereArrayContains("members", userId).whereEqualTo("isOngoing", true);
+        }
+        else{
+            query =  projectsRef.whereArrayContains("members", userId).whereEqualTo("isOngoing", false);
+        }
+
         FirestoreRecyclerOptions<Project> options = new FirestoreRecyclerOptions.Builder<Project>()
                 .setQuery(query, Project.class)
                 .build();
