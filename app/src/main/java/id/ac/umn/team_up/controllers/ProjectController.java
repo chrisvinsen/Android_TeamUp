@@ -35,6 +35,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
 
@@ -58,26 +59,10 @@ public class ProjectController {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static DatabaseReference db ;
     private static FirebaseFirestore db_firestore = FirebaseFirestore.getInstance();
-    private static CollectionReference noteRef = db_firestore.collection("ProjectDetails");
-    private static CollectionReference noteRef2 = db_firestore.collection("ProjectDetails");
+    private static CollectionReference projectRef = db_firestore.collection("ProjectDetails");
+    private static CollectionReference memberRef = db_firestore.collection("ProjectMembers");
+    private static CollectionReference todolistRef = db_firestore.collection("ToDoList");
 
-    private static final String KEY_MEMBER_ID = "id";
-    private static final String KEY_MEMBER_FNAME = "firstName";
-    private static final String KEY_MEMBER_LNAME = "lastName";
-    private static final String KEY_MEMBER_IMG = "profilePicture";
-    private static final String KEY_ID = "id";
-    private static final String KEY_TITLE = "title";
-    private static final String KEY_DESCRIPTION = "description";
-    private static final String KEY_ADMIN = "adminId";
-    private static final String KEY_ICON = "groupIcon";
-    private static final String KEY_IMAGES = "images";
-    private static final String KEY_ONGOING = "isOngoing";
-    private static final String KEY_TODO_TITLE = "title";
-    private static final String KEY_TODO_DESC = "description";
-    private static final String KEY_TODO_STATUS = "status";
-    private static final String KEY_MEMBERS = "members";
-    private static final String KEY_TODOLIST = " to_do_list";
-    private static final String KEY_CREATED_AT = "createdAt";
 
     private static ArrayList<Project> dataProject;
     private static ArrayList<ProjectMembers> members;
@@ -85,6 +70,8 @@ public class ProjectController {
     // For home
     private static PostAdapter post_adapter;
     private static List<Project> projects;
+    private static DocumentSnapshot lastResult;
+    private static Button show_more_button;
 
     public static void getProjectList(RecyclerView rv, View view){
        db = FirebaseDatabase.getInstance().getReference();
@@ -122,43 +109,82 @@ public class ProjectController {
         // Get current time
         FieldValue createdAt = FieldValue.serverTimestamp();
         // Array of todolist and members
-        List<Map<String, String>> members = new ArrayList<Map<String, String>>();
-        List<Map<String, String>> to_do_list = new ArrayList<Map<String, String>>();
-
-        // Put to do list into map
-        Map<String, String> todolist = new HashMap<>();
-        todolist.put(KEY_TODO_TITLE, "Title of your to do list");
-        todolist.put(KEY_TODO_DESC, "Description of your to do list");
-        todolist.put(KEY_TODO_STATUS, "false");
-        to_do_list.add(todolist);
-
-
-        // Put member into map
-        Map<String, String> member = new HashMap<>();
-        member.put(KEY_MEMBER_ID, mAuth.getUid());
-        member.put(KEY_MEMBER_FNAME, "Felix");
-        member.put(KEY_MEMBER_LNAME, "Laynardi");
-        member.put(KEY_MEMBER_IMG, "https://firebasestorage.googleapis.com/v0/b/team-up-solib.appspot.com/o/uploads%2F1621347046743.jpg?alt=media&token=03ead921-1e56-4acf-a06d-dcb243dda1d1");
-        members.add(member);
+        List<String> members = new ArrayList<String>();
+        List<String> to_do_list = new ArrayList<String>();
 
         // Get random id
-        String document_id = noteRef.document().getId();
+        String document_id = projectRef.document().getId();
+
+        // Get random id for todolist
+        String todolist_id = todolistRef.document().getId();
+
+        // Input id to array
+        members.add(mAuth.getUid());
+        to_do_list.add(todolist_id);
 
         // Put input into map
         Map<String, Object> project = new HashMap<>();
-        project.put(KEY_ID, document_id);
-        project.put(KEY_TITLE, project_title);
-        project.put(KEY_DESCRIPTION, project_description);
-        project.put(KEY_ADMIN, mAuth.getUid());
-        project.put(KEY_ICON, "");
-        project.put(KEY_IMAGES, upload_url);
-        project.put(KEY_ONGOING, true);
-        project.put(KEY_MEMBERS, members);
-        project.put(KEY_TODOLIST, to_do_list);
-        project.put(KEY_CREATED_AT, createdAt);
+        project.put("id", document_id);
+        project.put("title", project_title);
+        project.put("description", project_description);
+        project.put("adminId", mAuth.getUid());
+        project.put("groupIcon", "");
+        project.put("images", upload_url);
+        project.put("isOngoing", true);
+        project.put("members", members);
+        project.put("toDoList", to_do_list);
+        project.put("createdAt", createdAt);
 
         // Set map into collection
-        noteRef.document(document_id).set(project)
+        projectRef.document(document_id).set(project)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Utils.show(app, "Something went wrong, please try again later.");
+                    }
+                });
+
+
+
+        // Put to do list into map
+        Map<String, String> todolist = new HashMap<>();
+        todolist.put("title", "Title of your to do list");
+        todolist.put("description", "Description of your to do list");
+        todolist.put("status", "false");
+        todolist.put("todolistId", todolist_id);
+        todolist.put("projectId", document_id);
+
+        // Set map into collection
+        todolistRef.document(todolist_id).set(todolist)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Utils.show(app, "Something went wrong, please try again later.");
+                    }
+                });
+
+        // Put member into map
+        Map<String, String> member = new HashMap<>();
+        member.put("userId", mAuth.getUid());
+        member.put("projectId", document_id);
+        member.put("fullName", "Felix Laynardi");
+        member.put("role", "Admin");
+        member.put("picture", "https://firebasestorage.googleapis.com/v0/b/team-up-solib.appspot.com/o/uploads%2F1621347046743.jpg?alt=media&token=03ead921-1e56-4acf-a06d-dcb243dda1d1");
+
+        // Set map into collection
+        memberRef.document().set(member)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -173,69 +199,56 @@ public class ProjectController {
                         Utils.show(app, "Something went wrong, please try again later.");
                     }
                 });
-        // Set members into collection of collection
-//        noteRef.document(document_id).collection("members").document().set(members)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//
-//                    }
-//
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Utils.show(app, "Something went wrong, please try again later.");
-//                    }
-//                });
-//        // Set to do lists into collection of collection
-//        noteRef.document(document_id).collection("to-do-list").document().set(todolist)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        final Intent intent = new Intent(app, MainActivity.class);
-//                        app.startActivity(intent);
-//                        Utils.show(app, "Your project has been successfully created!");
-//                    }
-//
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Utils.show(app, "Something went wrong, please try again later.");
-//                    }
-//                });
-        
     }
 
     public static void getProjectPost(RecyclerView recycler_view, View view){
-        // Get from firebase database ProjectDetails collection
-        Log.d("check", "3");
         projects= new ArrayList<Project>();
 
-        noteRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    Log.d("check", "2");
-                    for(DocumentSnapshot document : task.getResult()){
-                        Log.d("check", "1");
-                        Project project = document.toObject(Project.class);
-                        Log.d("id", project.getId());
-                        Log.d("timestamp", project.getCreatedAt().toString());
-                        projects.add(project);
-                    }
-                    post_adapter= new PostAdapter(view.getContext(),projects);
+        lastResult = null;
 
-                    recycler_view.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                    recycler_view.setAdapter(post_adapter);
-                }
-                else{
-                    Log.d("check", "2");
-                    Toast.makeText(view.getContext(), "There is a problem", Toast.LENGTH_SHORT).show();
-                }
+        loadPost(recycler_view, view);
+
+        show_more_button = (Button) view.findViewById(R.id.show_more_button);
+        show_more_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadPost(recycler_view, view);
             }
         });
+    }
+
+    public static void loadPost(RecyclerView recycler_view, View view){
+        Query query;
+
+        if (lastResult == null) {
+            query = projectRef.orderBy("createdAt")
+                    .limit(3);
+        } else {
+            query = projectRef.orderBy("createdAt")
+                    .startAfter(lastResult)
+                    .limit(3);
+        }
+
+        query.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            Log.d("project", documentSnapshot.toString());
+                            Project project = documentSnapshot.toObject(Project.class);
+                            Log.d("project", project.toString());
+                            projects.add(project);
+                            Log.d("project", "1");
+                        }
+                        if (queryDocumentSnapshots.size() > 0) {
+                            lastResult = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() - 1);
+                            post_adapter= new PostAdapter(view.getContext(),projects);
+
+                            recycler_view.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                            recycler_view.setAdapter(post_adapter);
+                        }
+                    }
+                });
     }
 
 

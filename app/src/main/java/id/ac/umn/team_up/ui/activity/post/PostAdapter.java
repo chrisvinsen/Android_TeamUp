@@ -41,9 +41,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
     public void onBindViewHolder(@NonNull PostHolder holder, int position) {
         Project project = mProjects.get(position);
         // Insert user profile
-        String fullname = project.getMembers().get(0).getFirstName() + " " + project.getMembers().get(0).getLastName();
-        holder.profile_name.setText(fullname);
-        Picasso.get().load(project.getMembers().get(0).getProfilePicture()).placeholder(R.mipmap.ic_launcher).fit().into(holder.profile_image);
+//        String fullname = project.getMembers().get(0).getFirstName() + " " + project.getMembers().get(0).getLastName();
+//        holder.profile_name.setText(fullname);
+//        Picasso.get().load(project.getMembers().get(0).getProfilePicture()).placeholder(R.mipmap.ic_launcher).fit().into(holder.profile_image);
         // Insert project
         SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss");
         holder.post_time.setText(formatter.format(project.getCreatedAt()));
