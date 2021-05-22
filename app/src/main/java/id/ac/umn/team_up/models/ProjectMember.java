@@ -2,11 +2,14 @@ package id.ac.umn.team_up.models;
 
 import androidx.annotation.Nullable;
 
-public class ProjectMember {
+import java.io.Serializable;
+
+public class ProjectMember implements Serializable {
     private String userId;
     private String role;
     private String fullName;
     private String projectId;
+    private String picture;
 
     @Nullable
     private boolean hasBeenAccepted;
@@ -14,18 +17,20 @@ public class ProjectMember {
     public ProjectMember() {
     }
 
-    public ProjectMember(String userId, String role, String fullName, String projectId) {
+    public ProjectMember(String userId, String role, String fullName, String projectId, String picture) {
         this.userId = userId;
         this.role = role;
         this.fullName = fullName;
         this.projectId = projectId;
+        this.picture = picture;
     }
 
-    public ProjectMember(String userId, String role, String fullName, String projectId, boolean hasBeenAccepted) {
+    public ProjectMember(String userId, String role, String fullName, String projectId, String picture, boolean hasBeenAccepted) {
         this.userId = userId;
         this.role = role;
         this.fullName = fullName;
         this.projectId = projectId;
+        this.picture = picture;
         this.hasBeenAccepted = hasBeenAccepted;
     }
 
@@ -59,6 +64,14 @@ public class ProjectMember {
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
+    }
+
+    public String getPicture(){
+        return picture;
+    }
+
+    public void setPicture(String picture){
+        this.picture = picture;
     }
 
     public boolean isHasBeenAccepted() {

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Handler;
+import android.os.Looper;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
@@ -118,19 +120,7 @@ public class Utils {
             throw new RuntimeException(ex);
         }
     }
-
-    public static void overrideFont(Context context, String defaultFontNameToOverride, String customFontFileNameInAssets) {
-        try {
-            final Typeface customFontTypeface = Typeface.createFromAsset(context.getAssets(), customFontFileNameInAssets);
-
-            final Field defaultFontTypefaceField = Typeface.class.getDeclaredField(defaultFontNameToOverride);
-            defaultFontTypefaceField.setAccessible(true);
-            defaultFontTypefaceField.set(null, customFontTypeface);
-        } catch (Exception e) {
-            show(context, "overrideFont Error!");
-        }
-    }
-
+    
     public static SharedPreferences getSharedPref(Context c) {
         return c.getSharedPreferences(c.getPackageName(), Context.MODE_PRIVATE);
     }

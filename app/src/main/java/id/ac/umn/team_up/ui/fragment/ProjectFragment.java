@@ -3,27 +3,21 @@ package id.ac.umn.team_up.ui.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import java.util.List;
 
 import id.ac.umn.team_up.R;
-import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.controllers.ProjectListController;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
-import okhttp3.internal.Util;
 
 public class ProjectFragment extends Fragment {
     private RecyclerView rvProjectList;
