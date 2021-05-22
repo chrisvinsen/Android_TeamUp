@@ -3,6 +3,7 @@ package id.ac.umn.team_up.ui.fragment;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.models.Project;
 
@@ -61,6 +64,8 @@ public class PostFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
     private int MAX_UPLOAD = 5;
 
+    private ImageView profile_picture;
+    private TextView profile_fullname;
     private EditText project_title;
     private EditText project_description;
     private Button post_button;
@@ -115,7 +120,12 @@ public class PostFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_post, container, false);
 
+        // Get shared preference
+        SharedPreferences sharedPref = Utils.getSharedPref(getActivity().getApplicationContext());
+
         // Connect variables to view
+        profile_picture = (ImageView) view.findViewById(R.id.profile_picture);
+        profile_fullname = (TextView) view.findViewById(R.id.profile_fullname);
         project_title = (EditText) view.findViewById(R.id.project_title);
         project_description = (EditText) view.findViewById(R.id.project_description);
         post_button = (Button) view.findViewById(R.id.post_button);
@@ -126,6 +136,11 @@ public class PostFragment extends Fragment {
         image_view4 = (ImageView) view.findViewById(R.id.image_view4);
         image_view5 = (ImageView) view.findViewById(R.id.image_view5);
         progress_bar = (ProgressBar) view.findViewById(R.id.progress_bar);
+
+        // Set profile
+        String fullname = sharedPref.getString("ufirstname", "") + " " + sharedPref.getString("ulastname", "");
+        profile_fullname.setText(fullname);
+        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/team-up-solib.appspot.com/o/uploads%2F1621347046743.jpg?alt=media&token=03ead921-1e56-4acf-a06d-dcb243dda1d1").placeholder(R.mipmap.ic_launcher).fit().into(profile_picture);
 
         // Connect to FirebaseStorage uploads
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");

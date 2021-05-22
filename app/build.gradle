@@ -53,6 +53,8 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-database:19.7.0'
     implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
+    // Swipe refresh
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.ivbaranov:materiallettericon:0.2.3'

@@ -42,6 +42,7 @@
         android:id="@+id/project_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
         android:text="Project Title"
         android:textStyle="bold"/>
     <TextView
@@ -96,6 +97,7 @@
     </HorizontalScrollView>
 
     <Button
+        android:id="@+id/join_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

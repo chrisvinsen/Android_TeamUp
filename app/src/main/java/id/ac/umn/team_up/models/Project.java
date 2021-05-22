@@ -18,6 +18,7 @@ public class Project implements Serializable {
     private boolean isOngoing;
     private List<String> images;
     private List<String> members;
+    private List<String> membersRequest;
     private List<String> toDoList;
     private Date createdAt;
     @Nullable
@@ -27,6 +28,23 @@ public class Project implements Serializable {
 
     public Project(){
         //empty constructor
+    }
+
+    public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, List<String> images, boolean isOngoing, List<String> members, List<String> membersRequest, List<String> toDoList, String createdAt){
+        this.id = id;
+        this.adminId = adminId;
+        this.adminFullname = adminFullname;
+        this.adminPicture = adminPicture;
+        this.description = description;
+        this.groupIcon = groupIcon;
+        this.title = title;
+        this.images = images;
+        this.members = members;
+        this.membersRequest = membersRequest;
+        this.toDoList = toDoList;
+        this.isOngoing = isOngoing;
+        Long t = Long.parseLong(createdAt);
+        this.createdAt = new Date(t*1000);
     }
 
     public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, List<String> images, boolean isOngoing, List<String> members, List<String> toDoList, String createdAt){
@@ -76,11 +94,22 @@ public class Project implements Serializable {
     public List<String> getMembers(){
         return members;
     }
+    public List<String> getMembersRequest(){
+        return membersRequest;
+    }
     public List<String> getToDoList(){
         return toDoList;
     }
     public Date getCreatedAt(){
         return createdAt;
     }
-
+    public void addMemberRequest(String id){
+        if(membersRequest == null){
+            membersRequest = new ArrayList<String>();
+            membersRequest.add(id);
+        }
+        else{
+            membersRequest.add(id);
+        }
+    }
 }
