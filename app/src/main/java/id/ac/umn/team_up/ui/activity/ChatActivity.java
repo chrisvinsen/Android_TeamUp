@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private Button btnTodoList;
     private Button btnChat;
+    private String groupID;
 
 
 
@@ -31,6 +34,8 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         btnTodoList = findViewById(R.id.btnTodoList);
         btnChat = findViewById(R.id.btnChat);
+        Intent intent = getIntent();
+        this.groupID = intent.getStringExtra("groupID");
 
         //initiate chat fragment
         initView();
@@ -63,7 +68,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void initView(){
-        openFragment(new ChatFragment().newInstance("",""));
+        openFragment(new ChatFragment().newInstance(groupID,""));
     }
 
     private void openFragment(Fragment fragment) {

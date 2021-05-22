@@ -1,11 +1,13 @@
 package id.ac.umn.team_up.ui.activity.recycleviews.project;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -22,6 +24,7 @@ public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, Projec
 //    private final Context c;
     private List<Project> projects;
     private List<Message> recentMessages;
+    private AppCompatActivity app;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -29,8 +32,9 @@ public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, Projec
      *
      * @param options
      */
-    public ProjectListAdapter(@NonNull FirestoreRecyclerOptions<Project> options) {
+    public ProjectListAdapter(@NonNull FirestoreRecyclerOptions<Project> options, AppCompatActivity app) {
         super(options);
+        this.app = app;
     }
 
     interface itemClickListener{
@@ -48,7 +52,7 @@ public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, Projec
     @Override
     public ProjectsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.project_item_layout,parent,false);
-        return new ProjectsViewHolder(view);
+        return new ProjectsViewHolder(view,app);
     }
 
 //    @Override
@@ -61,6 +65,7 @@ public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, Projec
 
     @Override
     protected void onBindViewHolder(@NonNull ProjectsViewHolder holder, int position, @NonNull Project model) {
+        holder.setGroupID(model.getId());
         holder.setTvProjectListName(model.getTitle());
 //        holder.setTvProjectListRecentChatText(model.getRecentMessage());
 //        holder.setTvProjectListChatTime(String.valueOf(model.getSentAt().toDate().getTime()));

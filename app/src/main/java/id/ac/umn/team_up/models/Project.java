@@ -31,7 +31,7 @@ public class Project implements Serializable {
         //empty constructor
     }
 
-    public Project(String adminId, String description, String groupIcon, String title, Timestamp createdAt, boolean isOngoing, List<String> members) {
+    public Project(String adminId, String description, String groupIcon, String title, Timestamp createdAt, boolean isOngoing, List<String> members, String id) {
         this.adminId = adminId;
         this.description = description;
         this.groupIcon = groupIcon;
@@ -39,14 +39,14 @@ public class Project implements Serializable {
         this.createdAt = createdAt;
         this.isOngoing = isOngoing;
         this.members = members;
+        this.id = id;
     }
 
-    @Exclude
+
     public String getId() {
         return id;
     }
 
-    @Exclude
     public void setId(String id) {
         this.id = id;
     }

@@ -4,12 +4,22 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.controllers.MessageController;
+import id.ac.umn.team_up.controllers.UserController;
+import id.ac.umn.team_up.models.Message;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +28,9 @@ import id.ac.umn.team_up.R;
  */
 public class ChatFragment extends Fragment {
 
-    private static TextView tvChat;
+    private static EditText edChat;
+    private static Button btnSendMessage;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +38,7 @@ public class ChatFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String mParam1; //GroupID
     private String mParam2;
 
     public ChatFragment() {
@@ -67,8 +79,25 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_chat, container, false);
+        edChat = view.findViewById(R.id.edtSendMessage);
+        btnSendMessage = view.findViewById(R.id.btnSendMessage);
+
+        //setOnClick
+        btnSendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userId = UserController.getUserId();
+
+//                Message message = new Message(mParam1, userId,edChat.getText(),  )
+                MessageController.sentMessage(mParam1, userId, edChat.getText().toString());//groupid, userId, message
+            }
+        });
+
+
 
         //tvChat = (TextView) view.findViewById(R.id.tvChat);
         return view;
     }
+
+
 }

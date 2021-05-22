@@ -2,44 +2,26 @@ package id.ac.umn.team_up.models;
 
 import androidx.annotation.Nullable;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
+
 public class Message {
     private String fromId;
-    private String _id;
+    private String groupId;
     @Nullable
     private String attachment;
     private String message;
+    private FieldValue createdAt;
+    private String fullName;
+    //private String picURL;
 
-    public Message(String _id, @Nullable String attachment, String fromId, String messages){
-        this._id = _id;
-        this.attachment = attachment;
+    public Message(String groupId, String fromId, String messages,FieldValue createdAt){
+        this.groupId = groupId;
         this.fromId = fromId;
         this.message = messages;
-        this.sentAt = sentAt;
+        this.createdAt = createdAt;
     }
 
-    public String get_id() {
-        return _id;
-    }
-
-    public String getAttachment() {
-        return attachment;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
-    public void setAttachment(String attachment) {
-        this.attachment = attachment;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public String getFromId() {
         return fromId;
@@ -49,15 +31,49 @@ public class Message {
         this.fromId = fromId;
     }
 
-    public void setMessages(String messages) {
-        this.message = messages;
+    public String getGroupId() {
+        return groupId;
     }
 
-    public Timestamp getSentAt() {
-        return sentAt;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
-    public void setSentAt(Timestamp sentAt) {
-        this.sentAt = sentAt;
+    @Nullable
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(@Nullable String attachment) {
+        this.attachment = attachment;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public FieldValue getCreatedAt() {
+        return createdAt;
+    }
+
+
+//    public String getCurrentDate() {
+//        return createdAt;
+//    }
+
+    public void setCreatedAt(FieldValue createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

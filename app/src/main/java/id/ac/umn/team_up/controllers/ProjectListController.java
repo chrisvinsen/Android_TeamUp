@@ -53,46 +53,46 @@ public class ProjectListController {
 //        return listOfProject;
 //    }
 
-    public static FirestoreRecyclerOptions<Project> getLoadUsersProjectOptions(String userId){
-        Query query =  projectsRef.whereArrayContains("members", userId);
+    public static FirestoreRecyclerOptions<Project> getLoadUsersProjectOptions(String userId){ //is called by mAdapter ProjecjFragment
+        Query query =  projectsRef.whereArrayContains("members", userId); //query array member
         FirestoreRecyclerOptions<Project> options = new FirestoreRecyclerOptions.Builder<Project>()
                 .setQuery(query, Project.class)
-                .build();
+                .build(); //setting the firestore recyclerview
         Log.e("LOADPROJECT", options.getSnapshots().toString());
         return options;
     }
 
-    public static Message getRecentMessage(String projectDocumentId){
-        projectsRef.document(projectDocumentId)
-                .collection("messages")
-//                .orderBy("sentAt", Query.Direction.DESCENDING)
-//                .limit(1)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Log.e("GETRECENTMESSAGE", String.valueOf(queryDocumentSnapshots.size()));
-                        for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-                            recentMessage = documentSnapshot.toObject(Message.class);
-                            Log.e("RECENTMESSAGELOADING", recentMessage.getMessage());
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("GETRECENTMESSAGE", "getRecentMessage failed");
-                    }
-                })
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Log.e("GETRECENTMESSAGES", "completed");
-                    }
-                });
-//        Log.e("RECENTMESSAGELOADING", recentMessage.getMessage());
-        return recentMessage;
-    }
+//    public static Message getRecentMessage(String projectDocumentId){
+//        projectsRef.document(projectDocumentId)
+//                .collection("messages")
+////                .orderBy("sentAt", Query.Direction.DESCENDING)
+////                .limit(1)
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        Log.e("GETRECENTMESSAGE", String.valueOf(queryDocumentSnapshots.size()));
+//                        for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+//                            recentMessage = documentSnapshot.toObject(Message.class);
+//                            //Log.e("RECENTMESSAGELOADING", recentMessage.getMessage());
+//                        }
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.e("GETRECENTMESSAGE", "getRecentMessage failed");
+//                    }
+//                })
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        Log.e("GETRECENTMESSAGES", "completed");
+//                    }
+//                });
+////        Log.e("RECENTMESSAGELOADING", recentMessage.getMessage());
+//        return recentMessage;
+//    }
 
     public static void addProjectsListener(String userId, List<Project> projectList){
 //        projectsRef.whereEqualTo("adminId", userId)

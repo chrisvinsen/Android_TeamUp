@@ -1,29 +1,44 @@
 package id.ac.umn.team_up.ui.activity.recycleviews.project;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.ui.activity.ChatActivity;
 
 public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private TextView tvProjectListName, tvProjectListChatTime, tvProjectListRecentChatText;
     private ProjectListAdapter.itemClickListener itemClickListener;
+    private String groupID;
+    private AppCompatActivity app;
 
-    public ProjectsViewHolder(@NonNull View itemView) {
+    public ProjectsViewHolder(@NonNull View itemView,AppCompatActivity app) {
         super(itemView);
         this.tvProjectListName = itemView.findViewById(R.id.project_list_name);
         this.tvProjectListChatTime = itemView.findViewById(R.id.project_list_chat_time);
         this.tvProjectListRecentChatText = itemView.findViewById(R.id.project_list_chat_text);
+        this.app = app;
         itemView.setOnClickListener(this);
     }
 
     public void setTvProjectListName(String tvProjectListName) {
         this.tvProjectListName.setText( tvProjectListName);
     }
+
+    public String getGroupID(){
+        return groupID;
+    }
+
+    public void setGroupID(String id){
+        this.groupID = id;
+    }
+
 
     public void setTvProjectListChatTime(String tvProjectListChatTime) {
         this.tvProjectListChatTime.setText(tvProjectListChatTime);
@@ -48,7 +63,11 @@ public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.
     @Override
     public void onClick(View v) {
         //this.itemClickListener.onItemClick(this.getLayoutPosition());
-        Log.d("rvItem","clicked");
-
+//        Log.d("rvItem","clicked");
+//        Log.d("data", groupID);
+        Intent intent = new Intent(v.getContext(), ChatActivity.class);
+        //sending project id
+        intent.putExtra("groupID",this.groupID);
+        app.startActivity(intent);
     }
 }
