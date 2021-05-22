@@ -5,24 +5,36 @@ import androidx.annotation.Nullable;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
 
+import java.sql.Date;
+
 public class Message {
+    private String id;
     private String fromId;
     private String groupId;
     @Nullable
     private String attachment;
     private String message;
-    private FieldValue createdAt;
+    private Date createdAt;
     private String fullName;
     //private String picURL;
 
-    public Message(String groupId, String fromId, String messages,FieldValue createdAt){
+    public Message(String id,String groupId, String fromId, String messages,String createdAt, @Nullable String attachment){
         this.groupId = groupId;
         this.fromId = fromId;
         this.message = messages;
-        this.createdAt = createdAt;
+        Long t = Long.parseLong(createdAt);
+        this.createdAt = new Date(t*1000);
+        this.id = id;
+        this.attachment = attachment;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public String getId() {
+        return id;
+    }
     public String getFromId() {
         return fromId;
     }
@@ -56,7 +68,7 @@ public class Message {
         this.message = message;
     }
 
-    public FieldValue getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
@@ -65,8 +77,9 @@ public class Message {
 //        return createdAt;
 //    }
 
-    public void setCreatedAt(FieldValue createdAt) {
-        this.createdAt = createdAt;
+    public void setCreatedAt(String createdAt) {
+        Long t = Long.parseLong(createdAt);
+        this.createdAt = new Date(t*1000);
     }
 
     public String getFullName() {

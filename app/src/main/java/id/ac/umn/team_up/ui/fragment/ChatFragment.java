@@ -87,9 +87,9 @@ public class ChatFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String userId = UserController.getUserId();
-
 //                Message message = new Message(mParam1, userId,edChat.getText(),  )
-                MessageController.sentMessage(mParam1, userId, edChat.getText().toString());//groupid, userId, message
+                MessageController.sentMessage(mParam1, userId, edChat.getText().toString(),null);//groupid, userId, message
+                edChat.setText("");
             }
         });
 
@@ -99,5 +99,8 @@ public class ChatFragment extends Fragment {
         return view;
     }
 
+    public void getMessageRecyclerView(){
+
+    }
 
 }
