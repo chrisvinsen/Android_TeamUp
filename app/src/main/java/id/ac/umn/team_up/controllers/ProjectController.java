@@ -1,11 +1,8 @@
 package id.ac.umn.team_up.controllers;
 
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -18,11 +15,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -42,7 +35,6 @@ import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.models.ProjectMember;
 import id.ac.umn.team_up.ui.activity.MainActivity;
 import id.ac.umn.team_up.ui.activity.post.PostAdapter;
-import id.ac.umn.team_up.ui.activity.project.ProjectListAdapter;
 
 public class ProjectController {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -63,38 +55,6 @@ public class ProjectController {
     private static ProgressBar progress_bar;
     private static NestedScrollView nested_scroll_view;
     private static Task<QuerySnapshot> load_task;
-
-    public static void getProjectList(RecyclerView rv, View view){
-       db = FirebaseDatabase.getInstance().getReference();
-       db.child("ProjectDetail").addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot snapshot) {
-               dataProject = new ArrayList<Project>();
-               for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-
-                   Project projects = dataSnapshot.getValue(Project.class);
-
-//                   projects.setKey(snapshot.getKey());
-                   dataProject.add(projects);
-
-               }
-
-               Log.d("size data", String.valueOf(dataProject.size()));
-               //Log.d("recentmessage message", dataProject.get(0).getRecentMessageMessage());
-
-                rv.setHasFixedSize(true);
-                rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                rv.setAdapter(new ProjectListAdapter(view.getContext(),dataProject));
-
-           }
-
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
-               Log.d("Error","Please try again letter");
-           }
-       });
-
-    }
 
     public static void postProject(final AppCompatActivity app, String project_title, String project_description, List<String> upload_url){
         // Get current time

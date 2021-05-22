@@ -25,14 +25,14 @@ import id.ac.umn.team_up.models.Project;
 public class ProjectListController {
     private static FirebaseAuth auth;
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private static CollectionReference projectsRef = db.collection("Projects");
+    private static CollectionReference projectsRef = db.collection("ProjectDetails");
     private static CollectionReference messagesRef = db.collection("Message");
     private static List<Project> listOfProject = new ArrayList<Project>();
     private static Message recentMessage;
 
     public static FirestoreRecyclerOptions<Project> getLoadUsersProjectOptions(String userId, boolean isOngoing){
         Query query;
-
+        Log.e("USERID", userId);
         if(isOngoing){
             query =  projectsRef.whereArrayContains("members", userId).whereEqualTo("isOngoing", true);
         }
@@ -43,7 +43,8 @@ public class ProjectListController {
         FirestoreRecyclerOptions<Project> options = new FirestoreRecyclerOptions.Builder<Project>()
                 .setQuery(query, Project.class)
                 .build();
-        Log.e("LOADPROJECT", options.getSnapshots().toString());
+        Log.e("LOADPROJECT", String.valueOf(options.getSnapshots().size()));
+        Log.e("USERID", userId);
         return options;
     }
 

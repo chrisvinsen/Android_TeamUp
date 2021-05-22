@@ -66,11 +66,20 @@ public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, Projec
         holder.setTvProjectListName(model.getTitle());
 //        holder.setTvProjectListRecentChatText(model.getRecentMessage());
 //        holder.setTvProjectListChatTime(String.valueOf(model.getSentAt().toDate().getTime()));
-        Picasso.get()
-                .load(model.getGroupIcon())
-                .placeholder(R.mipmap.ic_launcher)
-                .transform(new CircleTransform())
-                .into(holder.getIvProjectGroupIcon());
+        if(model.getGroupIcon().compareTo("") != 0){
+            Picasso.get()
+                    .load(model.getGroupIcon())
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .transform(new CircleTransform())
+                    .into(holder.getIvProjectGroupIcon());
+        } else {
+            Picasso.get()
+                    .load(R.mipmap.ic_launcher_round)
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .transform(new CircleTransform())
+                    .into(holder.getIvProjectGroupIcon());
+        }
+
     }
 
 //    @Override
