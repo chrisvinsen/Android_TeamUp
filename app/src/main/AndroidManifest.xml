@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TeamUp">
+
         <activity android:name=".ui.activity.ChatActivity"></activity>
         <activity android:name=".ui.activity.ProfileSettingActivity"></activity>
         <activity android:name=".ui.activity.ProfileSettingSkillActivity" />
@@ -21,6 +22,11 @@
             android:name=".ui.activity.SplashScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.TeamUp.White">
+
+        <activity android:name=".ui.ProjectMember.ProjectMember"></activity>
+        <activity android:name=".ui.activity.ProjectUtensil" />
+        <activity android:name=".ui.activity.MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -134,5 +134,4 @@
         <item name="android:textColor">@color/orange</item>
         <item name="android:background">@drawable/btn_orange_border</item>
     </style>
-
 </resources>
