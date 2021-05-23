@@ -48,7 +48,7 @@ public class MessageController {
 
     private static final String KEY_ID = "id";
     private static final String KEY_FROM_ID = "fromId";
-    private static final String KEY_GROUP_ID = "groupId";
+    private static final String KEY_GROUP_ID = "projectId";
     private static final String KEY_message = "message";
     private static final String KEY_createdAt = "createdAt";
     private static final String KEY_FULLNAME = "fullName";
@@ -63,7 +63,7 @@ public class MessageController {
     }
 
     //sendmessage
-    public static void sentMessage(String GroupID, String fullname,String userId, String msg, String attachment){
+    public static void sentMessage(String projectId, String fullname,String userId, String msg, String attachment){
         FieldValue createdAt = FieldValue.serverTimestamp();
 
         Map<String, Object> message = new HashMap<>();
@@ -84,7 +84,7 @@ public class MessageController {
         message.put(KEY_ID, document_id);
         message.put(KEY_FROM_ID, userId);
         message.put(KEY_createdAt, createdAt);
-        message.put(KEY_GROUP_ID, GroupID);
+        message.put(KEY_GROUP_ID, projectId);
         message.put(KEY_message, msg);
         message.put(KEY_ATTACHMENT, attachment);
         message.put(KEY_FULLNAME,fullname );
@@ -101,9 +101,9 @@ public class MessageController {
     }
 
     //getMessage
-    public static void getMessage(RecyclerView rv, View v, String userId, String groupId){
+    public static void getMessage(RecyclerView rv, View v, String userId, String projectId){
         ArrayList<Message> messageList = new ArrayList<Message>();
-        Log.d("GroupID", groupId);
+        Log.d("GroupID", projectId);
 
 //        messagesRef.whereEqualTo("groupId",groupId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 //            @Override
@@ -162,7 +162,7 @@ public class MessageController {
         rv.setLayoutManager(linearLayoutManager);
         rv.setAdapter(mMessageAdapter);
 
-        messagesRef.whereEqualTo("groupId",groupId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        messagesRef.whereEqualTo("projectId",projectId).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
