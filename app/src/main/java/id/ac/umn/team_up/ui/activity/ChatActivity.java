@@ -25,6 +25,7 @@ public class ChatActivity extends AppCompatActivity {
     private Button btnTodoList;
     private Button btnChat;
     private String groupID;
+    private String fullname;
 
 
 
@@ -36,6 +37,7 @@ public class ChatActivity extends AppCompatActivity {
         btnChat = findViewById(R.id.btnChat);
         Intent intent = getIntent();
         this.groupID = intent.getStringExtra("groupID");
+        this.fullname = intent.getStringExtra("curretUser");
 
         //initiate chat fragment
         initView();
@@ -68,7 +70,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void initView(){
-        openFragment(new ChatFragment().newInstance(groupID,""));
+        openFragment(new ChatFragment().newInstance(groupID,fullname));
     }
 
     private void openFragment(Fragment fragment) {

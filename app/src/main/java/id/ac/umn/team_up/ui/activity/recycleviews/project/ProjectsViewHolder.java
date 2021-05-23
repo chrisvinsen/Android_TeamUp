@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.ui.activity.ChatActivity;
 
 public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -65,9 +66,11 @@ public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.
         //this.itemClickListener.onItemClick(this.getLayoutPosition());
 //        Log.d("rvItem","clicked");
 //        Log.d("data", groupID);
+
         Intent intent = new Intent(v.getContext(), ChatActivity.class);
         //sending project id
         intent.putExtra("groupID",this.groupID);
+        intent.putExtra("curretUser", UserController.getCurrentUser(v.getContext()).getFullName());
         app.startActivity(intent);
     }
 }

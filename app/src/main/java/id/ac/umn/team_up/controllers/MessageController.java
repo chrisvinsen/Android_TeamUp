@@ -63,7 +63,7 @@ public class MessageController {
     }
 
     //sendmessage
-    public static void sentMessage(String GroupID, String userId, String msg, String attachment){
+    public static void sentMessage(String GroupID, String fullname,String userId, String msg, String attachment){
         FieldValue createdAt = FieldValue.serverTimestamp();
 
         Map<String, Object> message = new HashMap<>();
@@ -87,6 +87,7 @@ public class MessageController {
         message.put(KEY_GROUP_ID, GroupID);
         message.put(KEY_message, msg);
         message.put(KEY_ATTACHMENT, attachment);
+        message.put(KEY_FULLNAME,fullname );
 
         messagesRef.document(document_id).set(message)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

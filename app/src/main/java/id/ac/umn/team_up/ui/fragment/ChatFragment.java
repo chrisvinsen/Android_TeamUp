@@ -1,5 +1,6 @@
 package id.ac.umn.team_up.ui.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.MessageController;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.ui.activity.ChatActivity;
+import id.ac.umn.team_up.ui.activity.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,6 +99,8 @@ public class ChatFragment extends Fragment {
         btnSendMessage = view.findViewById(R.id.btnSendMessage);
         rvMessage =view.findViewById(R.id.rvMessage);
         userId = UserController.getUserId();
+
+
         MessageController.getMessage(rvMessage,view,userId,mParam1);
 
         //setOnClick
@@ -105,7 +109,7 @@ public class ChatFragment extends Fragment {
             public void onClick(View v) {
 
 //                Message message = new Message(mParam1, userId,edChat.getText(),  )
-                MessageController.sentMessage(mParam1, userId, edChat.getText().toString(),null);//groupid, userId, message
+                MessageController.sentMessage(mParam1,mParam2, userId, edChat.getText().toString(),null);//groupid, userId, message
                 edChat.setText("");
 
             }

@@ -68,6 +68,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             case VIEW_TYPE_MESSAGE_RECEIVED:
                 ((ReceivedMessageHolder) holder).setTvRecieveMessage(mMessageList.get(position).getMessage());
                 ((ReceivedMessageHolder) holder).setTvRecieveName(mMessageList.get(position).getFullName());
+
         }
     }
 
@@ -110,6 +111,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         public void setTvRecieveName(String fullname){
             this.tvRecieveName.setText(fullname);
         }
+
     }
 
 
