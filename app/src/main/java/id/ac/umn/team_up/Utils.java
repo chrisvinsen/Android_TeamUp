@@ -25,6 +25,7 @@ import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import id.ac.umn.team_up.models.User;
@@ -128,5 +129,10 @@ public class Utils {
     public static void delayForSomeSeconds(int milliseconds, Runnable function){
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(function, milliseconds);
+    }
+
+    public static String getHourAndMinute(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+        return dateFormat.format(date);
     }
 }

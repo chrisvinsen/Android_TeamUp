@@ -15,17 +15,18 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.Utils;
+import id.ac.umn.team_up.controllers.MessageController;
 import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.ui.CircleTransform;
 
 public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, ProjectsViewHolder> {
 //    private final Context c;
-    private List<Project> projects;
-    private List<Message> recentMessages;
     private AppCompatActivity app;
 
     /**
@@ -69,8 +70,14 @@ public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, Projec
     protected void onBindViewHolder(@NonNull ProjectsViewHolder holder, int position, @NonNull Project model) {
         holder.setGroupID(model.getId());
         holder.setTvProjectListName(model.getTitle());
-//        holder.setTvProjectListRecentChatText(model.getRecentMessage());
-//        holder.setTvProjectListChatTime(String.valueOf(model.getSentAt().toDate().getTime()));
+//        Message recentMessage = MessageController.getRecentMessage(model.getId(), app.getApplicationContext()), this);
+//        Log.e("RECENTMESSAGEONADAPTER", recentMessage.getMessage());
+        if(model.getRecentMessage() != null){
+            holder.setTvProjectListRecentChatText(model.getRecentMessage());
+        }
+        if(model.getSentAt() != null){
+            holder.setTvProjectListChatTime(Utils.getHourAndMinute(model.getSentAt()));
+        }
         if(model.getGroupIcon().compareTo("") != 0){
             Picasso.get()
                     .load(model.getGroupIcon())

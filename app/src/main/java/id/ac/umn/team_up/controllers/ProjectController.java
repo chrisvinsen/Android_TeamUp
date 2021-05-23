@@ -1,11 +1,13 @@
 package id.ac.umn.team_up.controllers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,8 +21,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -255,7 +259,6 @@ public class ProjectController {
         else{
             query =  projectsRef.whereArrayContains("members", userId).whereEqualTo("isOngoing", false);
         }
-
         FirestoreRecyclerOptions<Project> options = new FirestoreRecyclerOptions.Builder<Project>()
                 .setQuery(query, Project.class)
                 .build();
