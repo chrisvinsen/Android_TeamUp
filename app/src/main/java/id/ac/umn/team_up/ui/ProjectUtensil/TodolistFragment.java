@@ -6,11 +6,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Queue;
 
 import id.ac.umn.team_up.R;
 
@@ -20,10 +28,11 @@ import id.ac.umn.team_up.R;
  * create an instance of this fragment.
  */
 public class TodolistFragment extends Fragment {
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static CollectionReference todolistRef = db.collection("Todolists");
 
-    RecyclerView rvTdlList;
-    TodoListAdapter tdlAdapter;
-    LinkedList<TodoListExample> tdlList = new LinkedList<>();
+    private TodoListAdapter adapter;
+    private RecyclerView rvTdl;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,16 +78,31 @@ public class TodolistFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_todolist, container, false);
-        isiTdlList();
-        rvTdlList = (RecyclerView) view.findViewById(R.id.rvTodoList);
-        tdlAdapter = new TodoListAdapter(view.getContext(), tdlList);
-        rvTdlList.setAdapter(tdlAdapter);
-        rvTdlList.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        Query query = todolistRef;
+        FirestoreRecyclerOptions<ToDoList> options = new FirestoreRecyclerOptions.Builder<ToDoList>()
+                .setQuery(query, ToDoList.class)
+                .build();
+
+        adapter = new TodoListAdapter(options);
+
+        rvTdl = view.findViewById(R.id.rvTodoList);
+        rvTdl.setHasFixedSize(true);
+        rvTdl.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvTdl.setAdapter(adapter);
+        Log.d("asd", mParam1);
         return view;
     }
 
-    public void isiTdlList(){
-        tdlList.add(new TodoListExample("Tugas 1", "Mengerjakan Website UMN ECO", Boolean.TRUE));
-        tdlList.add(new TodoListExample("Tugas 2", "Mengerjakan Website Rencang", Boolean.FALSE));
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

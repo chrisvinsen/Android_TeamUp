@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.ui.ProjectUtensil.TodolistFragment;
 import id.ac.umn.team_up.ui.fragment.ChatFragment;
 
 public class ChatActivity extends AppCompatActivity {
@@ -50,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
         btnTodoList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todolist fragment
+                openFragment(new TodolistFragment().newInstance(groupID,""));
             }
         });
 
@@ -62,7 +63,6 @@ public class ChatActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.bottom_navigation_menu, menu);
-
 
         return true;
     }
