@@ -4,99 +4,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.HomeFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <ScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/pull_to_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:padding="10dp">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/profile_image"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/crop"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#FF000000"/>
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:hint="Search"
-                    android:layout_marginLeft="15dp"
-                    android:background="@drawable/input_box"
-                    android:drawableLeft="@drawable/smaller_ic_search"
-                    android:drawablePadding="10dp"
-                    android:paddingLeft="5dp"
-                    android:layout_gravity="left|center_vertical|fill_horizontal"/>
-            </GridLayout>
 
+        <!-- TODO: Update blank fragment layout -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
                 android:orientation="vertical">
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:columnCount="2"
-                    android:layout_marginVertical="15dp">
+                    android:padding="10dp">
                     <de.hdodenhof.circleimageview.CircleImageView
                         xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:id="@+id/profile_picture"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@drawable/crop"
                         app:civ_border_width="2dp"
                         app:civ_border_color="#FF000000"/>
-                    <LinearLayout
+                    <EditText
+                        android:id="@+id/search_edit"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:layout_marginLeft="20dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="20dp"
-                            android:textStyle="bold"
-                            android:text="Christianto Vinsen"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Just Now"/>
-                    </LinearLayout>
+                        android:layout_height="40dp"
+                        android:hint="Search"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/input_box"
+                        android:drawableLeft="@drawable/smaller_ic_search"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="5dp"
+                        android:layout_gravity="left|center_vertical|fill_horizontal"/>
                 </GridLayout>
-                <TextView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="@style/Widget.AppCompat.ProgressBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Project Title"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pharetra orci dui, id condimentum augue rhoncus eget. Integer malesuada id mi vel tincidunt. Vivamus et quam sapien. Suspendisse et vestibulum eros. Morbi accumsan semper nibh, a commodo nisi elementum nec. Nullam eget dapibus nulla. Curabitur sollicitudin eu nunc at ullamcorper. Quisque at elementum augue. Donec ultrices at enim faucibus bibendum."/>
-                <ImageView
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/crop"/>
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textAllCaps="false"
-                        android:background="@drawable/button_box"
-                        android:text="Request To Join"/>
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/orange"/>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

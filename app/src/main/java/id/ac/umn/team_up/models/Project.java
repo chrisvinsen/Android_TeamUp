@@ -1,111 +1,127 @@
 package id.ac.umn.team_up.models;
 
-import com.google.firebase.Timestamp;
-import com.google.firebase.database.Exclude;
+import androidx.annotation.Nullable;
+
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Nullable;
 
 public class Project implements Serializable {
-    private String id;
-    private String adminId;
-    private String description;
-    private String groupIcon;
-    private String title;
-    private Timestamp createdAt;
+    private String id, adminId, adminFullname, adminPicture, description, groupIcon, title;
     private boolean isOngoing;
+    private List<String> images;
     private List<String> members;
-
+    private List<String> membersRequest;
+    private List<String> toDoList;
+    private Date createdAt;
     @Nullable
-    private Timestamp endedAt;
-
+    private Date endedAt;
     @Nullable
     private String recentMessage;
-
     @Nullable
-    private Timestamp sentAt;
+    private Date sentAt;
+
+    // private Map<String,String> recentMessage;
 
     public Project(){
         //empty constructor
     }
 
-    public Project(String adminId, String description, String groupIcon, String title, Timestamp createdAt, boolean isOngoing, List<String> members, String id) {
+    public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, List<String> images, boolean isOngoing, List<String> members, List<String> membersRequest, List<String> toDoList, String createdAt, @Nullable Date endedAt, @Nullable String recentMessage, @Nullable Date sentAt){
+        this.id = id;
         this.adminId = adminId;
+        this.adminFullname = adminFullname;
+        this.adminPicture = adminPicture;
         this.description = description;
         this.groupIcon = groupIcon;
         this.title = title;
-        this.createdAt = createdAt;
-        this.isOngoing = isOngoing;
+        this.images = images;
         this.members = members;
-        this.id = id;
+        this.membersRequest = membersRequest;
+        this.toDoList = toDoList;
+        this.isOngoing = isOngoing;
+        this.endedAt = endedAt;
+        this.recentMessage = recentMessage;
+        this.sentAt = sentAt;
+        Long t = Long.parseLong(createdAt);
+        this.createdAt = new Date(t*1000);
     }
 
+    public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, List<String> images, boolean isOngoing, List<String> members, List<String> toDoList, String createdAt, @Nullable Date endedAt, @Nullable String recentMessage, @Nullable Date sentAt){
+        this.id = id;
+        this.adminId = adminId;
+        this.adminFullname = adminFullname;
+        this.adminPicture = adminPicture;
+        this.description = description;
+        this.groupIcon = groupIcon;
+        this.title = title;
+        this.images = images;
+        this.members = members;
+        this.toDoList = toDoList;
+        this.isOngoing = isOngoing;
+        this.endedAt = endedAt;
+        this.recentMessage = recentMessage;
+        this.sentAt = sentAt;
+        Long t = Long.parseLong(createdAt);
+        this.createdAt = new Date(t*1000);
+    }
 
-    public String getId() {
+    // Get method
+    public String getId(){
         return id;
     }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getAdminId() {
+    public String getAdminId(){
         return adminId;
     }
-
-    public void setAdminId(String adminId) {
-        this.adminId = adminId;
+    public String getAdminFullname(){
+        return adminFullname;
     }
-
-    public String getDescription() {
+    public String getAdminPicture(){
+        return adminPicture;
+    }
+    public String getDescription(){
         return description;
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getGroupIcon() {
+    public String getGroupIcon(){
         return groupIcon;
     }
-
-    public void setGroupIcon(String groupIcon) {
-        this.groupIcon = groupIcon;
-    }
-
-    public String getTitle() {
+    public String getTitle(){
         return title;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public boolean isOngoing() {
+    public boolean getIsOngoing(){
         return isOngoing;
     }
-
-    public void setOngoing(boolean ongoing) {
-        isOngoing = ongoing;
+    public List<String> getImages(){
+        return images;
+    }
+    public List<String> getMembers(){
+        return members;
+    }
+    public List<String> getMembersRequest(){
+        return membersRequest;
+    }
+    public List<String> getToDoList(){
+        return toDoList;
+    }
+    public Date getCreatedAt(){
+        return createdAt;
+    }
+    public void addMemberRequest(String id){
+        if(membersRequest == null){
+            membersRequest = new ArrayList<String>();
+            membersRequest.add(id);
+        }
+        else{
+            membersRequest.add(id);
+        }
     }
 
     @Nullable
-    public Timestamp getEndedAt() {
+    public Date getEndedAt() {
         return endedAt;
-    }
-
-    public void setEndedAt(@Nullable Timestamp endedAt) {
-        this.endedAt = endedAt;
     }
 
     @Nullable
@@ -113,24 +129,8 @@ public class Project implements Serializable {
         return recentMessage;
     }
 
-    public void setRecentMessage(@Nullable String recentMessage) {
-        this.recentMessage = recentMessage;
-    }
-
     @Nullable
-    public Timestamp getSentAt() {
+    public Date getSentAt() {
         return sentAt;
-    }
-
-    public void setSentAt(@Nullable Timestamp sentAt) {
-        this.sentAt = sentAt;
-    }
-
-    public List<String> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<String> members) {
-        this.members = members;
     }
 }

@@ -73,6 +73,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
+  
+    // Swipe refresh
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.ivbaranov:materiallettericon:0.2.3'

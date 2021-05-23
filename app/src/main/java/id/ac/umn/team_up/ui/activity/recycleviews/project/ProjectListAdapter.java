@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.models.Project;
+import id.ac.umn.team_up.ui.CircleTransform;
 
 public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, ProjectsViewHolder> {
 //    private final Context c;
@@ -69,6 +71,20 @@ public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, Projec
         holder.setTvProjectListName(model.getTitle());
 //        holder.setTvProjectListRecentChatText(model.getRecentMessage());
 //        holder.setTvProjectListChatTime(String.valueOf(model.getSentAt().toDate().getTime()));
+        if(model.getGroupIcon().compareTo("") != 0){
+            Picasso.get()
+                    .load(model.getGroupIcon())
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .transform(new CircleTransform())
+                    .into(holder.getIvProjectGroupIcon());
+        } else {
+            Picasso.get()
+                    .load(R.mipmap.ic_launcher_round)
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .transform(new CircleTransform())
+                    .into(holder.getIvProjectGroupIcon());
+        }
+
     }
 
 //    @Override

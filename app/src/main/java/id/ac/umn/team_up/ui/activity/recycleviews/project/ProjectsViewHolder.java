@@ -3,6 +3,7 @@ package id.ac.umn.team_up.ui.activity.recycleviews.project;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import id.ac.umn.team_up.ui.activity.ChatActivity;
 
 public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private TextView tvProjectListName, tvProjectListChatTime, tvProjectListRecentChatText;
+    private ImageView ivProjectGroupIcon;
     private ProjectListAdapter.itemClickListener itemClickListener;
     private String groupID;
     private AppCompatActivity app;
@@ -25,6 +27,7 @@ public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.
         this.tvProjectListChatTime = itemView.findViewById(R.id.project_list_chat_time);
         this.tvProjectListRecentChatText = itemView.findViewById(R.id.project_list_chat_text);
         this.app = app;
+        this.ivProjectGroupIcon = itemView.findViewById(R.id.project_list_group_icon_box);
         itemView.setOnClickListener(this);
     }
 
@@ -72,5 +75,13 @@ public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.
         intent.putExtra("groupID",this.groupID);
         intent.putExtra("curretUser", UserController.getCurrentUser(v.getContext()).getFullName());
         app.startActivity(intent);
+    }
+
+    public ImageView getIvProjectGroupIcon() {
+        return ivProjectGroupIcon;
+    }
+
+    public void setIvProjectGroupIcon(ImageView ivProjectGroupIcon) {
+        this.ivProjectGroupIcon = ivProjectGroupIcon;
     }
 }

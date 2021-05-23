@@ -1,17 +1,41 @@
 package id.ac.umn.team_up.ui.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.Utils;
+import id.ac.umn.team_up.controllers.ProjectController;
+import id.ac.umn.team_up.models.Project;
+import id.ac.umn.team_up.ui.activity.post.PostAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +54,13 @@ public class HomeFragment extends Fragment {
     private String mParam2;
 
     //
-    private static Button search_button;
+    private static RecyclerView recycler_view;
+    private static PostAdapter post_adapter;
+    private static DatabaseReference database_reference;
+    private static List<Project> projects;
+    private static View view;
+    private static EditText search_edit;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -66,11 +96,61 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        if(view == null){
+            // Inflate the layout for this fragment
+            view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        search_button = (Button) view.findViewById(R.id.search_button);
+            search_edit = (EditText) view.findViewById(R.id.search_edit);
+            final SwipeRefreshLayout pullToRefresh = view.findViewById(R.id.pull_to_refresh);
+            pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    Utils.delayForSomeSeconds(1000, new Runnable() {
+                        @Override
+                        public void run() {
+                            search_edit.setText("");
+                        }
+                    });
+                    ProjectController.getProjectPost(recycler_view, view);
+                    pullToRefresh.setRefreshing(false);
+                }
+            });
+
+            SharedPreferences sharedPref = Utils.getSharedPref(getActivity().getApplicationContext());
+            Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/team-up-solib.appspot.com/o/uploads%2F1621347046743.jpg?alt=media&token=03ead921-1e56-4acf-a06d-dcb243dda1d1").placeholder(R.mipmap.ic_launcher).fit().into((ImageView) view.findViewById(R.id.profile_picture));
+
+
+            // Search functionality
+            search_edit.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if(s.length() != 0){
+                        ProjectController.getAllProjectPost(recycler_view, view, s);
+                    }
+                    else{
+                        ProjectController.getProjectPost(recycler_view, view);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+            // Set up recycler view
+            recycler_view = view.findViewById(R.id.recycler_view);
+            ProjectController.getProjectPost(recycler_view, view);
+
+        }
 
         return view;
     }
+
+
 }
