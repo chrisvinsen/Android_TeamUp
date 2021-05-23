@@ -11,6 +11,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -40,7 +41,7 @@ public class ProjectController {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static DatabaseReference db ;
     private static FirebaseFirestore db_firestore = FirebaseFirestore.getInstance();
-    private static CollectionReference projectRef = db_firestore.collection("ProjectDetails");
+    private static CollectionReference projectsRef = db_firestore.collection("ProjectDetails");
     private static CollectionReference memberRef = db_firestore.collection("ProjectMembers");
     private static CollectionReference todolistRef = db_firestore.collection("ToDoList");
 
@@ -64,7 +65,7 @@ public class ProjectController {
         List<String> to_do_list = new ArrayList<String>();
 
         // Get random id
-        String document_id = projectRef.document().getId();
+        String document_id = projectsRef.document().getId();
 
         // Get random id for todolist
         String todolist_id = todolistRef.document().getId();
@@ -89,7 +90,7 @@ public class ProjectController {
         project.put("createdAt", createdAt);
 
         // Set map into collection
-        projectRef.document(document_id).set(project)
+        projectsRef.document(document_id).set(project)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -180,10 +181,10 @@ public class ProjectController {
         Query query;
 
         if (lastResult == null) {
-            query = projectRef.orderBy("createdAt", Query.Direction.DESCENDING)
+            query = projectsRef.orderBy("createdAt", Query.Direction.DESCENDING)
                     .limit(3);
         } else {
-            query = projectRef.orderBy("createdAt", Query.Direction.DESCENDING)
+            query = projectsRef.orderBy("createdAt", Query.Direction.DESCENDING)
                     .startAfter(lastResult)
                     .limit(3);
         }
@@ -216,7 +217,7 @@ public class ProjectController {
 
         Query query;
 
-        query = projectRef.orderBy("createdAt", Query.Direction.DESCENDING);
+        query = projectsRef.orderBy("createdAt", Query.Direction.DESCENDING);
 
         load_task = query.get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -245,7 +246,21 @@ public class ProjectController {
         });
     }
 
+    public static FirestoreRecyclerOptions<Project> loadUsersProjectOptions(String userId, boolean isOngoing){
+        Query query;
+        Log.e("USERID", userId);
+        if(isOngoing){
+            query =  projectsRef.whereArrayContains("members", userId).whereEqualTo("isOngoing", true);
+        }
+        else{
+            query =  projectsRef.whereArrayContains("members", userId).whereEqualTo("isOngoing", false);
+        }
 
-
-
+        FirestoreRecyclerOptions<Project> options = new FirestoreRecyclerOptions.Builder<Project>()
+                .setQuery(query, Project.class)
+                .build();
+        Log.e("LOADPROJECT", String.valueOf(options.getSnapshots().size()));
+        Log.e("USERID", userId);
+        return options;
+    }
 }

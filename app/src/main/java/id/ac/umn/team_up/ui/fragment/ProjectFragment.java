@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import id.ac.umn.team_up.R;
-import id.ac.umn.team_up.controllers.ProjectListController;
+import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.models.Project;
@@ -32,10 +32,10 @@ public class ProjectFragment extends Fragment {
         View view;
         if(this.getArguments().getBoolean("isOngoing")) {
             view = inflater.inflate(R.layout.fragment_project, container, false);
-            mAdapter = new ProjectListAdapter(ProjectListController.getLoadUsersProjectOptions(UserController.getUserId(), true));
+            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), true));
         } else {
             view = inflater.inflate(R.layout.fragment_project_history, container, false);
-            mAdapter = new ProjectListAdapter(ProjectListController.getLoadUsersProjectOptions(UserController.getUserId(), false));
+            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), false));
         }
         rvProjectList = view.findViewById(R.id.rvProject);
         rvProjectList.setHasFixedSize(true);
