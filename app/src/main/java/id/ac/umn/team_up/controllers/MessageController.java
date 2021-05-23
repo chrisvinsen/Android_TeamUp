@@ -1,10 +1,12 @@
 package id.ac.umn.team_up.controllers;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,9 +16,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -119,31 +124,66 @@ public class MessageController {
 //            }
 //        });
 
-        messagesRef.whereEqualTo("groupId",groupId).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//        messagesRef.whereEqualTo("groupId",groupId).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                if(!queryDocumentSnapshots.isEmpty()){
+//                    Log.d("CHEKPOINT","1");
+//                    for(DocumentSnapshot document : queryDocumentSnapshots){
+//                        Log.d("check", document.toString());
+//                        Message message = document.toObject(Message.class);
+//                        messageList.add(message);
+//                    }
+//
+////                    Log.d("MESSAGELIST", messageList.get(0).getMessage());
+////                    Log.d("UserID", userId);
+//                    mMessageAdapter = new MessageListAdapter(v.getContext(),messageList,userId);
+//                    rv.setLayoutManager(new LinearLayoutManager(v.getContext()));
+//                    rv.setAdapter(mMessageAdapter);
+//
+//                }
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//
+//            }
+//        });
+//
+        //setting progress dialog for user experience
+        ProgressDialog progressDialog = new ProgressDialog(v.getContext());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Fetching Data...");
+
+        mMessageAdapter = new MessageListAdapter(v.getContext(), messageList,userId);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(v.getContext());
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(linearLayoutManager);
+        rv.setAdapter(mMessageAdapter);
+
+        messagesRef.whereEqualTo("groupId",groupId).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if(!queryDocumentSnapshots.isEmpty()){
-                    Log.d("CHEKPOINT","1");
-                    for(DocumentSnapshot document : queryDocumentSnapshots){
-                        Log.d("check", document.toString());
-                        Message message = document.toObject(Message.class);
-                        messageList.add(message);
-                    }
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-//                    Log.d("MESSAGELIST", messageList.get(0).getMessage());
-//                    Log.d("UserID", userId);
-                    mMessageAdapter = new MessageListAdapter(v.getContext(),messageList,userId);
-                    rv.setLayoutManager(new LinearLayoutManager(v.getContext()));
-                    rv.setAdapter(mMessageAdapter);
-
+                if(error != null){
+//                    if(progressDialog.isShowing())
+//                        progressDialog.dismiss();
+                    Log.e("MESSAGEREF","error");
+                    return;
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+                for(DocumentChange dc : value.getDocumentChanges()){
+                    if(dc.getType() == DocumentChange.Type.ADDED){
+                        messageList.add(dc.getDocument().toObject(Message.class));
+                    }
+                    mMessageAdapter.notifyDataSetChanged();
+                    linearLayoutManager.scrollToPosition(messageList.size()-1);
+//                    if(progressDialog.isShowing())
+//                        progressDialog.dismiss();
+                }
 
             }
         });
+
 
     }
 

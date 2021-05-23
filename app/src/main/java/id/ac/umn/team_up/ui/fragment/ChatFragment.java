@@ -2,18 +2,31 @@ package id.ac.umn.team_up.ui.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.concurrent.Executor;
+
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.MessageController;
 import id.ac.umn.team_up.controllers.UserController;
+import id.ac.umn.team_up.ui.activity.ChatActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +40,9 @@ public class ChatFragment extends Fragment {
     private RecyclerView rvMessage;
     private static String userId;
 
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference messageRef = db.collection("MessageDetails");
 
 
 
@@ -100,5 +116,20 @@ public class ChatFragment extends Fragment {
 
         return view;
     }
-    
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        messageRef.whereEqualTo("groupId",mParam1).addSnapshotListener((Executor) this, new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                if(error != null){
+//                    Log.d("DATACHECK", "error");
+//                }
+//                if(!value.isEmpty()){
+//                    Log.d("DATACHECK", "updated messages");
+//                }
+//            }
+//        });
+//    }
 }
