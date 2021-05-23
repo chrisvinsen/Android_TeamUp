@@ -24,7 +24,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private Button btnTodoList;
     private Button btnChat;
-    private String groupID;
+    private String projectID;
     private String fullname;
 
 
@@ -36,7 +36,7 @@ public class ChatActivity extends AppCompatActivity {
         btnTodoList = findViewById(R.id.btnTodoList);
         btnChat = findViewById(R.id.btnChat);
         Intent intent = getIntent();
-        this.groupID = intent.getStringExtra("groupID");
+        this.projectID = intent.getStringExtra("groupID");
         this.fullname = intent.getStringExtra("curretUser");
 
         //initiate chat fragment
@@ -45,7 +45,7 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                openFragment(new ChatFragment().newInstance("",""));
+                openFragment(new ChatFragment().newInstance(projectID,fullname));
             }
         });
 
@@ -70,7 +70,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void initView(){
-        openFragment(new ChatFragment().newInstance(groupID,fullname));
+        openFragment(new ChatFragment().newInstance(projectID,fullname));
     }
 
     private void openFragment(Fragment fragment) {

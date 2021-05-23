@@ -2,15 +2,12 @@ package id.ac.umn.team_up.models;
 
 import androidx.annotation.Nullable;
 
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.FieldValue;
-
 import java.util.Date;
 
 public class Message {
     private String id;
     private String fromId;
-    private String groupId;
+    private String projectId;
     @Nullable
     private String attachment;
     private String message;
@@ -23,8 +20,8 @@ public class Message {
     }
 
 
-    public Message(String id,String groupId, String fromId, String messages,String createdAt){
-        this.groupId = groupId;
+    public Message(String id,String projectId, String fromId, String messages,String createdAt){
+        this.projectId = projectId;
         this.fromId = fromId;
         this.message = messages;
         Long t = Long.parseLong(createdAt);
@@ -32,8 +29,8 @@ public class Message {
         this.id = id;
     }
 
-    public Message(String id,String groupId, String fromId, String messages,String createdAt, @Nullable String attachment){
-        this.groupId = groupId;
+    public Message(String id,String projectId, String fromId, String messages,String createdAt, @Nullable String attachment){
+        this.projectId = projectId;
         this.fromId = fromId;
         this.message = messages;
         Long t = Long.parseLong(createdAt);
@@ -61,12 +58,12 @@ public class Message {
         this.fromId = fromId;
     }
 
-    public String getGroupId() {
-        return groupId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     @Nullable
