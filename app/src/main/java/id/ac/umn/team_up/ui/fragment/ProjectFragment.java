@@ -38,10 +38,10 @@ public class ProjectFragment extends Fragment {
         View view;
         if(this.getArguments().getBoolean("isOngoing")) {
             view = inflater.inflate(R.layout.fragment_project, container, false);
-            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), true));
+            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), true), (AppCompatActivity) getActivity() );
         } else {
             view = inflater.inflate(R.layout.fragment_project_history, container, false);
-            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), false));
+            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), false), (AppCompatActivity) getActivity());
         }
         rvProjectList = view.findViewById(R.id.rvProject);
         rvProjectList.setHasFixedSize(true);
