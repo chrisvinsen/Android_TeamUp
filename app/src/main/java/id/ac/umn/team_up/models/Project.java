@@ -23,7 +23,8 @@ public class Project implements Serializable {
     private String recentMessage;
     @Nullable
     private Date sentAt;
-
+    @Nullable
+    private Message recentM;
     // private Map<String,String> recentMessage;
 
     public Project(){
@@ -132,5 +133,24 @@ public class Project implements Serializable {
     @Nullable
     public Date getSentAt() {
         return sentAt;
+    }
+
+    public void setRecentMessage(@Nullable String recentMessage) {
+        this.recentMessage = recentMessage;
+    }
+
+    public void setSentAt(@Nullable Date sentAt) {
+//        Long t = Long.parseLong(sentAt);
+//        this.sentAt = new Date(t*1000);
+        this.sentAt = sentAt;
+    }
+
+    @Nullable
+    public Message getRecentM() {
+        return recentM;
+    }
+
+    public void setRecentM(@Nullable Message recentM) {
+        this.recentM = recentM;
     }
 }

@@ -1,6 +1,8 @@
 package id.ac.umn.team_up.controllers;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
@@ -24,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.sql.Timestamp;
 import java.time.Duration;
@@ -34,8 +38,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
+import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.Message;
+import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.ui.activity.recycleviews.message.MessageListAdapter;
+import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
 
 public class MessageController {
 
@@ -44,7 +51,7 @@ public class MessageController {
 
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static CollectionReference messagesRef = db.collection("MessageDetails");
-
+    private static CollectionReference projectsRef = db.collection("ProjectDetails");
 
     private static final String KEY_ID = "id";
     private static final String KEY_FROM_ID = "fromId";
@@ -183,6 +190,47 @@ public class MessageController {
 
     }
 
-
-
+    public static void getRecentMessage(Context c, ProjectListAdapter adapter){
+//        final Message[] recentMessage = new Message[1];
+        messagesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(error != null){
+                            Utils.show(c, "Error getting recent message");
+                            return;
+                        }
+                        for(DocumentChange dc: value.getDocumentChanges()){
+                            if(dc.getType() == DocumentChange.Type.ADDED){
+                                Message recentMessage = dc.getDocument().toObject(Message.class);
+                                DocumentReference projectRef = projectsRef.document(recentMessage.getProjectId());
+                                projectRef.get()
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    if (document.exists()) {
+                                                        Project project = document.toObject(Project.class);
+                                                        Log.d("GETRECENTMESSAGE", "DocumentSnapshot data: " + document.getData());
+                                                        project.setRecentMessage(recentMessage.getMessage());
+                                                        Log.d("GETRECENTMESSAGE", recentMessage.getMessage());
+                                                        project.setSentAt(recentMessage.getCreatedAt());
+//                                                        Log.d("GETRECENTMESSAGE", recentMessage.getCreatedAt().toString());
+                                                        projectRef.set(project, SetOptions.merge());
+                                                    } else {
+                                                        Log.d("GETRECENTMESSAGE", "No such document");
+                                                    }
+                                                } else {
+                                                    Log.d("GETRECENTMESSAGE", "get failed with ", task.getException());
+                                                }
+                                            }
+                                        });
+                                Log.e("RECENTMESSAGE", recentMessage.getMessage());
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+//        return recentMessage[0];
+    }
 }

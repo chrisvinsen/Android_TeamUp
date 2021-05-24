@@ -18,6 +18,7 @@ import java.util.List;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
+import id.ac.umn.team_up.controllers.MessageController;
 import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.Message;
@@ -43,6 +44,7 @@ public class ProjectFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_project_history, container, false);
             mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), false), (AppCompatActivity) getActivity());
         }
+        MessageController.getRecentMessage(view.getContext(), mAdapter);
         rvProjectList = view.findViewById(R.id.rvProject);
         rvProjectList.setHasFixedSize(true);
         rvProjectList.setLayoutManager(new LinearLayoutManager(getContext()));

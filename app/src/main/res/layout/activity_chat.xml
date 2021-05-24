@@ -11,20 +11,47 @@
         android:id="@+id/layout_group_chat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnLinearLayout"
+        app:layout_constraintRight_toLeftOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_gchannel"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/Widget.AppCompat.Toolbar"
+            android:layout_height="wrap_content"
+            android:id="@+id/project_fragment_toolbar"
+            android:minHeight="?attr/actionBarSize"
             app:popupTheme="@style/Theme.AppCompat.Light">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp">
 
+                <TextView
+                    android:id="@+id/project_details_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Project Title"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
+                <ImageButton
+                    android:id="@+id/project_details_button"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/ic_baseline_more_vert_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout

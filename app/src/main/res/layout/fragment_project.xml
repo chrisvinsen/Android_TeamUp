@@ -23,7 +23,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/toolbar"
+                android:id="@+id/project_fragment_toolbar"
                 android:background="@color/white"
                 android:minHeight="?attr/actionBarSize">
 
