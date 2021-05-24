@@ -23,14 +23,14 @@
                     android:layout_height="wrap_content"
                     android:columnCount="2"
                     android:padding="10dp">
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/profile_picture"
+                    <ImageView
+                        android:id="@+id/profile_picture_beside_search"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/crop"
-                        app:civ_border_width="2dp"
-                        app:civ_border_color="#FF000000"/>
+                        android:src="@drawable/crop"/>
+<!--                    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--                        app:civ_border_width="2dp"-->
+<!--                        app:civ_border_color="#FF000000"/>-->
                     <EditText
                         android:id="@+id/search_edit"
                         android:layout_width="wrap_content"

@@ -32,10 +32,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+//import de.hdodenhof.circleimageview.CircleImageView;
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.Project;
+import id.ac.umn.team_up.ui.CircleTransform;
 import id.ac.umn.team_up.ui.activity.MainActivity;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> implements Filterable {
@@ -66,7 +67,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
         Project project = mProjectsFilter.get(position);
         // Insert user profile
         holder.profile_name.setText(project.getAdminFullname());
-        Picasso.get().load(project.getAdminPicture()).placeholder(R.mipmap.ic_launcher).fit().into(holder.profile_image);
+        Picasso.get().load(project.getAdminPicture()).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(holder.profile_image);
         // Insert project
         SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss");
         holder.post_time.setText(formatter.format(project.getCreatedAt()));
@@ -233,7 +234,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
 
     public class PostHolder extends RecyclerView.ViewHolder{
         public TextView profile_name;
-        public CircleImageView profile_image;
+        public ImageView profile_image;
         public TextView post_time;
         public TextView project_title;
         public TextView project_description;
@@ -249,7 +250,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
             super(itemView);
 
             profile_name = itemView.findViewById(R.id.profile_name);
-            profile_image = itemView.findViewById(R.id.profile_image);
+            profile_image = itemView.findViewById(R.id.profile_image_post_item);
             post_time = itemView.findViewById(R.id.post_time);
             project_title = itemView.findViewById(R.id.project_title);
             project_description = itemView.findViewById(R.id.project_description);

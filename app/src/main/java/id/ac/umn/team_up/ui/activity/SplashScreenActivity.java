@@ -11,7 +11,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.controllers.MessageController;
 import id.ac.umn.team_up.controllers.UserController;
+import id.ac.umn.team_up.models.Message;
 
 public class SplashScreenActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
@@ -19,8 +21,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
         new Handler().postDelayed(() -> {
+            MessageController.listenToRecentMessageChanges(getApplicationContext());
             Intent intent;
             if (UserController.isLogin()) {
                 intent = new Intent(this.getApplicationContext(), MainActivity.class);

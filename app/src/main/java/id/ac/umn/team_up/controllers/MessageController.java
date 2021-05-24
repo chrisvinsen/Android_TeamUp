@@ -195,7 +195,7 @@ public class MessageController {
 
     }
 
-    public static void getRecentMessage(Context c, ProjectListAdapter adapter){
+    public static void listenToRecentMessageChanges(Context c){
 //        final Message[] recentMessage = new Message[1];
         messagesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -219,8 +219,30 @@ public class MessageController {
                                                         Log.d("GETRECENTMESSAGE", "DocumentSnapshot data: " + document.getData());
                                                         project.setRecentMessage(recentMessage.getMessage());
                                                         Log.d("GETRECENTMESSAGE", recentMessage.getMessage());
+                                                        if(recentMessage.getCreatedAt() != null){
+                                                            project.setSentAt(recentMessage.getCreatedAt());
+                                                        } else {
+                                                            messagesRef.document(recentMessage.getId()).get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                            if(task.isSuccessful()){
+                                                                                DocumentSnapshot ds = task.getResult();
+                                                                                if(ds.exists()){
+                                                                                    Message m = ds.toObject(Message.class);
+                                                                                    Log.e("NULLCREATEDATHANDLER", String.valueOf(m.getCreatedAt()));
+                                                                                    ProjectController.updateProjectRecentMessage(m, projectRef);
+                                                                                }
+                                                                            }
+                                                                            else {
+                                                                                Log.e("NULLCREATEDATHANDLER", "failed");
+                                                                            }
+                                                                        }
+                                                                    });
+                                                        }
                                                         project.setSentAt(recentMessage.getCreatedAt());
-//                                                        Log.d("GETRECENTMESSAGE", recentMessage.getCreatedAt().toString());
+                                                        Log.d("GETRECENTMESSAGE", String.valueOf(recentMessage.getCreatedAt()));
+                                                        Log.e("GETRECENTMESSAGE", String.valueOf(project.getSentAt()));
                                                         projectRef.set(project, SetOptions.merge());
                                                     } else {
                                                         Log.d("GETRECENTMESSAGE", "No such document");
@@ -231,7 +253,8 @@ public class MessageController {
                                             }
                                         });
                                 Log.e("RECENTMESSAGE", recentMessage.getMessage());
-                                adapter.notifyDataSetChanged();
+                                Log.e("RECENTMESSAGE", String.valueOf(recentMessage.getCreatedAt()));
+//                                adapter.notifyDataSetChanged();
                             }
                         }
                     }
