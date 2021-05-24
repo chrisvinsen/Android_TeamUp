@@ -39,7 +39,6 @@ public class  NotificationItemAdapter extends RecyclerView.Adapter<NotificationV
         holder.getNameFrom().setText(this.notifFrom);
         holder.getNotifHead().setText(this.notifHead);
         holder.getNotifTime().setText(this.notifDate);
-
     }
 
     @Override

@@ -56,11 +56,6 @@ public class MessageController {
 
     private static MessageListAdapter mMessageAdapter;
 
-    //argument group id
-    public void getMessage(String GroupID){
-
-
-    }
 
     //sendmessage
     public static void sentMessage(String projectId, String fullname,String userId, String msg, String attachment){
@@ -68,7 +63,7 @@ public class MessageController {
 
         Map<String, Object> message = new HashMap<>();
 
-        //random id
+        //time id
         AtomicLong LAST_TIME_MS = new AtomicLong();
         long now = System.currentTimeMillis();
         while(true) {

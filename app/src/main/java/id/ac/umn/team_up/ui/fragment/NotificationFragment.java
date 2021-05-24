@@ -6,11 +6,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.controllers.NotificationController;
+import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.ui.activity.recycleviews.notification.NotificationItemAdapter;
 
 /**
@@ -76,7 +81,7 @@ public class NotificationFragment extends Fragment {
 
         //inflate NotificationFragment
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
-
+        NotificationController.getRecentMessage();
         rvNotification = view.findViewById(R.id.rvNotificationItem);
         rvNotification.setHasFixedSize(true);
         rvNotification.setLayoutManager(new LinearLayoutManager(view.getContext()));
