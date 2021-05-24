@@ -196,7 +196,6 @@ public class MessageController {
     }
 
     public static void listenToRecentMessageChanges(Context c){
-//        final Message[] recentMessage = new Message[1];
         messagesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -259,6 +258,5 @@ public class MessageController {
                         }
                     }
                 });
-//        return recentMessage[0];
     }
 }

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.ui.fragment.ChatFragment;
@@ -26,7 +27,7 @@ public class ChatActivity extends AppCompatActivity {
     private Button btnChat;
     private String projectID;
     private String fullname;
-
+    private String projectTitle;
 
 
     @Override
@@ -38,7 +39,10 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         this.projectID = intent.getStringExtra("groupID");
         this.fullname = intent.getStringExtra("curretUser");
+        this.projectTitle = intent.getStringExtra("projectTitle");
 
+        TextView tvProjectTitle = findViewById(R.id.project_details_title_text);
+        tvProjectTitle.setText(this.projectTitle);
         //initiate chat fragment
         initView();
         btnChat.setOnClickListener(new View.OnClickListener(){
