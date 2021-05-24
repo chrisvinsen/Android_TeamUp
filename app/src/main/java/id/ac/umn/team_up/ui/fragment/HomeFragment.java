@@ -130,10 +130,10 @@ public class HomeFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(s.length() != 0){
+                    if(s.length() == 1){
                         ProjectController.getAllProjectPost(recycler_view, view, s);
                     }
-                    else{
+                    else if(s.length() == 0){
                         ProjectController.getProjectPost(recycler_view, view);
                     }
                 }
