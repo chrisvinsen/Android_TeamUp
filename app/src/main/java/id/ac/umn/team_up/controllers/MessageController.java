@@ -202,6 +202,7 @@ public class MessageController {
                         for(DocumentChange dc: value.getDocumentChanges()){
                             if(dc.getType() == DocumentChange.Type.ADDED){
                                 Message recentMessage = dc.getDocument().toObject(Message.class);
+
                                 DocumentReference projectRef = projectsRef.document(recentMessage.getProjectId());
                                 projectRef.get()
                                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
