@@ -213,7 +213,9 @@ public class MessageController {
                                                         Project project = document.toObject(Project.class);
                                                         Log.d("GETRECENTMESSAGE", "DocumentSnapshot data: " + document.getData());
                                                         project.setRecentMessage(recentMessage.getMessage());
+                                                        project.setRecentMessageSender(recentMessage.getFullName());
                                                         Log.d("GETRECENTMESSAGE", recentMessage.getMessage());
+                                                        Log.d("GETRECENTMESSAGESENDER", recentMessage.getFullName());
                                                         if(recentMessage.getCreatedAt() != null){
                                                             project.setSentAt(recentMessage.getCreatedAt());
                                                         } else {

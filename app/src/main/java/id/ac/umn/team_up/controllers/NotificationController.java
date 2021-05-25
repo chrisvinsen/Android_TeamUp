@@ -60,7 +60,7 @@ public class NotificationController {
 //            }
 //        });
 
-        projectRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        projectRef.whereArrayContains("members",UserController.getUserId()).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
@@ -68,10 +68,13 @@ public class NotificationController {
                     return;
                 }
                 for(DocumentChange dc : value.getDocumentChanges()){
-                    if(dc.getType() == DocumentChange.Type.ADDED){
-                        projectListId.add(dc.getDocument().toObject(Project.class).getId());
-                    }
+                    Log.e("DOCUMENTCHANGE", "ADA DATA");
+//                    if(dc.getType() == DocumentChange.Type.MODIFIED){
+//                        projectListId.add(dc.getDocument().toObject(Project.class).getId());
+//                    }
+                    projectListId.add(dc.getDocument().toObject(Project.class).getTitle());
                 }
+                Log.d("Datanotif",projectListId.toString());
             }
         });
 
