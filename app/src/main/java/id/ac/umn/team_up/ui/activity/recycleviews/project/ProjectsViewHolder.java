@@ -74,6 +74,8 @@ public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.
         //sending project id
         intent.putExtra("groupID",this.groupID);
         intent.putExtra("curretUser", UserController.getCurrentUser(v.getContext()).getFullName());
+        intent.putExtra("projectTitle", String.valueOf(getTvProjectListName().getText()));
+        Log.e("ONCLICKPROJECT", String.valueOf(getTvProjectListName().getText()));
         app.startActivity(intent);
     }
 

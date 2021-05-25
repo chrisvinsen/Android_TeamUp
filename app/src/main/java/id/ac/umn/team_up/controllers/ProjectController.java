@@ -1,6 +1,7 @@
 package id.ac.umn.team_up.controllers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -14,12 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
@@ -28,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,10 +41,12 @@ import java.util.Map;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
+import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.models.ProjectMember;
 import id.ac.umn.team_up.ui.activity.MainActivity;
 import id.ac.umn.team_up.ui.activity.post.PostAdapter;
+import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
 
 public class ProjectController {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -265,5 +272,54 @@ public class ProjectController {
         Log.e("LOADPROJECT", String.valueOf(options.getSnapshots().size()));
         Log.e("USERID", userId);
         return options;
+    }
+
+    public static void listenToProjectChanges(Context c, ProjectListAdapter adapter, String userId){
+        projectsRef.whereArrayContains("members", userId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Utils.show(c, "Error listening to project changes");
+                    return;
+                }
+                for(DocumentChange dc: value.getDocumentChanges()) {
+//                    adapter.notifyDataSetChanged();
+                    if (dc.getType() == DocumentChange.Type.ADDED) {
+                        adapter.notifyDataSetChanged();
+                        Log.e("LISTENTOPROJECTCHANGES", "added");
+                    }
+                    if(dc.getType() == DocumentChange.Type.MODIFIED){
+                        adapter.notifyDataSetChanged();
+                        Log.e("LISTENTOPROJECTCHANGES", "modified");
+                    }
+                }
+            }
+        });
+    }
+
+    public static void updateProjectRecentMessage(Message message, DocumentReference projectRef){
+        projectRef.get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Project project = document.toObject(Project.class);
+                                Log.d("GETRECENTMESSAGE", "DocumentSnapshot data: " + document.getData());
+                                project.setRecentMessage(message.getMessage());
+                                Log.d("GETRECENTMESSAGE", message.getMessage());
+                                project.setSentAt(message.getCreatedAt());
+                                Log.d("GETRECENTMESSAGE", String.valueOf(message.getCreatedAt()));
+                                Log.e("GETRECENTMESSAGE", String.valueOf(project.getSentAt()));
+                                projectRef.set(project, SetOptions.merge());
+                            } else {
+                                Log.d("GETRECENTMESSAGE", "No such document");
+                            }
+                        } else {
+                            Log.d("GETRECENTMESSAGE", "get failed with ", task.getException());
+                        }
+                    }
+                });
     }
 }

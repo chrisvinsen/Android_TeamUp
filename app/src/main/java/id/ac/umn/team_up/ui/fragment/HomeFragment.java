@@ -35,6 +35,7 @@ import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.models.Project;
+import id.ac.umn.team_up.ui.CircleTransform;
 import id.ac.umn.team_up.ui.activity.post.PostAdapter;
 
 /**
@@ -117,7 +118,7 @@ public class HomeFragment extends Fragment {
             });
 
             SharedPreferences sharedPref = Utils.getSharedPref(getActivity().getApplicationContext());
-            Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/team-up-solib.appspot.com/o/uploads%2F1621347046743.jpg?alt=media&token=03ead921-1e56-4acf-a06d-dcb243dda1d1").placeholder(R.mipmap.ic_launcher).fit().into((ImageView) view.findViewById(R.id.profile_picture));
+            Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/team-up-solib.appspot.com/o/uploads%2F1621347046743.jpg?alt=media&token=03ead921-1e56-4acf-a06d-dcb243dda1d1").placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into((ImageView) view.findViewById(R.id.profile_picture_beside_search));
 
 
             // Search functionality
@@ -129,10 +130,10 @@ public class HomeFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(s.length() != 0){
+                    if(s.length() == 1){
                         ProjectController.getAllProjectPost(recycler_view, view, s);
                     }
-                    else{
+                    else if(s.length() == 0){
                         ProjectController.getProjectPost(recycler_view, view);
                     }
                 }

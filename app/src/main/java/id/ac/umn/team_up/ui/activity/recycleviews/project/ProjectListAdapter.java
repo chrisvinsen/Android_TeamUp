@@ -72,8 +72,10 @@ public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, Projec
         holder.setTvProjectListName(model.getTitle());
 //        Message recentMessage = MessageController.getRecentMessage(model.getId(), app.getApplicationContext()), this);
 //        Log.e("RECENTMESSAGEONADAPTER", recentMessage.getMessage());
-        if(model.getRecentMessage() != null && model.getSentAt() != null){
+        if(model.getRecentMessage() != null){
             holder.setTvProjectListRecentChatText(model.getRecentMessage());
+        }
+        if(model.getSentAt() != null){
             holder.setTvProjectListChatTime(Utils.getHourAndMinute(model.getSentAt()));
         }
         if(model.getGroupIcon().compareTo("") != 0){
