@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.UserController;
@@ -44,12 +42,11 @@ public class ProfileSettingAboutActivity extends AppCompatActivity {
         closeKeyboard();
         currentUser.setAbout(etAbout.getText().toString());
 
-        UserController.updateUser(this, currentUser);
+        UserController.updateUser(this, currentUser, true);
     }
 
     @Override
     public void onBackPressed() {
-        Log.d("back", "back clicked");
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("frgToLoad", "profile");
         finish();

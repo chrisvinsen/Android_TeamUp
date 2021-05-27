@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TeamUp">
-        <activity android:name=".ui.activity.ProfileSettingActivity"></activity>
+        <activity android:name=".ui.activity.ForgotPasswordActivity"></activity>
+        <activity android:name=".ui.activity.ProfileSettingActivity" />
         <activity android:name=".ui.activity.ProfileSettingSkillActivity" />
         <activity android:name=".ui.activity.ProfileSettingProjectActivity" />
         <activity android:name=".ui.activity.ProfileSettingAboutActivity" />
