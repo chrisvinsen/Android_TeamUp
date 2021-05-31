@@ -203,10 +203,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
                 filteredList.addAll(mProjects);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                Log.d("filter", "1");
+                Log.d("filtera1", "1");
+                Log.d("filter", filterPattern);
 
                 for (Project item : mProjects) {
                     if (item.getTitle().toLowerCase().contains(filterPattern)) {
+                        Log.d("filtera23", filterPattern);
+                        Log.d("filtera2", item.getTitle().toLowerCase());
                         filteredList.add(item);
                     }
                     else if(item.getDescription().toLowerCase().contains(filterPattern)){
