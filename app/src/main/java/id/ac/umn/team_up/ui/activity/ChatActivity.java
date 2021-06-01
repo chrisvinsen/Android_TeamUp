@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.ui.fragment.ChatFragment;
+import id.ac.umn.team_up.ui.fragment.TodolistFragment;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -56,7 +57,7 @@ public class ChatActivity extends AppCompatActivity {
         btnTodoList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todolist fragment
+                openFragment(new TodolistFragment().newInstance(projectID,""));
             }
         });
 

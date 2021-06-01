@@ -44,9 +44,11 @@ import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.models.ProjectMember;
+import id.ac.umn.team_up.models.ToDoList;
 import id.ac.umn.team_up.ui.activity.MainActivity;
 import id.ac.umn.team_up.ui.activity.post.PostAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
+import id.ac.umn.team_up.ui.activity.recycleviews.todolist.TodoListAdapter;
 
 public class ProjectController {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -321,5 +323,29 @@ public class ProjectController {
                         }
                     }
                 });
+    }
+    public static void getTodolist(RecyclerView rvTdl, View v, String projectId){
+        ArrayList<ToDoList> todoLists = new ArrayList<>();
+
+        Log.d("PROJECTIDTDL", projectId);
+        todolistRef.whereEqualTo("projectId", projectId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Log.e("TODOLISTREF","error");
+                    return;
+                }
+                for(DocumentChange dc : value.getDocumentChanges()){
+                    todoLists.add(dc.getDocument().toObject(ToDoList.class));
+                }
+                TodoListAdapter mTodolistAdapter;
+                mTodolistAdapter = new TodoListAdapter(v.getContext(), todoLists);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(v.getContext());
+                rvTdl.setHasFixedSize(true);
+                rvTdl.setLayoutManager(linearLayoutManager);
+                rvTdl.setAdapter(mTodolistAdapter);
+            }
+        });
+
     }
 }
