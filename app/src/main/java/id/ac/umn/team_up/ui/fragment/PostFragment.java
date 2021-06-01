@@ -1,15 +1,25 @@
 package id.ac.umn.team_up.ui.fragment;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -37,6 +47,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import id.ac.umn.team_up.R;
@@ -45,17 +56,20 @@ import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.ui.CircleTransform;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PostFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PostFragment extends Fragment {
+public class PostFragment extends Fragment implements LocationListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final int LOCATION_PERMISSION_CODE = 100;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -70,6 +84,8 @@ public class PostFragment extends Fragment {
     private TextView profile_fullname;
     private EditText project_title;
     private EditText project_description;
+    private EditText project_location;
+    private Button project_location_button;
     private Button post_button;
     private Button upload_button;
     private ImageView image_view1;
@@ -78,6 +94,8 @@ public class PostFragment extends Fragment {
     private ImageView image_view4;
     private ImageView image_view5;
     private ProgressBar progress_bar;
+
+    private LocationManager locationManager;
 
     private List<Uri> image_uri;
 
@@ -130,6 +148,8 @@ public class PostFragment extends Fragment {
         profile_fullname = (TextView) view.findViewById(R.id.profile_fullname);
         project_title = (EditText) view.findViewById(R.id.project_title);
         project_description = (EditText) view.findViewById(R.id.project_description);
+        project_location = (EditText) view.findViewById(R.id.project_location);
+        project_location_button = (Button) view.findViewById(R.id.project_location_button);
         post_button = (Button) view.findViewById(R.id.post_button);
         upload_button = (Button) view.findViewById(R.id.upload_button);
         image_view1 = (ImageView) view.findViewById(R.id.image_view1);
@@ -138,6 +158,13 @@ public class PostFragment extends Fragment {
         image_view4 = (ImageView) view.findViewById(R.id.image_view4);
         image_view5 = (ImageView) view.findViewById(R.id.image_view5);
         progress_bar = (ProgressBar) view.findViewById(R.id.progress_bar);
+
+        //Runtime permissions
+//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+//            ActivityCompat.requestPermissions(getActivity(),new String[]{
+//                    Manifest.permission.ACCESS_FINE_LOCATION
+//            },100);
+//        }
 
         // Set profile
         String fullname = sharedPref.getString("ufirstname", "") + " " + sharedPref.getString("ulastname", "");
@@ -155,6 +182,15 @@ public class PostFragment extends Fragment {
 
         upload_url = new ArrayList<String>();
         image_uri = new ArrayList<Uri>();
+
+        project_location_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get current location
+                checkPermission(LOCATION_PERMISSION_CODE);
+                getLocation();
+            }
+        });
 
         post_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,6 +232,71 @@ public class PostFragment extends Fragment {
         });
 
         return view;
+    }
+
+    // Function to check and request permission.
+    public void checkPermission(int requestCode) {
+        Log.d("postpermission", "checking");
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
+            Log.d("postpermission", "msk");
+            // Requesting the permission
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestCode);
+        } else {
+            Log.d("postpermission", "ggl");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d("postpermission", "checking2");
+
+        if (requestCode == LOCATION_PERMISSION_CODE) {
+            Log.d("postpermission", "msk2");
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("postpermission", "dd");
+                Toast.makeText(getActivity(), "Location Permission Granted", Toast.LENGTH_SHORT) .show();
+            }
+            else {
+                Log.d("postpermission", "ee");
+                Toast.makeText(getActivity(), "Location Permission Denied", Toast.LENGTH_SHORT) .show();
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getLocation() {
+
+        try {
+            Log.d("postpermission", "success");
+            locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,5, (android.location.LocationListener) this);
+
+        }catch (Exception e){
+            Log.d("postpermission", "fail");
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        try {
+
+            Log.d("postpermission", "sccss");
+            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+            String address = addresses.get(0).getAddressLine(0);
+
+            project_location.setText(address);
+
+        }catch (Exception e){
+
+            Log.d("postpermission", "fall");
+            e.printStackTrace();
+        }
+
     }
 
     private void openFileChooser(){
