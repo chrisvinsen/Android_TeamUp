@@ -168,6 +168,7 @@ public class PostFragment extends Fragment implements LocationListener {
 
         // Set profile
         String fullname = sharedPref.getString("ufirstname", "") + " " + sharedPref.getString("ulastname", "");
+        String picture = sharedPref.getString("upicture", "");
         Log.e("FULLNAME", sharedPref.getString("ufirstname", "") + " " + sharedPref.getString("ulastname", ""));
         Map<String, ?> allEntries = sharedPref.getAll();
         Log.e("map size", String.valueOf(allEntries.size()));
@@ -175,7 +176,12 @@ public class PostFragment extends Fragment implements LocationListener {
             Log.e("map values", entry.getKey() + ": " + entry.getValue().toString());
         }
         profile_fullname.setText(fullname);
-        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/team-up-solib.appspot.com/o/uploads%2F1621347046743.jpg?alt=media&token=03ead921-1e56-4acf-a06d-dcb243dda1d1").placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(profile_picture);
+        if(picture != "" && picture != null){
+            Picasso.get().load(picture).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(profile_picture);
+        }
+        else{
+            Picasso.get().load(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(profile_picture);
+        }
 
         // Connect to FirebaseStorage uploads
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");

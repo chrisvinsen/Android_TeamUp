@@ -74,6 +74,7 @@ public class ProjectController {
         SharedPreferences sharedPref = Utils.getSharedPref(app);
 
         String fullname = sharedPref.getString("ufirstname", "") + " " + sharedPref.getString("ulastname", "");
+        String picture = sharedPref.getString("upicture", "");
 
         // Get current time
         FieldValue createdAt = FieldValue.serverTimestamp();
@@ -98,7 +99,7 @@ public class ProjectController {
         project.put("description", project_description);
         project.put("adminId", mAuth.getUid());
         project.put("adminFullname", fullname);
-        project.put("adminPicture", "https://firebasestorage.googleapis.com/v0/b/team-up-solib.appspot.com/o/uploads%2F1621347046743.jpg?alt=media&token=03ead921-1e56-4acf-a06d-dcb243dda1d1");
+        project.put("adminPicture", picture);
         project.put("groupIcon", "");
         project.put("images", upload_url);
         project.put("isOngoing", true);
@@ -152,7 +153,7 @@ public class ProjectController {
         member.put("projectId", document_id);
         member.put("fullName", fullname);
         member.put("role", "Admin");
-        member.put("picture", "https://firebasestorage.googleapis.com/v0/b/team-up-solib.appspot.com/o/uploads%2F1621347046743.jpg?alt=media&token=03ead921-1e56-4acf-a06d-dcb243dda1d1");
+        member.put("picture", picture);
 
         // Set map into collection
         memberRef.document().set(member)
