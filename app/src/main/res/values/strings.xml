@@ -7,4 +7,5 @@
     <string name="welcome_back">Welcome\nBack.</string>
     <string name="ongoing_project">Ongoing Projects</string>
     <string name="ended_project">Ended Projects</string>
+    <string name="forgot_password">Forgot\nPassword?</string>
 </resources>

@@ -5,10 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.MessageController;
@@ -16,7 +12,6 @@ import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.Message;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

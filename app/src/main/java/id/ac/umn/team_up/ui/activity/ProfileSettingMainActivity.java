@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.User;
-import id.ac.umn.team_up.ui.fragment.ProfileFragment;
 
 public class ProfileSettingMainActivity extends AppCompatActivity {
     private User currentUser;
@@ -23,7 +21,6 @@ public class ProfileSettingMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("info", "activity create");
         setContentView(R.layout.activity_profile_setting_main);
 
         currentUser = UserController.getCurrentUser(this);
@@ -56,14 +53,12 @@ public class ProfileSettingMainActivity extends AppCompatActivity {
             currentUser.setLastName(etLastname.getText().toString());
             currentUser.setHeadline(etHeadline.getText().toString());
 
-            UserController.updateUser(this, currentUser);
+            UserController.updateUser(this, currentUser, true);
         }
     }
 
     @Override
     public void onBackPressed() {
-        Log.d("back", "back clicked");
-
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("frgToLoad", "profile");
         finish();
