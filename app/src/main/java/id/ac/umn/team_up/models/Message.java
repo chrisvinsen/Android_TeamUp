@@ -13,6 +13,7 @@ public class Message {
     private String message;
     private Date createdAt;
     private String fullName;
+
     //private String picURL;
 
     public Message(){
@@ -92,3 +93,4 @@ public class Message {
         this.fullName = fullName;
     }
 }
+

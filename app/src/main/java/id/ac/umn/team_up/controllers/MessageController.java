@@ -63,13 +63,13 @@ public class MessageController {
 
     private static MessageListAdapter mMessageAdapter;
 
+    private static boolean statusSending = false;
 
     //sendmessage
     public static void sentMessage(String projectId, String fullname,String userId, String msg, String attachment){
         FieldValue createdAt = FieldValue.serverTimestamp();
 
         Map<String, Object> message = new HashMap<>();
-
         //time id
         AtomicLong LAST_TIME_MS = new AtomicLong();
         long now = System.currentTimeMillis();
@@ -95,6 +95,7 @@ public class MessageController {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        statusSending = true;
                         Log.d("SUCCESS","sending message sucess");
                     }
                 });
@@ -130,10 +131,18 @@ public class MessageController {
                 }
                 for(DocumentChange dc : value.getDocumentChanges()){
                     if(dc.getType() == DocumentChange.Type.ADDED){
+
+
+
+
                         messageList.add(dc.getDocument().toObject(Message.class));
+
                     }
+
+
                     mMessageAdapter.notifyDataSetChanged();
                     linearLayoutManager.scrollToPosition(messageList.size()-1);
+                    statusSending = true;
 //                    if(progressDialog.isShowing())
 //                        progressDialog.dismiss();
                 }
