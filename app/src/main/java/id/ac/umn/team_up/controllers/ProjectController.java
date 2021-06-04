@@ -363,4 +363,25 @@ public class ProjectController {
 
         todolistRef.document(todolist_id).set(todolist);
     }
+
+    public static void updateStatusTodolist(String todolistId, String status){
+        DocumentReference tdlRef = todolistRef.document(todolistId);
+        todolistRef.document(todolistId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        ToDoList toDoList = document.toObject(ToDoList.class);
+                        if(toDoList.getStatus() == "true"){
+                            toDoList.setStatus("false");
+                        }else{
+                            toDoList.setStatus("true");
+                        }
+                        tdlRef.set(toDoList, SetOptions.merge());
+                    }
+                }
+            }
+        });
+    }
 }
