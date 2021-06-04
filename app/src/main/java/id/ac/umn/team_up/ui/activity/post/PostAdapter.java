@@ -67,7 +67,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
         Project project = mProjectsFilter.get(position);
         // Insert user profile
         holder.profile_name.setText(project.getAdminFullname());
-        Picasso.get().load(project.getAdminPicture()).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(holder.profile_image);
+        if(project.getAdminPicture() != ""){
+            Picasso.get().load(project.getAdminPicture()).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(holder.profile_image);
+        }
+        else{
+            Picasso.get().load(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(holder.profile_image);
+        }
         // Insert project
         SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss");
         holder.post_time.setText(formatter.format(project.getCreatedAt()));
@@ -159,10 +164,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
                 member.put("projectId", project.getId());
 
                 String fullname = sharedPref.getString("ufirstname", "") + " " + sharedPref.getString("ulastname", "");
+                String picture = sharedPref.getString("upicture", "");
 
                 member.put("fullName", fullname);
                 member.put("role", "Member");
-                member.put("picture", "https://firebasestorage.googleapis.com/v0/b/team-up-solib.appspot.com/o/uploads%2F1621347046743.jpg?alt=media&token=03ead921-1e56-4acf-a06d-dcb243dda1d1");
+                member.put("picture", picture);
 
                 // Set map into collection
                 memberRef.document().set(member)
@@ -203,10 +209,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
                 filteredList.addAll(mProjects);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                Log.d("filter", "1");
+                Log.d("filtera1", "1");
+                Log.d("filter", filterPattern);
 
                 for (Project item : mProjects) {
                     if (item.getTitle().toLowerCase().contains(filterPattern)) {
+                        Log.d("filtera23", filterPattern);
+                        Log.d("filtera2", item.getTitle().toLowerCase());
                         filteredList.add(item);
                     }
                     else if(item.getDescription().toLowerCase().contains(filterPattern)){

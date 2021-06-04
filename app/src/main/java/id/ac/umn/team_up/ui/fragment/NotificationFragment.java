@@ -79,13 +79,20 @@ public class NotificationFragment extends Fragment {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_notification, container, false);
 
+
+
         //inflate NotificationFragment
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
-        NotificationController.getRecentMessage();
+
+        //init recyclerview
         rvNotification = view.findViewById(R.id.rvNotificationItem);
-        rvNotification.setHasFixedSize(true);
-        rvNotification.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        rvNotification.setAdapter(new NotificationItemAdapter(view.getContext()));
+
+        //setting the recyclerview
+        NotificationController.getRecentMessage(rvNotification, view.getContext());
+
+//        rvNotification.setHasFixedSize(true);
+//        rvNotification.setLayoutManager(new LinearLayoutManager(view.getContext()));
+//        rvNotification.setAdapter(new NotificationItemAdapter(view.getContext()));
         return view;
     }
 }

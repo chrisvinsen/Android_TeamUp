@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 import id.ac.umn.team_up.R;
-import id.ac.umn.team_up.ui.activity.MainActivity;
 import id.ac.umn.team_up.ui.activity.ProfileSettingSkillActivity;
 
 public class ProfileSettingSkillAdapter extends ArrayAdapter<String> {

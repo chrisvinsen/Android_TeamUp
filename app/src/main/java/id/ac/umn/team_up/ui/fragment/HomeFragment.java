@@ -118,7 +118,13 @@ public class HomeFragment extends Fragment {
             });
 
             SharedPreferences sharedPref = Utils.getSharedPref(getActivity().getApplicationContext());
-            Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/team-up-solib.appspot.com/o/uploads%2F1621347046743.jpg?alt=media&token=03ead921-1e56-4acf-a06d-dcb243dda1d1").placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into((ImageView) view.findViewById(R.id.profile_picture_beside_search));
+            String picture = sharedPref.getString("upicture", "");
+            if(picture != "" && picture != null){
+                Picasso.get().load(picture).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into((ImageView) view.findViewById(R.id.profile_picture_beside_search));
+            }
+            else{
+                Picasso.get().load(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into((ImageView) view.findViewById(R.id.profile_picture_beside_search));
+            }
 
 
             // Search functionality

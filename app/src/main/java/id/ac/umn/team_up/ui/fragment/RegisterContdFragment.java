@@ -1,20 +1,16 @@
 package id.ac.umn.team_up.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.firebase.database.DatabaseReference;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.UserController;
@@ -56,19 +52,25 @@ public class RegisterContdFragment extends Fragment {
                     if (password.isEmpty()) {
                         etPassword.setError("Password must be filled");
                         isAllFilled = false;
+                    } else if (password.length() < 6) {
+                        etPassword.setError("Password must be at least 6 characters long");
+                        isAllFilled = false;
                     }
                     if (cpassword.isEmpty()) {
                         etCPassword.setError("Confirmation password must be filled");
                         isAllFilled = false;
-                    }
-                    if (!password.equalsIgnoreCase(cpassword)) {
-                        etCPassword.setError("Confirmation password doesn't match");
+                    } else if (cpassword.length() < 6) {
+                        etCPassword.setError("Password confirmation must be at least 6 characters long");
                         isAllFilled = false;
                     }
 
                     if (isAllFilled) {
-                        User newUser = new User(first_name, last_name, email, password);
-                        UserController.register((AppCompatActivity) getActivity(), newUser);
+                        if (password.equalsIgnoreCase(cpassword)) {
+                            User newUser = new User(first_name, last_name, email);
+                            UserController.register((AppCompatActivity) getActivity(), newUser, password);
+                        } else {
+                            etCPassword.setError("Confirmation password doesn't match");
+                        }
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Please fill all required data", Toast.LENGTH_SHORT).show();
                     }

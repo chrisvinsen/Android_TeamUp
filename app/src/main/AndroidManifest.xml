@@ -3,6 +3,7 @@
     package="id.ac.umn.team_up">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -13,6 +14,8 @@
         android:theme="@style/Theme.TeamUp">
         <activity android:name=".ui.activity.ChatActivity"></activity>
         <activity android:name=".ui.activity.ProfileSettingActivity"></activity>
+        <activity android:name=".ui.activity.ForgotPasswordActivity"></activity>
+        <activity android:name=".ui.activity.ProfileSettingActivity" />
         <activity android:name=".ui.activity.ProfileSettingSkillActivity" />
         <activity android:name=".ui.activity.ProfileSettingProjectActivity" />
         <activity android:name=".ui.activity.ProfileSettingAboutActivity" />

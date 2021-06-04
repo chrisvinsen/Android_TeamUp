@@ -3,7 +3,6 @@ package id.ac.umn.team_up.ui.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,14 +41,15 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if (isAllFilled) {
-                    Log.d("data", "email: " + etEmail.getText().toString());
-                    Log.d("data", "password: " + etPassword.getText().toString());
-
-                    UserController.login(LoginActivity.this, email, Utils.sha256(password));
+                    UserController.login(LoginActivity.this, email, password);
                 } else {
                     Toast.makeText(LoginActivity.this, "Please fill all required data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    public void goToForgotPasswordActivity(View view) {
+        Utils.openActivity(this, ForgotPasswordActivity.class);
     }
 }

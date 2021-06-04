@@ -106,52 +106,6 @@ public class MessageController {
     public static void getMessage(RecyclerView rv, View v, String userId, String projectId){
         ArrayList<Message> messageList = new ArrayList<Message>();
         Log.d("GroupID", projectId);
-
-//        messagesRef.whereEqualTo("groupId",groupId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if(task.isSuccessful()){
-//                    for(DocumentSnapshot document : task.getResult()){
-//                        Log.d("check", document.toString());
-//                        Message message = document.toObject(Message.class);
-//                        messageList.add(message);
-//                    }
-//
-////                    Log.d("MESSAGELIST", messageList.get(0).getMessage());
-////                    Log.d("UserID", userId);
-//                    mMessageAdapter = new MessageListAdapter(v.getContext(),messageList,userId);
-//                    rv.setLayoutManager(new LinearLayoutManager(v.getContext()));
-//                    rv.setAdapter(mMessageAdapter);
-//
-//                }
-//            }
-//        });
-
-//        messagesRef.whereEqualTo("groupId",groupId).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                if(!queryDocumentSnapshots.isEmpty()){
-//                    Log.d("CHEKPOINT","1");
-//                    for(DocumentSnapshot document : queryDocumentSnapshots){
-//                        Log.d("check", document.toString());
-//                        Message message = document.toObject(Message.class);
-//                        messageList.add(message);
-//                    }
-//
-////                    Log.d("MESSAGELIST", messageList.get(0).getMessage());
-////                    Log.d("UserID", userId);
-//                    mMessageAdapter = new MessageListAdapter(v.getContext(),messageList,userId);
-//                    rv.setLayoutManager(new LinearLayoutManager(v.getContext()));
-//                    rv.setAdapter(mMessageAdapter);
-//
-//                }
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
 //
         //setting progress dialog for user experience
         ProgressDialog progressDialog = new ProgressDialog(v.getContext());

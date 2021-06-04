@@ -5,18 +5,19 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp"
         >
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:elevation="5dp"
-            android:background="@drawable/ic_profile"
-            />
+<!--        <ImageView-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:elevation="5dp"-->
+<!--            android:background="@drawable/ic_profile"-->
+<!--            />-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,6 +32,7 @@
                 android:orientation="horizontal"
                 >
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/tvNameFrom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -43,6 +45,7 @@
                     />
 
                 <TextView
+
                     android:id="@+id/tvNotifTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -59,6 +62,7 @@
 
             <!--            notification headline-->
             <TextView
+                android:layout_marginLeft="10dp"
                 android:id="@+id/tvNotifHead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

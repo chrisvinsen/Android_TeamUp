@@ -1,5 +1,6 @@
 package id.ac.umn.team_up.ui.activity.recycleviews.notification;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,4 +32,9 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
         return tvNotifTime;
     }
 
+
+//    @Override
+//    public void onClick(View v) {
+//        Log.d("NOTIFDICLICK","TRUE");
+//    }
 }

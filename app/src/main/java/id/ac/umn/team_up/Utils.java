@@ -1,6 +1,5 @@
 package id.ac.umn.team_up;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
@@ -75,6 +73,21 @@ public class Utils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         return dateFormat.format(date);
     }
+
+    public static String getDateforChat(Date date) {
+        SimpleDateFormat month = new SimpleDateFormat("MMM");
+        SimpleDateFormat day = new SimpleDateFormat("dd");
+        SimpleDateFormat year = new SimpleDateFormat("yyyy");
+
+
+
+        return String.format("%s %s, %s",
+                month.format(date),
+                day.format(date),
+                year.format(date)
+                );
+    }
+
 
     public static void sendUserToActivity(Context c, User user, Class clazz) {
         Intent intent = new Intent(c, clazz);
