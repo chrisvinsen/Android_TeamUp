@@ -74,6 +74,21 @@ public class Utils {
         return dateFormat.format(date);
     }
 
+    public static String getDateforChat(Date date) {
+        SimpleDateFormat month = new SimpleDateFormat("MMM");
+        SimpleDateFormat day = new SimpleDateFormat("dd");
+        SimpleDateFormat year = new SimpleDateFormat("yyyy");
+
+
+
+        return String.format("%s %s, %s",
+                month.format(date),
+                day.format(date),
+                year.format(date)
+                );
+    }
+
+
     public static void sendUserToActivity(Context c, User user, Class clazz) {
         Intent intent = new Intent(c, clazz);
         intent.putExtra("USER_KEY", user);

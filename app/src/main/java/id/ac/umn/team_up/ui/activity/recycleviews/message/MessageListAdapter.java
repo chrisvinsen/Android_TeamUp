@@ -15,7 +15,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import java.util.List;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.Message;
+import okhttp3.internal.Util;
 
 public class MessageListAdapter extends RecyclerView.Adapter {
 
@@ -63,11 +65,31 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch(holder.getItemViewType()){
             case VIEW_TYPE_MESSAGE_SENT:
+                //message body
                 ((SentMessageHolder) holder).setTvMessageText(mMessageList.get(position).getMessage());
+
+                //date
+                ((SentMessageHolder) holder).setTvMessageDate(Utils.getDateforChat(mMessageList.get(position).getCreatedAt()));
+
+
+                //time
+                ((SentMessageHolder) holder).setTvMessageTime(Utils.getHourAndMinute(mMessageList.get(position).getCreatedAt()));
+
+
                 break;
             case VIEW_TYPE_MESSAGE_RECEIVED:
+                //body
                 ((ReceivedMessageHolder) holder).setTvRecieveMessage(mMessageList.get(position).getMessage());
+
+                //name
                 ((ReceivedMessageHolder) holder).setTvRecieveName(mMessageList.get(position).getFullName());
+
+                //date
+                ((ReceivedMessageHolder) holder).setTvRecieveDate(Utils.getDateforChat(mMessageList.get(position).getCreatedAt()));
+
+                //time
+                ((ReceivedMessageHolder) holder).setTvRecieveTime(Utils.getHourAndMinute(mMessageList.get(position).getCreatedAt()));
+
 
         }
     }
@@ -77,7 +99,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         return mMessageList.size();
     }
 
-
+    //from user
     public class SentMessageHolder extends RecyclerView.ViewHolder{
         private TextView tvMessageText, tvMessageTime, tvMessageDate;
 
@@ -91,8 +113,13 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         public void setTvMessageText(String Message){
             this.tvMessageText.setText(Message);
         }
+
+        public void setTvMessageDate(String date){ this.tvMessageDate.setText(date);}
+
+        public void setTvMessageTime(String time){ this.tvMessageTime.setText(time);}
     }
 
+    //from others
     public class ReceivedMessageHolder extends RecyclerView.ViewHolder {
         private TextView tvRecieveDate, tvRecieveName, tvRecieveMessage, tvRecieveTime;
 
@@ -111,6 +138,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         public void setTvRecieveName(String fullname){
             this.tvRecieveName.setText(fullname);
         }
+
+        public void setTvRecieveDate(String date){ this.tvRecieveDate.setText(date);}
+
+        public void setTvRecieveTime(String time) {this.tvRecieveTime.setText(time);}
+
 
     }
 

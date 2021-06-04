@@ -66,7 +66,10 @@ public class NotificationController {
 //                    if(dc.getType() == DocumentChange.Type.MODIFIED){
 //                        projectListId.add(dc.getDocument().toObject(Project.class).getId());
 //                    }
-                    projectListId.add(dc.getDocument().toObject(Project.class));
+                    //if it has field recentMessage
+                    if(dc.getDocument().toObject(Project.class).getRecentMessage() != null){
+                        projectListId.add(dc.getDocument().toObject(Project.class));
+                    }
                 }
 
                 //set adapter

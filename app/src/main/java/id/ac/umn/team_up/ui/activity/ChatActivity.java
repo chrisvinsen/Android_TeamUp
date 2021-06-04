@@ -84,5 +84,9 @@ public class ChatActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }
