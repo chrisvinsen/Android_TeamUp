@@ -1,25 +1,16 @@
 package id.ac.umn.team_up.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.drawable.DrawableCompat;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
@@ -90,7 +81,7 @@ public class ProfileSettingSkillActivity extends AppCompatActivity {
     public void saveData(View view) {
         currentUser.setSkills(listSkills);
 
-        UserController.updateUser(this, currentUser);
+        UserController.updateUser(this, currentUser, true);
     }
 
     public void backActivity(View view) {
