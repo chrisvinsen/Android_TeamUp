@@ -373,7 +373,7 @@ public class ProjectController {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
                         ToDoList toDoList = document.toObject(ToDoList.class);
-                        if(toDoList.getStatus() == "true"){
+                        if(toDoList.getStatus().equals("true")){
                             toDoList.setStatus("false");
                         }else{
                             toDoList.setStatus("true");

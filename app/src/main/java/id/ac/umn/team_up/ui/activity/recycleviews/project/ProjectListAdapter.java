@@ -1,27 +1,18 @@
 package id.ac.umn.team_up.ui.activity.recycleviews.project;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
-import id.ac.umn.team_up.controllers.MessageController;
-import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.ui.CircleTransform;
 

@@ -40,11 +40,24 @@ public class TodoListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((TodolistHolder) holder).setTvTitle(mTodoList.get(position).getTitle(), mTodoList.get(position).getStatus());
-        ((TodolistHolder) holder).setTvDesc(mTodoList.get(position).getDescription(), mTodoList.get(position).getStatus());
-        ((TodolistHolder) holder).setLybg(mTodoList.get(position).getStatus());
-        ((TodolistHolder) holder).setCheckboxImg(mTodoList.get(position).getStatus());
-        ((TodolistHolder) holder).setProjectId(mTodoList.get(position).getProjectId());
+        ((TodolistHolder) holder).setTvTitle(mTodoList.get(position).getTitle());
+        ((TodolistHolder) holder).setTvDesc(mTodoList.get(position).getDescription());
+        if(mTodoList.get(position).getStatus().equals("true")){
+            ((TodolistHolder) holder).lybg.setBackgroundResource(R.drawable.selectedtdl);
+            ((TodolistHolder) holder).checkboxImg.setBackgroundResource(R.drawable.ic_baseline_check_box_24);
+
+        }else{
+            ((TodolistHolder) holder).lybg.setBackgroundResource(R.drawable.unselectedtdl);
+            ((TodolistHolder) holder).checkboxImg.setBackgroundResource(R.drawable.ic_baseline_check_box_outline_blank_24);
+        }
+        if(mTodoList.get(position).getStatus().equals("true")){
+            ((TodolistHolder) holder).tvTitle.setTextColor(ContextCompat.getColor(context, R.color.white));
+            ((TodolistHolder) holder).tvDesc.setTextColor(ContextCompat.getColor(context, R.color.white));
+        }else{
+            ((TodolistHolder) holder).tvTitle.setTextColor(ContextCompat.getColor(context, R.color.black));
+            ((TodolistHolder) holder).tvDesc.setTextColor(ContextCompat.getColor(context, R.color.black));
+        }
+        ((TodolistHolder) holder).setStatus(mTodoList.get(position).getStatus());
         ((TodolistHolder) holder).setTodolistId(mTodoList.get(position).getTodolistId());
     }
 
@@ -57,7 +70,9 @@ public class TodoListAdapter extends RecyclerView.Adapter {
         private TextView tvTitle, tvDesc;
         private LinearLayout lybg;
         private ImageButton checkboxImg;
-        private String projectId, todolistId;
+        private String status, todolistId;
+        private int mposisi;
+        private ToDoList mTdlList;
         public TodolistHolder(@NonNull View itemView) {
             super(itemView);
             this.tvTitle = itemView.findViewById(R.id.textviewTitle);
@@ -68,41 +83,17 @@ public class TodoListAdapter extends RecyclerView.Adapter {
         }
 
 
-        public void setTvTitle(String tvTitle, String status) {
+        public void setTvTitle(String tvTitle) {
             this.tvTitle.setText(tvTitle);
-            if(status == "true"){
-                this.tvTitle.setTextColor(ContextCompat.getColor(context, R.color.white));
-            }else{
-                this.tvTitle.setTextColor(ContextCompat.getColor(context, R.color.black));
-            }
         }
 
 
-        public void setTvDesc(String tvDesc, String status) {
+        public void setTvDesc(String tvDesc) {
             this.tvDesc.setText(tvDesc);
-            if(status == "true"){
-                this.tvDesc.setTextColor(ContextCompat.getColor(context, R.color.white));
-            }else{
-                this.tvDesc.setTextColor(ContextCompat.getColor(context, R.color.black));
-            }
-        }
-        public void setLybg(String status){
-            if(status == "true"){
-                this.lybg.setBackgroundResource(R.drawable.selectedtdl);
-            }else{
-                this.lybg.setBackgroundResource(R.drawable.unselectedtdl);
-            }
-        }
-        public void setCheckboxImg(String status){
-            if(status == "true"){
-                this.checkboxImg.setBackgroundResource(R.drawable.ic_baseline_check_box_24);
-            }else{
-                this.checkboxImg.setBackgroundResource(R.drawable.ic_baseline_check_box_outline_blank_24);
-            }
         }
 
-        public void setProjectId(String projectId) {
-            this.projectId = projectId;
+        public void setStatus(String status) {
+            this.status = status;
         }
 
         public void setTodolistId(String todolistId){
@@ -114,8 +105,11 @@ public class TodoListAdapter extends RecyclerView.Adapter {
         }
         @Override
         public void onClick(View v) {
-//
-            ProjectController.updateStatusTodolist(this.todolistId,"false");
+            mposisi = getLayoutPosition();
+            mTdlList = mTodoList.get(mposisi);
+            Log.e("tdlrv", "Clicked");
+            Log.e("tdlrv", mTdlList.getStatus());
+            ProjectController.updateStatusTodolist(this.todolistId,this.status);
         }
     }
 }
