@@ -1,6 +1,7 @@
 package id.ac.umn.team_up.ui.activity.recycleviews.notification;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +9,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.models.Project;
 
 public class  NotificationItemAdapter extends RecyclerView.Adapter<NotificationViewHolder> {
     private String notifFrom, notifHead, notifDate;
     private LayoutInflater mInflater;
+    private List<Project> arrProject = new ArrayList<Project>();
 
 
-    public NotificationItemAdapter(Context context){
+    public NotificationItemAdapter(Context context, List<Project> project){
+        this.arrProject = project;
         this.notifFrom = "Felix juniarto";
         this.notifHead = "you got new message";
         this.notifDate = "Oct 9, 2020";
@@ -36,6 +43,7 @@ public class  NotificationItemAdapter extends RecyclerView.Adapter<NotificationV
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
+        Log.d("ProjectId",arrProject.get(position).getTitle());
         holder.getNameFrom().setText(this.notifFrom);
         holder.getNotifHead().setText(this.notifHead);
         holder.getNotifTime().setText(this.notifDate);
