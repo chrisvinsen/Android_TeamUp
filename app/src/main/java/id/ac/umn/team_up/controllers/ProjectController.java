@@ -325,17 +325,20 @@ public class ProjectController {
                 });
     }
     public static void getTodolist(RecyclerView rvTdl, View v, String projectId){
-        ArrayList<ToDoList> todoLists = new ArrayList<>();
 
         Log.d("PROJECTIDTDL", projectId);
         todolistRef.whereEqualTo("projectId", projectId).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                ArrayList<ToDoList> todoLists = new ArrayList<>();
                 if(error != null){
                     Log.e("TODOLISTREF","error");
                     return;
                 }
                 for(DocumentChange dc : value.getDocumentChanges()){
+
+
+
                     todoLists.add(dc.getDocument().toObject(ToDoList.class));
                 }
                 TodoListAdapter mTodolistAdapter;
