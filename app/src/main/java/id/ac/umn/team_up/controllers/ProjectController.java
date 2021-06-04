@@ -348,4 +348,19 @@ public class ProjectController {
         });
 
     }
+    public static void addTodolist(String projectId, String title, String desc){
+        String todolist_id = todolistRef.document().getId();
+
+        // Put to do list into map
+        Map<String, String> todolist = new HashMap<>();
+        todolist.put("title", title);
+        todolist.put("description", desc);
+        todolist.put("status", "false");
+        todolist.put("todolistId", todolist_id);
+        todolist.put("projectId", projectId);
+
+        Log.e("ADDTODOLISTID", todolist_id);
+
+        todolistRef.document(todolist_id).set(todolist);
+    }
 }
