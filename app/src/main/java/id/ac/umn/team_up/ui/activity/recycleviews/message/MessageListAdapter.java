@@ -106,8 +106,8 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         public SentMessageHolder(@NonNull View itemView) {
             super(itemView);
             tvMessageText = (TextView) itemView.findViewById(R.id.text_gchat_message_me);
-            tvMessageDate = (TextView) itemView.findViewById(R.id.text_gchat_date_me);
-            tvMessageTime = (TextView) itemView.findViewById(R.id.text_gchat_timestamp_me);
+//            tvMessageDate = (TextView) itemView.findViewById(R.id.text_gchat_date_me);
+//            tvMessageTime = (TextView) itemView.findViewById(R.id.text_gchat_timestamp_me);
         }
 
         public void setTvMessageText(String Message){
@@ -125,10 +125,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         public ReceivedMessageHolder(@NonNull View itemView) {
             super(itemView);
-            tvRecieveDate = itemView.findViewById(R.id.text_gchat_date_other);
+//            tvRecieveDate = itemView.findViewById(R.id.text_gchat_date_other);
             tvRecieveMessage = itemView.findViewById(R.id.text_gchat_message_other);
             tvRecieveName = itemView.findViewById(R.id.text_gchat_user_other);
-            tvRecieveTime = itemView.findViewById(R.id.text_gchat_timestamp_other);
+//            tvRecieveTime = itemView.findViewById(R.id.text_gchat_timestamp_other);
         }
 
         public void setTvRecieveMessage(String message){

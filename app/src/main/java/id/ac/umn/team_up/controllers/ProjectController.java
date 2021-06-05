@@ -49,6 +49,7 @@ import id.ac.umn.team_up.models.ToDoList;
 import id.ac.umn.team_up.ui.activity.MainActivity;
 import id.ac.umn.team_up.ui.activity.post.PostAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
+import id.ac.umn.team_up.ui.activity.recycleviews.projectmember.ProjectMemberAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.todolist.TodoListAdapter;
 
 public class ProjectController {
@@ -393,5 +394,29 @@ public class ProjectController {
                 }
             }
         });
+    }
+
+    public static void getProjectMembers(RecyclerView rvProjectMember, View v, String projectId){
+        Log.d("PROJECTIDPM", projectId);
+        memberRef.whereEqualTo("projectId", projectId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                ArrayList<ProjectMember> projectMembers = new ArrayList<>();
+                if(error != null){
+                    Log.e("ProjectMemberRef","error");
+                    return;
+                }
+                for(DocumentChange dc : value.getDocumentChanges()){
+                    projectMembers.add(dc.getDocument().toObject(ProjectMember.class));
+                }
+                ProjectMemberAdapter mProjectMemberAdapter;
+                mProjectMemberAdapter = new ProjectMemberAdapter(v.getContext(), projectMembers);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(v.getContext());
+                rvProjectMember.setHasFixedSize(true);
+                rvProjectMember.setLayoutManager(linearLayoutManager);
+                rvProjectMember.setAdapter(mProjectMemberAdapter);
+            }
+        });
+
     }
 }
