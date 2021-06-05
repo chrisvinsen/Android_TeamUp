@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -201,7 +202,9 @@ public class UserController {
                         prefEditor.putString("uskills", jsonSkill);
                         prefEditor.apply();
 
-                        if (afterLogin && !currentUser.getPicture().isEmpty()) {
+                        Log.d("set", currentUser.getFirstName());
+
+                        if (afterLogin) {
                             checkAvailabilityProfileImageOnInternalStorage(app, currentUser);
                         }
                     } else {
