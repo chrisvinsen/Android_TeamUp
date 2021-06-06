@@ -151,12 +151,14 @@ public class ProjectController {
                 });
 
         // Put member into map
-        Map<String, String> member = new HashMap<>();
+        Map<String, Object> member = new HashMap<>();
         member.put("userId", mAuth.getUid());
         member.put("projectId", document_id);
         member.put("fullName", fullname);
         member.put("role", "Admin");
         member.put("picture", picture);
+        member.put("isMember", true);
+        member.put("isAdmin", true);
 
         // Set map into collection
         memberRef.document().set(member)

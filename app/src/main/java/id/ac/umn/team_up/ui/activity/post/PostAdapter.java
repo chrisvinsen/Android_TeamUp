@@ -67,7 +67,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
         Project project = mProjectsFilter.get(position);
         // Insert user profile
         holder.profile_name.setText(project.getAdminFullname());
-        if(project.getAdminPicture() != ""){
+        if(!project.getAdminPicture().isEmpty()){
             Picasso.get().load(project.getAdminPicture()).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(holder.profile_image);
         }
         else{
