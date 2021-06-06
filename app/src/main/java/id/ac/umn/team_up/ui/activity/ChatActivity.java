@@ -19,6 +19,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.models.ProjectMember;
 import id.ac.umn.team_up.ui.fragment.ChatFragment;
 import id.ac.umn.team_up.ui.fragment.TodolistFragment;
 
@@ -96,10 +97,10 @@ public class ChatActivity extends AppCompatActivity {
 //                return super.onOptionsItemSelected(item);
 //        }
 //    }
-    private void ProjectMemberIntent() {
+    private Intent ProjectMemberIntent() {
         Intent intent = new Intent(this, ProjectMemberActivity.class);
         intent.putExtra("projectId", this.projectID);
-        startActivity(intent) ;
+        return intent;
     }
 
     public void initView(){
@@ -124,19 +125,19 @@ public class ChatActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.project_members:
-                        Intent intentProfile = new Intent(ChatActivity.this, ProjectMembersActivity.class);
-                        startActivityForResult(intentProfile, 1);
+                        Intent intent = ProjectMemberIntent();
+                        startActivityForResult(intent, 1);
                         return true;
                     case R.id.project_settings:
-                        Intent intentMain = new Intent(ChatActivity.this, ProjectSettingsActivity.class);
-                        startActivityForResult(intentMain, 1);
+                        Intent intentSettings = new Intent(ChatActivity.this, ProjectSettingsActivity.class);
+                        startActivityForResult(intentSettings, 1);
                         return true;
                     default:
                         return false;
                 }
             }
         });
-        
+    }
     @Override
     protected void onStop() {
         super.onStop();
