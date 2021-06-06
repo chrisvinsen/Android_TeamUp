@@ -7,17 +7,21 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import id.ac.umn.team_up.R;
-import id.ac.umn.team_up.ui.fragment.ChatFragment;
+import id.ac.umn.team_up.ui.fragment.project_activity.ChatFragment;
+import id.ac.umn.team_up.ui.fragment.project_activity.MembersFragment;
+import id.ac.umn.team_up.ui.fragment.project_activity.SettingsFragment;
+import id.ac.umn.team_up.ui.fragment.project_activity.TodolistFragment;
 
-public class ChatActivity extends AppCompatActivity {
+public class ProjectActivity extends AppCompatActivity {
 
     private Fragment fragment;
     private FragmentManager fragmentManager = getFragmentManager();
@@ -25,6 +29,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private Button btnTodoList;
     private Button btnChat;
+    private Button btnProjectMember;
     private String projectID;
     private String fullname;
     private String projectTitle;
@@ -34,8 +39,11 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
         btnTodoList = findViewById(R.id.btnTodoList);
         btnChat = findViewById(R.id.btnChat);
+        btnProjectMember = findViewById(R.id.btnProjectMember);
+
         Intent intent = getIntent();
         this.projectID = intent.getStringExtra("groupID");
         this.fullname = intent.getStringExtra("curretUser");
@@ -56,11 +64,17 @@ public class ChatActivity extends AppCompatActivity {
         btnTodoList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todolist fragment
+                openFragment(new TodolistFragment().newInstance(projectID,""));
             }
         });
 
+        btnProjectMember.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View view) {
+                ProjectMemberIntent();
+            }
+        });
 
     }
 
@@ -69,8 +83,22 @@ public class ChatActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.bottom_navigation_menu, menu);
 
-
         return true;
+    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.projectmember:
+//                ProjectMemberIntent();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
+    private Intent ProjectMemberIntent() {
+        Intent intent = new Intent(this, ProjectMemberActivity.class);
+        intent.putExtra("projectId", this.projectID);
+        return intent;
     }
 
     public void initView(){
@@ -84,6 +112,28 @@ public class ChatActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void showProjectDropDown(View view) {
+        PopupMenu popup = new PopupMenu(this, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.project_drop_down_menu, popup.getMenu());
+        popup.show();
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.project_members:
+                        openFragment(new MembersFragment().newInstance(projectID, ""));
+                        return true;
+                    case R.id.project_settings:
+                        openFragment(new SettingsFragment().newInstance(projectID, ""));
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
     @Override
     protected void onStop() {
         super.onStop();

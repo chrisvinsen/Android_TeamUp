@@ -1,6 +1,5 @@
 package id.ac.umn.team_up.controllers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,9 +44,12 @@ import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.models.ProjectMember;
+import id.ac.umn.team_up.models.ToDoList;
 import id.ac.umn.team_up.ui.activity.MainActivity;
-import id.ac.umn.team_up.ui.activity.post.PostAdapter;
+import id.ac.umn.team_up.ui.activity.recycleviews.post.PostAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
+import id.ac.umn.team_up.ui.activity.recycleviews.projectmember.ProjectMemberAdapter;
+import id.ac.umn.team_up.ui.activity.recycleviews.todolist.TodoListAdapter;
 
 public class ProjectController {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -148,12 +150,14 @@ public class ProjectController {
                 });
 
         // Put member into map
-        Map<String, String> member = new HashMap<>();
+        Map<String, Object> member = new HashMap<>();
         member.put("userId", mAuth.getUid());
         member.put("projectId", document_id);
         member.put("fullName", fullname);
-        member.put("role", "Admin");
+        member.put("isAdmin", true);
         member.put("picture", picture);
+        member.put("isMember", true);
+        member.put("adminId", mAuth.getUid());
 
         // Set map into collection
         memberRef.document().set(member)
@@ -328,5 +332,94 @@ public class ProjectController {
                         }
                     }
                 });
+    }
+    public static void getTodolist(RecyclerView rvTdl, View v, String projectId){
+
+        Log.d("PROJECTIDTDL", projectId);
+        todolistRef.whereEqualTo("projectId", projectId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                ArrayList<ToDoList> todoLists = new ArrayList<>();
+                if(error != null){
+                    Log.e("TODOLISTREF","error");
+                    return;
+                }
+                for(DocumentChange dc : value.getDocumentChanges()){
+
+
+
+                    todoLists.add(dc.getDocument().toObject(ToDoList.class));
+                }
+                TodoListAdapter mTodolistAdapter;
+                mTodolistAdapter = new TodoListAdapter(v.getContext(), todoLists);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(v.getContext());
+                rvTdl.setHasFixedSize(true);
+                rvTdl.setLayoutManager(linearLayoutManager);
+                rvTdl.setAdapter(mTodolistAdapter);
+            }
+        });
+
+    }
+    public static void addTodolist(String projectId, String title, String desc){
+        String todolist_id = todolistRef.document().getId();
+
+        // Put to do list into map
+        Map<String, String> todolist = new HashMap<>();
+        todolist.put("title", title);
+        todolist.put("description", desc);
+        todolist.put("status", "false");
+        todolist.put("todolistId", todolist_id);
+        todolist.put("projectId", projectId);
+
+        Log.e("ADDTODOLISTID", todolist_id);
+
+        todolistRef.document(todolist_id).set(todolist);
+    }
+
+    public static void updateStatusTodolist(String todolistId, String status){
+        DocumentReference tdlRef = todolistRef.document(todolistId);
+        todolistRef.document(todolistId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        ToDoList toDoList = document.toObject(ToDoList.class);
+                        if(toDoList.getStatus().equals("true")){
+                            toDoList.setStatus("false");
+                        }else{
+                            toDoList.setStatus("true");
+                        }
+                        tdlRef.set(toDoList, SetOptions.merge());
+                    }
+                }
+            }
+        });
+    }
+
+    public static void getProjectMembers(RecyclerView rvProjectMember, Context context, String projectId){
+        Log.d("PROJECTIDPM", projectId);
+
+        memberRef.whereEqualTo("projectId", projectId)
+                .whereEqualTo("isMember", true)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                ArrayList<ProjectMember> projectMembers = new ArrayList<>();
+                if(error != null){
+                    Log.e("ProjectMemberRef","error");
+                    return;
+                }
+                for(DocumentChange dc : value.getDocumentChanges()){
+                    projectMembers.add(dc.getDocument().toObject(ProjectMember.class));
+                }
+                ProjectMemberAdapter mProjectMemberAdapter;
+                mProjectMemberAdapter = new ProjectMemberAdapter(context, projectMembers);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+                rvProjectMember.setHasFixedSize(true);
+                rvProjectMember.setLayoutManager(linearLayoutManager);
+                rvProjectMember.setAdapter(mProjectMemberAdapter);
+            }
+        });
     }
 }

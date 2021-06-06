@@ -8,6 +8,7 @@ import android.os.Handler;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.MessageController;
+import id.ac.umn.team_up.controllers.NotificationController;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.Message;
 
@@ -18,6 +19,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         new Handler().postDelayed(() -> {
             MessageController.listenToRecentMessageChanges(getApplicationContext());
+            NotificationController.loadProjectMemberRequestNotification(getApplicationContext());
             Intent intent;
             if (UserController.isLogin()) {
                 intent = new Intent(this.getApplicationContext(), MainActivity.class);

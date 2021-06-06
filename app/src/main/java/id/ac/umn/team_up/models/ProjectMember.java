@@ -10,28 +10,34 @@ public class ProjectMember implements Serializable {
     private String fullName;
     private String projectId;
     private String picture;
+    private String adminId;
+    private boolean isMember;
 
     @Nullable
-    private boolean hasBeenAccepted;
+    private boolean isAdmin;
 
     public ProjectMember() {
     }
 
-    public ProjectMember(String userId, String role, String fullName, String projectId, String picture) {
+
+
+    public ProjectMember(String userId, String role, String fullName, String projectId, String picture, boolean isMember) {
         this.userId = userId;
         this.role = role;
         this.fullName = fullName;
         this.projectId = projectId;
         this.picture = picture;
+        this.isMember = isMember;
     }
 
-    public ProjectMember(String userId, String role, String fullName, String projectId, String picture, boolean hasBeenAccepted) {
+    public ProjectMember(String userId, String role, String fullName, String projectId, String picture, boolean isMember, boolean isAdmin) {
         this.userId = userId;
         this.role = role;
         this.fullName = fullName;
         this.projectId = projectId;
         this.picture = picture;
-        this.hasBeenAccepted = hasBeenAccepted;
+        this.isMember = isMember;
+        this.isAdmin= isAdmin;
     }
 
     public String getUserId() {
@@ -74,11 +80,31 @@ public class ProjectMember implements Serializable {
         this.picture = picture;
     }
 
-    public boolean isHasBeenAccepted() {
-        return hasBeenAccepted;
+    public boolean isMember() {
+        return isMember;
     }
 
-    public void setHasBeenAccepted(boolean hasBeenAccepted) {
-        this.hasBeenAccepted = hasBeenAccepted;
+    public void setMember(boolean member) {
+        isMember = member;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public String getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }

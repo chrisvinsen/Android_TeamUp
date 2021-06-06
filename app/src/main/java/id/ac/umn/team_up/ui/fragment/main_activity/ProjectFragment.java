@@ -1,4 +1,4 @@
-package id.ac.umn.team_up.ui.fragment;
+package id.ac.umn.team_up.ui.fragment.main_activity;
 
 import android.os.Bundle;
 
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.List;
 
@@ -23,9 +24,7 @@ import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
 
 public class ProjectFragment extends Fragment {
     private RecyclerView rvProjectList;
-    private List<Project> listOfProject;
     private ProjectListAdapter mAdapter;
-    private List<Message> listOfRecentMessage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,4 +58,6 @@ public class ProjectFragment extends Fragment {
         super.onStop();
         mAdapter.stopListening();
     }
+
+
 }
