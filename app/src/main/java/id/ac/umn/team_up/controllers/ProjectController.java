@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -72,7 +74,7 @@ public class ProjectController {
     private static NestedScrollView nested_scroll_view;
     private static Task<QuerySnapshot> load_task;
 
-    public static void postProject(final AppCompatActivity app, String project_title, String project_description, List<String> upload_url){
+    public static void postProject(final AppCompatActivity app, String project_title, String project_description, String project_location, List<String> upload_url){
         // Get Shared Preference
         SharedPreferences sharedPref = Utils.getSharedPref(app);
 
@@ -100,6 +102,7 @@ public class ProjectController {
         project.put("id", document_id);
         project.put("title", project_title);
         project.put("description", project_description);
+        project.put("location", project_location);
         project.put("adminId", mAuth.getUid());
         project.put("adminFullname", fullname);
         project.put("adminPicture", picture);
