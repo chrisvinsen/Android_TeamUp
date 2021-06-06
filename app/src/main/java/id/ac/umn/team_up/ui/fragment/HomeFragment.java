@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment {
 
             SharedPreferences sharedPref = Utils.getSharedPref(getActivity().getApplicationContext());
             String picture = sharedPref.getString("upicture", "");
-            if(picture != "" && picture != null){
+            if(!picture.isEmpty() && picture != null){
                 Picasso.get().load(picture).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into((ImageView) view.findViewById(R.id.profile_picture_beside_search));
             }
             else{

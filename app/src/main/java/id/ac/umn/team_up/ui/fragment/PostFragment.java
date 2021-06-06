@@ -176,7 +176,7 @@ public class PostFragment extends Fragment implements LocationListener {
             Log.e("map values", entry.getKey() + ": " + entry.getValue().toString());
         }
         profile_fullname.setText(fullname);
-        if(picture != "" && picture != null){
+        if(!picture.isEmpty() && picture != null){
             Picasso.get().load(picture).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(profile_picture);
         }
         else{
