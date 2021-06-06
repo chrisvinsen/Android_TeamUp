@@ -159,7 +159,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
                 SharedPreferences sharedPref = Utils.getSharedPref(mContext.getApplicationContext());
 
                 // Put member into map
-                Map<String, String> member = new HashMap<>();
+                Map<String, Object> member = new HashMap<>();
                 member.put("userId", mAuth.getUid());
                 member.put("projectId", project.getId());
 
@@ -169,6 +169,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
                 member.put("fullName", fullname);
                 member.put("role", "Member");
                 member.put("picture", picture);
+                member.put("isMember", false);
 
                 // Set map into collection
                 memberRef.document().set(member)
