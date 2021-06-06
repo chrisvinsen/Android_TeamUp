@@ -21,7 +21,7 @@
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:columnCount="2"
+                    android:columnCount="3"
                     android:padding="10dp">
                     <ImageView
                         android:id="@+id/profile_picture_beside_search"
@@ -36,12 +36,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:hint="Search"
+                        android:padding="10dp"
                         android:layout_marginLeft="15dp"
                         android:background="@drawable/input_box"
-                        android:drawableLeft="@drawable/smaller_ic_search"
                         android:drawablePadding="10dp"
                         android:paddingLeft="5dp"
                         android:layout_gravity="left|center_vertical|fill_horizontal"/>
+                    <ImageButton
+                        android:id="@+id/search_button"
+                        android:layout_width="28dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="15dp"
+                        android:background="@null"
+                        android:src="@drawable/smaller_ic_search"/>
+
                 </GridLayout>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"

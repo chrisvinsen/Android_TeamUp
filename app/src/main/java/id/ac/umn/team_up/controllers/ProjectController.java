@@ -238,7 +238,7 @@ public class ProjectController {
                 });
     }
 
-    public static void getAllProjectPost(RecyclerView recycler_view, View view, CharSequence s){
+    public static void getAllProjectPost(RecyclerView recycler_view, View view, String s){
         projects= new ArrayList<Project>();
 
         Query query;

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -61,6 +62,8 @@ public class HomeFragment extends Fragment {
     private static List<Project> projects;
     private static View view;
     private static EditText search_edit;
+    private static ImageButton search_button;
+    private static String search_string;
 
 
     public HomeFragment() {
@@ -102,6 +105,8 @@ public class HomeFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_home, container, false);
 
             search_edit = (EditText) view.findViewById(R.id.search_edit);
+            search_button = (ImageButton) view.findViewById(R.id.search_button);
+            search_string = new String("");
             final SwipeRefreshLayout pullToRefresh = view.findViewById(R.id.pull_to_refresh);
             pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -110,6 +115,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void run() {
                             search_edit.setText("");
+                            search_string = new String("");
                         }
                     });
                     ProjectController.getProjectPost(recycler_view, view);
@@ -128,6 +134,22 @@ public class HomeFragment extends Fragment {
 
 
             // Search functionality
+            search_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!search_string.equals("")){
+                        search_button.setEnabled(false);
+                        ProjectController.getAllProjectPost(recycler_view, view, search_string);
+                        Utils.delayForSomeSeconds(1000, new Runnable() {
+                            @Override
+                            public void run() {
+                                search_button.setEnabled(true);
+                            }
+                        });
+                    }
+                }
+            });
+
             search_edit.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -136,8 +158,9 @@ public class HomeFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(s.length() == 1){
-                        ProjectController.getAllProjectPost(recycler_view, view, s);
+                    if(s.length() >= 1){
+                        search_string = s.toString();
+                        Log.d("onchanged", search_string);
                     }
                     else if(s.length() == 0){
                         ProjectController.getProjectPost(recycler_view, view);
