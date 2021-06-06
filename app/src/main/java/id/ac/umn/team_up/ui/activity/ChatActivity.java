@@ -1,5 +1,7 @@
 package id.ac.umn.team_up.ui.activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,6 +29,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private Button btnTodoList;
     private Button btnChat;
+    private Button btnProjectMember;
     private String projectID;
     private String fullname;
     private String projectTitle;
@@ -35,8 +39,11 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
         btnTodoList = findViewById(R.id.btnTodoList);
         btnChat = findViewById(R.id.btnChat);
+        btnProjectMember = findViewById(R.id.btnProjectMember);
+
         Intent intent = getIntent();
         this.projectID = intent.getStringExtra("groupID");
         this.fullname = intent.getStringExtra("curretUser");
@@ -61,7 +68,13 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        btnProjectMember.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View view) {
+                ProjectMemberIntent();
+            }
+        });
 
     }
 
@@ -70,8 +83,22 @@ public class ChatActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.bottom_navigation_menu, menu);
 
-
         return true;
+    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.projectmember:
+//                ProjectMemberIntent();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
+    private void ProjectMemberIntent() {
+        Intent intent = new Intent(this, ProjectMemberActivity.class);
+        intent.putExtra("projectId", this.projectID);
+        startActivity(intent) ;
     }
 
     public void initView(){

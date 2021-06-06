@@ -396,9 +396,12 @@ public class ProjectController {
         });
     }
 
-    public static void getProjectMembers(RecyclerView rvProjectMember, View v, String projectId){
+    public static void getProjectMembers(RecyclerView rvProjectMember, Context context, String projectId){
         Log.d("PROJECTIDPM", projectId);
-        memberRef.whereEqualTo("projectId", projectId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+        memberRef.whereEqualTo("projectId", projectId)
+                .whereEqualTo("isMember", true)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 ArrayList<ProjectMember> projectMembers = new ArrayList<>();
@@ -410,8 +413,8 @@ public class ProjectController {
                     projectMembers.add(dc.getDocument().toObject(ProjectMember.class));
                 }
                 ProjectMemberAdapter mProjectMemberAdapter;
-                mProjectMemberAdapter = new ProjectMemberAdapter(v.getContext(), projectMembers);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(v.getContext());
+                mProjectMemberAdapter = new ProjectMemberAdapter(context, projectMembers);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
                 rvProjectMember.setHasFixedSize(true);
                 rvProjectMember.setLayoutManager(linearLayoutManager);
                 rvProjectMember.setAdapter(mProjectMemberAdapter);
