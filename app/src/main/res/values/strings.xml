@@ -8,4 +8,7 @@
     <string name="ongoing_project">Ongoing Projects</string>
     <string name="ended_project">Ended Projects</string>
     <string name="forgot_password">Forgot\nPassword?</string>
+    <string name="end_project">End Project</string>
+    <string name="members">Members</string>
+    <string name="settings">Settings</string>
 </resources>

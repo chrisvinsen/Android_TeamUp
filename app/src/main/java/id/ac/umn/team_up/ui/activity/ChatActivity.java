@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import id.ac.umn.team_up.R;
@@ -84,5 +86,28 @@ public class ChatActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void showProjectDropDown(View view) {
+        PopupMenu popup = new PopupMenu(this, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.project_drop_down_menu, popup.getMenu());
+        popup.show();
 
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.project_members:
+                        Intent intentProfile = new Intent(ChatActivity.this, ProjectMembersActivity.class);
+                        startActivityForResult(intentProfile, 1);
+                        return true;
+                    case R.id.project_settings:
+                        Intent intentMain = new Intent(ChatActivity.this, ProjectSettingsActivity.class);
+                        startActivityForResult(intentMain, 1);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
 }

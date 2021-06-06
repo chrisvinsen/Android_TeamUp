@@ -18,10 +18,13 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
+
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.Project;
+import id.ac.umn.team_up.models.ProjectMember;
 import id.ac.umn.team_up.models.User;
 import id.ac.umn.team_up.ui.fragment.HomeFragment;
 import id.ac.umn.team_up.ui.fragment.NotificationFragment;
@@ -114,5 +117,10 @@ public class MainActivity extends AppCompatActivity {
         bundle.putBoolean("isOngoing", isOngoing);
         fragment.setArguments(bundle);
         openFragment(fragment);
+    }
+
+    public void endTheProject(View view) {
+//        String projectId = "6AKu0PSo41AeRZ5UjPh6";
+//        List<ProjectMember>
     }
 }

@@ -3,7 +3,7 @@
     package="id.ac.umn.team_up">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -12,9 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TeamUp">
-        <activity android:name=".ui.activity.ChatActivity"></activity>
-        <activity android:name=".ui.activity.ProfileSettingActivity"></activity>
-        <activity android:name=".ui.activity.ForgotPasswordActivity"></activity>
+        <activity android:name=".ui.activity.ProjectSettingsActivity"></activity>
+        <activity android:name=".ui.activity.ProjectMembersActivity" />
+        <activity android:name=".ui.activity.PeerAssessmentActivity" />
+        <activity android:name=".ui.activity.ChatActivity" />
+        <activity android:name=".ui.activity.ProfileSettingActivity" />
+        <activity android:name=".ui.activity.ForgotPasswordActivity" />
         <activity android:name=".ui.activity.ProfileSettingActivity" />
         <activity android:name=".ui.activity.ProfileSettingSkillActivity" />
         <activity android:name=".ui.activity.ProfileSettingProjectActivity" />
@@ -43,7 +46,6 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait" />
-<!--        <activity android:name=".ui.activity.project.ProjectViewHolder" />-->
     </application>
 
 </manifest>
