@@ -1,7 +1,5 @@
 package id.ac.umn.team_up.ui.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -9,7 +7,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,11 +16,12 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import id.ac.umn.team_up.R;
-import id.ac.umn.team_up.models.ProjectMember;
-import id.ac.umn.team_up.ui.fragment.ChatFragment;
-import id.ac.umn.team_up.ui.fragment.TodolistFragment;
+import id.ac.umn.team_up.ui.fragment.project_activity.ChatFragment;
+import id.ac.umn.team_up.ui.fragment.project_activity.MembersFragment;
+import id.ac.umn.team_up.ui.fragment.project_activity.SettingsFragment;
+import id.ac.umn.team_up.ui.fragment.project_activity.TodolistFragment;
 
-public class ChatActivity extends AppCompatActivity {
+public class ProjectActivity extends AppCompatActivity {
 
     private Fragment fragment;
     private FragmentManager fragmentManager = getFragmentManager();
@@ -125,12 +123,10 @@ public class ChatActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.project_members:
-                        Intent intent = ProjectMemberIntent();
-                        startActivityForResult(intent, 1);
+                        openFragment(new MembersFragment().newInstance(projectID, ""));
                         return true;
                     case R.id.project_settings:
-                        Intent intentSettings = new Intent(ChatActivity.this, ProjectSettingsActivity.class);
-                        startActivityForResult(intentSettings, 1);
+                        openFragment(new SettingsFragment().newInstance(projectID, ""));
                         return true;
                     default:
                         return false;
