@@ -30,6 +30,7 @@ import java.util.Map;
 import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.models.Project;
+import id.ac.umn.team_up.models.ProjectMember;
 import id.ac.umn.team_up.ui.activity.MainActivity;
 import id.ac.umn.team_up.ui.activity.recycleviews.notification.NotificationItemAdapter;
 
@@ -91,7 +92,7 @@ public class NotificationController {
     }
 
     public static void loadProjectMemberRequestNotification(Context context){
-        projectMembers.whereEqualTo("adminId", mAuth.getUid()).whereEqualTo("isMember", "false")
+        projectMembers.whereEqualTo("adminId", mAuth.getUid()).whereEqualTo("isMember", false)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -101,6 +102,9 @@ public class NotificationController {
                         }
                         for(DocumentChange dc: value.getDocumentChanges()) {
                             Log.e("DOCUMENTID", dc.getDocument().getId());
+                            ProjectMember pm = dc.getDocument().toObject(ProjectMember.class);
+                            Log.e("MEMBERNAME", pm.getFullName());
+                            Log.e("PROJECTID", pm.getProjectId());
 //                    adapter.notifyDataSetChanged();
                             if (dc.getType() == DocumentChange.Type.ADDED) {
                                 Log.e("NOTIF", "something added");
