@@ -1,5 +1,7 @@
 package id.ac.umn.team_up.ui.activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -18,6 +20,7 @@ import android.widget.TextView;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.ui.fragment.ChatFragment;
+import id.ac.umn.team_up.ui.fragment.TodolistFragment;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -27,6 +30,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private Button btnTodoList;
     private Button btnChat;
+    private Button btnProjectMember;
     private String projectID;
     private String fullname;
     private String projectTitle;
@@ -36,8 +40,11 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
         btnTodoList = findViewById(R.id.btnTodoList);
         btnChat = findViewById(R.id.btnChat);
+        btnProjectMember = findViewById(R.id.btnProjectMember);
+
         Intent intent = getIntent();
         this.projectID = intent.getStringExtra("groupID");
         this.fullname = intent.getStringExtra("curretUser");
@@ -58,11 +65,17 @@ public class ChatActivity extends AppCompatActivity {
         btnTodoList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todolist fragment
+                openFragment(new TodolistFragment().newInstance(projectID,""));
             }
         });
 
+        btnProjectMember.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View view) {
+                ProjectMemberIntent();
+            }
+        });
 
     }
 
@@ -71,8 +84,22 @@ public class ChatActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.bottom_navigation_menu, menu);
 
-
         return true;
+    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.projectmember:
+//                ProjectMemberIntent();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
+    private void ProjectMemberIntent() {
+        Intent intent = new Intent(this, ProjectMemberActivity.class);
+        intent.putExtra("projectId", this.projectID);
+        startActivity(intent) ;
     }
 
     public void initView(){
@@ -109,5 +136,10 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+        
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 }

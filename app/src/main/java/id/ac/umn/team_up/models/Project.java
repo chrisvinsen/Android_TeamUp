@@ -26,12 +26,14 @@ public class Project implements Serializable {
     @Nullable
     private Message recentM;
     // private Map<String,String> recentMessage;
+    @Nullable
+    private String recentMessageSender;
 
     public Project(){
         //empty constructor
     }
 
-    public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, List<String> images, boolean isOngoing, List<String> members, List<String> membersRequest, List<String> toDoList, String createdAt, @Nullable Date endedAt, @Nullable String recentMessage, @Nullable Date sentAt){
+    public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, List<String> images, boolean isOngoing, List<String> members, List<String> membersRequest, List<String> toDoList, String createdAt, @Nullable Date endedAt, @Nullable String recentMessage, @Nullable Date sentAt,@Nullable String recentMessageSender){
         this.id = id;
         this.adminId = adminId;
         this.adminFullname = adminFullname;
@@ -47,11 +49,12 @@ public class Project implements Serializable {
         this.endedAt = endedAt;
         this.recentMessage = recentMessage;
         this.sentAt = sentAt;
+        this.recentMessage = recentMessageSender;
         Long t = Long.parseLong(createdAt);
         this.createdAt = new Date(t*1000);
     }
 
-    public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, List<String> images, boolean isOngoing, List<String> members, List<String> toDoList, String createdAt, @Nullable Date endedAt, @Nullable String recentMessage, @Nullable Date sentAt){
+    public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, List<String> images, boolean isOngoing, List<String> members, List<String> toDoList, String createdAt, @Nullable Date endedAt, @Nullable String recentMessage, @Nullable Date sentAt, @Nullable String recentMessageSender){
         this.id = id;
         this.adminId = adminId;
         this.adminFullname = adminFullname;
@@ -66,6 +69,7 @@ public class Project implements Serializable {
         this.endedAt = endedAt;
         this.recentMessage = recentMessage;
         this.sentAt = sentAt;
+        this.recentMessageSender = recentMessageSender;
         Long t = Long.parseLong(createdAt);
         this.createdAt = new Date(t*1000);
     }
@@ -135,6 +139,9 @@ public class Project implements Serializable {
         return sentAt;
     }
 
+    @Nullable
+    public String getRecentMessageSender(){ return recentMessageSender;}
+
     public void setRecentMessage(@Nullable String recentMessage) {
         this.recentMessage = recentMessage;
     }
@@ -143,6 +150,10 @@ public class Project implements Serializable {
 //        Long t = Long.parseLong(sentAt);
 //        this.sentAt = new Date(t*1000);
         this.sentAt = sentAt;
+    }
+
+    public void setRecentMessageSender(String sender){
+        this.recentMessageSender = sender;
     }
 
     @Nullable

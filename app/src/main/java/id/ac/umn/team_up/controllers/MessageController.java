@@ -63,11 +63,6 @@ public class MessageController {
 
     private static MessageListAdapter mMessageAdapter;
 
-    //argument group id
-    public void getMessage(String GroupID){
-
-
-    }
 
     //sendmessage
     public static void sentMessage(String projectId, String fullname,String userId, String msg, String attachment){
@@ -75,7 +70,7 @@ public class MessageController {
 
         Map<String, Object> message = new HashMap<>();
 
-        //random id
+        //time id
         AtomicLong LAST_TIME_MS = new AtomicLong();
         long now = System.currentTimeMillis();
         while(true) {
@@ -111,52 +106,6 @@ public class MessageController {
     public static void getMessage(RecyclerView rv, View v, String userId, String projectId){
         ArrayList<Message> messageList = new ArrayList<Message>();
         Log.d("GroupID", projectId);
-
-//        messagesRef.whereEqualTo("groupId",groupId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if(task.isSuccessful()){
-//                    for(DocumentSnapshot document : task.getResult()){
-//                        Log.d("check", document.toString());
-//                        Message message = document.toObject(Message.class);
-//                        messageList.add(message);
-//                    }
-//
-////                    Log.d("MESSAGELIST", messageList.get(0).getMessage());
-////                    Log.d("UserID", userId);
-//                    mMessageAdapter = new MessageListAdapter(v.getContext(),messageList,userId);
-//                    rv.setLayoutManager(new LinearLayoutManager(v.getContext()));
-//                    rv.setAdapter(mMessageAdapter);
-//
-//                }
-//            }
-//        });
-
-//        messagesRef.whereEqualTo("groupId",groupId).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                if(!queryDocumentSnapshots.isEmpty()){
-//                    Log.d("CHEKPOINT","1");
-//                    for(DocumentSnapshot document : queryDocumentSnapshots){
-//                        Log.d("check", document.toString());
-//                        Message message = document.toObject(Message.class);
-//                        messageList.add(message);
-//                    }
-//
-////                    Log.d("MESSAGELIST", messageList.get(0).getMessage());
-////                    Log.d("UserID", userId);
-//                    mMessageAdapter = new MessageListAdapter(v.getContext(),messageList,userId);
-//                    rv.setLayoutManager(new LinearLayoutManager(v.getContext()));
-//                    rv.setAdapter(mMessageAdapter);
-//
-//                }
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
 //
         //setting progress dialog for user experience
         ProgressDialog progressDialog = new ProgressDialog(v.getContext());
@@ -206,6 +155,7 @@ public class MessageController {
                         for(DocumentChange dc: value.getDocumentChanges()){
                             if(dc.getType() == DocumentChange.Type.ADDED){
                                 Message recentMessage = dc.getDocument().toObject(Message.class);
+
                                 DocumentReference projectRef = projectsRef.document(recentMessage.getProjectId());
                                 projectRef.get()
                                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -217,7 +167,9 @@ public class MessageController {
                                                         Project project = document.toObject(Project.class);
                                                         Log.d("GETRECENTMESSAGE", "DocumentSnapshot data: " + document.getData());
                                                         project.setRecentMessage(recentMessage.getMessage());
+                                                        project.setRecentMessageSender(recentMessage.getFullName());
                                                         Log.d("GETRECENTMESSAGE", recentMessage.getMessage());
+                                                        Log.d("GETRECENTMESSAGESENDER", recentMessage.getFullName());
                                                         if(recentMessage.getCreatedAt() != null){
                                                             project.setSentAt(recentMessage.getCreatedAt());
                                                         } else {
