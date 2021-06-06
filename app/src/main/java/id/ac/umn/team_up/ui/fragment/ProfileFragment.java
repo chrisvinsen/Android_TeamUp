@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -37,6 +38,7 @@ import java.io.FileOutputStream;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
+import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.User;
 import id.ac.umn.team_up.ui.activity.ProfileSettingAboutActivity;
@@ -44,7 +46,9 @@ import id.ac.umn.team_up.ui.activity.ProfileSettingActivity;
 import id.ac.umn.team_up.ui.activity.ProfileSettingMainActivity;
 import id.ac.umn.team_up.ui.activity.ProfileSettingProjectActivity;
 import id.ac.umn.team_up.ui.activity.ProfileSettingSkillActivity;
+import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
 import id.ac.umn.team_up.ui.adapter.FlexboxSkillsAdapter;
+import id.ac.umn.team_up.ui.adapter.ProfileProjectAdapter;
 
 public class ProfileFragment extends Fragment {
     private ImageView imgProfile;
@@ -52,8 +56,9 @@ public class ProfileFragment extends Fragment {
     private User currentUser;
     private TextView tvFullname, tvHeadline, tvAbout;
 
-    RecyclerView recyclerView;
-    FlexboxSkillsAdapter adapter;
+    RecyclerView rvSkills, rvProjectList;
+    FlexboxSkillsAdapter adapterSkill;
+    ProfileProjectAdapter adapterProject;
 
     private static final int CHANGE_PROFILE_PICTURE = 123;
 
@@ -125,7 +130,15 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        recyclerView = view.findViewById(R.id.recyclerView);
+        rvSkills = view.findViewById(R.id.rvSkills);
+
+        rvProjectList = view.findViewById(R.id.rvProject);
+
+        adapterProject = new ProfileProjectAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), true, true), (AppCompatActivity) getActivity() );
+
+        ProjectController.listenToProfileProjectChanges(getContext(), adapterProject, UserController.getUserId());
+        rvProjectList.setAdapter(adapterProject);
+        rvProjectList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return view;
     }
@@ -179,9 +192,9 @@ public class ProfileFragment extends Fragment {
 
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
         layoutManager.setFlexDirection(FlexDirection.ROW);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new FlexboxSkillsAdapter(getContext(), currentUser.getSkills());
-        recyclerView.setAdapter(adapter);
+        rvSkills.setLayoutManager(layoutManager);
+        adapterSkill = new FlexboxSkillsAdapter(getContext(), currentUser.getSkills());
+        rvSkills.setAdapter(adapterSkill);
     }
 
 
@@ -191,6 +204,14 @@ public class ProfileFragment extends Fragment {
 
         Log.d("info", "start");
         refreshUI();
+
+        adapterProject.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapterProject.stopListening();
     }
 
     @Override

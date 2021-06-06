@@ -51,6 +51,7 @@ import id.ac.umn.team_up.ui.activity.post.PostAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.projectmember.ProjectMemberAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.todolist.TodoListAdapter;
+import id.ac.umn.team_up.ui.adapter.ProfileProjectAdapter;
 
 public class ProjectController {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -267,15 +268,19 @@ public class ProjectController {
         });
     }
 
-    public static FirestoreRecyclerOptions<Project> loadUsersProjectOptions(String userId, boolean isOngoing){
+    public static FirestoreRecyclerOptions<Project> loadUsersProjectOptions(String userId, boolean isOngoing, boolean isNotGoingOn){
         Query query;
         Log.e("USERID", userId);
-        if(isOngoing){
+        if (isOngoing && isNotGoingOn) {
+            query =  projectsRef.whereArrayContains("members", userId);
+        } else if (isOngoing) {
             query =  projectsRef.whereArrayContains("members", userId).whereEqualTo("isOngoing", true);
-        }
-        else{
+        } else if (isNotGoingOn){
             query =  projectsRef.whereArrayContains("members", userId).whereEqualTo("isOngoing", false);
+        } else {
+            query =  projectsRef.whereArrayContains("members", userId);
         }
+
         FirestoreRecyclerOptions<Project> options = new FirestoreRecyclerOptions.Builder<Project>()
                 .setQuery(query, Project.class)
                 .build();
@@ -298,7 +303,30 @@ public class ProjectController {
                         adapter.notifyDataSetChanged();
                         Log.e("LISTENTOPROJECTCHANGES", "added");
                     }
-                    if(dc.getType() == DocumentChange.Type.MODIFIED){
+                    if (dc.getType() == DocumentChange.Type.MODIFIED){
+                        adapter.notifyDataSetChanged();
+                        Log.e("LISTENTOPROJECTCHANGES", "modified");
+                    }
+                }
+            }
+        });
+    }
+
+    public static void listenToProfileProjectChanges(Context c, ProfileProjectAdapter adapter, String userId){
+        projectsRef.whereArrayContains("members", userId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Utils.show(c, "Error listening to project changes");
+                    return;
+                }
+                for(DocumentChange dc: value.getDocumentChanges()) {
+//                    adapter.notifyDataSetChanged();
+                    if (dc.getType() == DocumentChange.Type.ADDED) {
+                        adapter.notifyDataSetChanged();
+                        Log.e("LISTENTOPROJECTCHANGES", "added");
+                    }
+                    if (dc.getType() == DocumentChange.Type.MODIFIED){
                         adapter.notifyDataSetChanged();
                         Log.e("LISTENTOPROJECTCHANGES", "modified");
                     }
