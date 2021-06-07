@@ -162,6 +162,7 @@ public class ProjectController {
         member.put("picture", picture);
         member.put("isMember", true);
         member.put("isAdmin", true);
+        member.put("adminId", mAuth.getUid());
 
         // Set map into collection
         memberRef.document().set(member)
@@ -458,5 +459,24 @@ public class ProjectController {
     public static void endProject(String projectId){
         projectsRef.document(projectId).update("isOngoing", false);
         projectsRef.document(projectId).update("endedAt", FieldValue.serverTimestamp());
+    }
+    
+    public static void updateProjectSetting(String projectId, String title, String desc){
+        DocumentReference projectRef = projectsRef.document(projectId);
+        projectsRef.document(projectId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        Project project = document.toObject(Project.class);
+                        project.setTitle(title);
+                        project.setDescription(desc);
+                        projectRef.set(project, SetOptions.merge());
+
+                    }
+                }
+            }
+        });
     }
 }

@@ -32,10 +32,10 @@ public class ChatActivity extends AppCompatActivity {
 
     private Button btnTodoList;
     private Button btnChat;
-    private Button btnProjectMember;
     private String projectID;
     private String fullname;
     private String projectTitle;
+    private String projectDesc;
 
 
     @Override
@@ -45,12 +45,13 @@ public class ChatActivity extends AppCompatActivity {
 
         btnTodoList = findViewById(R.id.btnTodoList);
         btnChat = findViewById(R.id.btnChat);
-//        btnProjectMember = findViewById(R.id.btnProjectMember);
+//        btnProjectMember = findViewById(R.id.btnProjectMember);s
 
         Intent intent = getIntent();
         this.projectID = intent.getStringExtra("groupID");
         this.fullname = intent.getStringExtra("curretUser");
         this.projectTitle = intent.getStringExtra("projectTitle");
+        this.projectDesc = intent.getStringExtra("projectDesc");
 
         TextView tvProjectTitle = findViewById(R.id.project_details_title_text);
         tvProjectTitle.setText(this.projectTitle);
@@ -130,11 +131,7 @@ public class ChatActivity extends AppCompatActivity {
                         startActivityForResult(intent, 1);
                         return true;
                     case R.id.project_settings:
-//                        HashMap<String,String> projectInfo = ProjectController.getProjectTitleAndDescription(projectID);
-//                        Log.e("HASHMAP", projectInfo.get("title"));
-//                        openFragment(new SettingsFragment().newInstance(projectInfo.get("title"), projectInfo.get("description")));
-                        Intent intentSettings = new Intent(ChatActivity.this, ProjectSettingsActivity.class);
-                        startActivityForResult(intentSettings, 1);
+                        openFragment(new SettingsFragment().newInstance(projectID, projectTitle, projectDesc, fullname));
                         return true;
                     default:
                         return false;

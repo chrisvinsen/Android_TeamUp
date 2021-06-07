@@ -18,7 +18,7 @@ public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.
     private TextView tvProjectListName, tvProjectListChatTime, tvProjectListRecentChatText;
     private ImageView ivProjectGroupIcon;
     private ProjectListAdapter.itemClickListener itemClickListener;
-    private String groupID;
+    private String groupID, projectDesc;
     private AppCompatActivity app;
 
     public ProjectsViewHolder(@NonNull View itemView,AppCompatActivity app) {
@@ -43,6 +43,9 @@ public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.
         this.groupID = id;
     }
 
+    public void setprojectDesc(String desc){
+        this.projectDesc = desc;
+    }
 
     public void setTvProjectListChatTime(String tvProjectListChatTime) {
         this.tvProjectListChatTime.setText(tvProjectListChatTime);
@@ -73,6 +76,7 @@ public class ProjectsViewHolder extends RecyclerView.ViewHolder implements View.
         Intent intent = new Intent(v.getContext(), ChatActivity.class);
         //sending project id
         intent.putExtra("groupID",this.groupID);
+        intent.putExtra("projectDesc", this.projectDesc);
         intent.putExtra("curretUser", UserController.getCurrentUser(v.getContext()).getFullName());
         intent.putExtra("projectTitle", String.valueOf(getTvProjectListName().getText()));
         Log.e("ONCLICKPROJECT", String.valueOf(getTvProjectListName().getText()));

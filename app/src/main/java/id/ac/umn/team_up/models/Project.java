@@ -180,6 +180,14 @@ public class Project implements Serializable {
         this.sentAt = sentAt;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public void setRecentMessageSender(String sender){
         this.recentMessageSender = sender;
     }
