@@ -58,14 +58,14 @@ public class  NotificationItemAdapter extends RecyclerView.Adapter<NotificationA
             holder.btnReject.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NotificationController.onDelete(reqMember.get(position));
+                    NotificationController.onDelete(reqMember.get(position), position);
                 }
             });
 
             holder.btnAcc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NotificationController.onAccept(reqMember.get(position));
+                    NotificationController.onAccept(reqMember.get(position), position);
                 }
             });
 

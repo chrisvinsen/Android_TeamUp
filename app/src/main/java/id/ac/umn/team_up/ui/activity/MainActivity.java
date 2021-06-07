@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        NotificationController.loadProjectMemberRequestNotification(getApplicationContext());
-        NotificationController.getProject(getApplicationContext());
+        //NotificationController.loadProjectMemberRequestNotification(getApplicationContext());
+        //NotificationController.getProject(getApplicationContext());
     }
 }

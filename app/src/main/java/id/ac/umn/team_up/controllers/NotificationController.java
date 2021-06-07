@@ -145,24 +145,38 @@ public class NotificationController {
 //                                }
 //                            }
 //
-
+                                Log.d("DOCUMENTTYPE", dc.getType().toString());
+                                Log.e("OLDINDEX", String.valueOf(dc.getOldIndex()));
                                 // not new item and not equal to the prev index in reqMember
-                                if(dc.getOldIndex() == -1 ) {
+//                                if(dc.getOldIndex() == -1 ) {
+//                                    reqMember.add(pm);
+//                                    Log.e("SIZEREQMEMBER", String.valueOf(reqMember.size()));
+//
+//                                    if(madapter != null){
+//                                        madapter.notifyDataSetChanged();
+//                                    }
+//                                }
+//                                else if(!reqMember.get(dc.getOldIndex()).getFullName().equals(pm.getFullName()) && (dc.getType() == DocumentChange.Type.ADDED) ){
+//                                    reqMember.add(pm);
+//                                    Log.e("SIZEREQMEMBER", String.valueOf(reqMember.size()));
+//
+//                                    if(madapter != null){
+//                                        madapter.notifyDataSetChanged();
+//                                    }
+//
+//
+//                                }
+
+                                if(dc.getType() == DocumentChange.Type.ADDED  ){
                                     reqMember.add(pm);
+                                    Log.e("SIZEREQMEMBER", String.valueOf(reqMember.size()));
 
                                     if(madapter != null){
                                         madapter.notifyDataSetChanged();
                                     }
                                 }
-                                else if(!reqMember.get(dc.getOldIndex()).getFullName().equals(pm.getFullName())){
-                                    reqMember.add(pm);
-
-                                    if(madapter != null){
-                                        madapter.notifyDataSetChanged();
-                                    }
 
 
-                                }
 
 
                                 //adding to the arraylist
@@ -183,6 +197,7 @@ public class NotificationController {
                                     Log.e("NOTIF", "something modified");
 //                                adapter.notifyDataSetChanged();
 //                                Log.e("LISTENTOPROJECTCHANGES", "modified");
+
                                     String projectId = reqMember.get(dc.getOldIndex()).getProjectId();
                                     reqMember.remove(dc.getOldIndex());
 
@@ -190,7 +205,7 @@ public class NotificationController {
                                         madapter.notifyDataSetChanged();
                                     }
 
-                                    updateFieldReqMember(reqMember,projectId);
+                                    //updateFieldReqMember(reqMember,projectId);
 
 
 
@@ -202,6 +217,7 @@ public class NotificationController {
 //                                Log.e("OLDINDEX", String.valueOf(dc.getOldIndex())); //to get the index
 //                                Log.e("NEWINDEX", String.valueOf(dc.getNewIndex()));
                                     String projectId = reqMember.get(dc.getOldIndex()).getProjectId();
+
                                     reqMember.remove(dc.getOldIndex());
 
                                     if(madapter != null){
@@ -222,19 +238,23 @@ public class NotificationController {
     }
 
 
-    public static void onDelete(ProjectMember member){
+    public static void onDelete(ProjectMember member, Integer position){
         Log.e("ONDELETEDOCUMENT", member.getDocumentId());
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("ProjectMembers").document(member.getDocumentId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Log.d("REMOVED",member.getDocumentId());
+
+                if(task.isSuccessful()){
+                    Log.d("REMOVED",member.getDocumentId());
+
+                }
             }
         });
 
     }
 
-    public static void onAccept(ProjectMember member){
+    public static void onAccept(ProjectMember member, Integer position){
         member.setMember(true);
         //Log.e("ACCEPTDOCUMENTID",member.getDocumentId());
 
