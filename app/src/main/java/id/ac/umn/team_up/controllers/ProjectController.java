@@ -54,7 +54,6 @@ import id.ac.umn.team_up.ui.adapter.ProfileProjectAdapter;
 
 public class ProjectController {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private static DatabaseReference db ;
     private static FirebaseFirestore db_firestore = FirebaseFirestore.getInstance();
     private static CollectionReference projectsRef = db_firestore.collection("ProjectDetails");
     private static CollectionReference memberRef = db_firestore.collection("ProjectMembers");
@@ -449,5 +448,34 @@ public class ProjectController {
                 rvProjectMember.setAdapter(mProjectMemberAdapter);
             }
         });
+    }
+
+    public static HashMap<String,String> getProjectTitleAndDescription(String projectId){
+        HashMap<String, String> projectInformation = new HashMap<>();
+        projectsRef.document(projectId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    Log.e("SUCCESS", "ye");
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.e("DOCUMENT DATA", String.valueOf(document.getData()));
+                        Project project = document.toObject(Project.class);
+                        if(project.getTitle() != null){
+                            Log.e("PROJECTTITLE", project.getTitle());
+                        } else {
+                            Log.e("NULL", "title is null");
+                        }
+                        projectInformation.put("description", project.getDescription());
+                        projectInformation.put("title", project.getTitle());
+                    } else {
+                        Log.d("NOTFOUND", "document not found");
+                    }
+                } else {
+                    Log.d("ERROR", "get failed with ", task.getException());
+                }
+            }
+        });
+        return projectInformation;
     }
 }

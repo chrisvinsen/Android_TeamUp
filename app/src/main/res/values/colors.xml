@@ -11,4 +11,5 @@
     <color name="appbar_border_bottom">#23F47C0C</color>
     <color name="orange">#F47C0C</color>
     <color name="grey_disabled">#D3D3D3</color>
+    <color name="persian_red">#CA3433</color>
 </resources>
