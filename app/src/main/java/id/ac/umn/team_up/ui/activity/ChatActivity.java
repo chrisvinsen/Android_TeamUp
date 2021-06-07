@@ -19,6 +19,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.models.ProjectMember;
 import id.ac.umn.team_up.ui.fragment.ChatFragment;
 import id.ac.umn.team_up.ui.fragment.TodolistFragment;
@@ -70,13 +71,13 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        btnProjectMember.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                ProjectMemberIntent();
-            }
-        });
+//        btnProjectMember.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View view) {
+//                ProjectMemberIntent();
+//            }
+//        });
 
     }
 
