@@ -19,7 +19,6 @@
         <activity android:name=".ui.activity.ProfileSettingActivity" />
         <activity android:name=".ui.activity.ForgotPasswordActivity" />
         <activity android:name=".ui.activity.ProfileSettingSkillActivity" />
-        <activity android:name=".ui.activity.ProfileSettingProjectActivity" />
         <activity android:name=".ui.activity.ProfileSettingAboutActivity" />
         <activity android:name=".ui.activity.ProfileSettingMainActivity" />
         <activity

@@ -44,15 +44,13 @@ import id.ac.umn.team_up.models.User;
 import id.ac.umn.team_up.ui.activity.ProfileSettingAboutActivity;
 import id.ac.umn.team_up.ui.activity.ProfileSettingActivity;
 import id.ac.umn.team_up.ui.activity.ProfileSettingMainActivity;
-import id.ac.umn.team_up.ui.activity.ProfileSettingProjectActivity;
 import id.ac.umn.team_up.ui.activity.ProfileSettingSkillActivity;
-import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
 import id.ac.umn.team_up.ui.adapter.FlexboxSkillsAdapter;
 import id.ac.umn.team_up.ui.adapter.ProfileProjectAdapter;
 
 public class ProfileFragment extends Fragment {
     private ImageView imgProfile;
-    private ImageButton btnMenu, btnEditPhoto, btnEditMain, btnEditAbout, btnEditProject, btnEditSkill;
+    private ImageButton btnMenu, btnEditPhoto, btnEditMain, btnEditAbout, btnEditSkill;
     private User currentUser;
     private TextView tvFullname, tvHeadline, tvAbout;
 
@@ -107,15 +105,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ProfileSettingAboutActivity.class);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
-        btnEditProject = view.findViewById(R.id.btnEditProject);
-        btnEditProject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ProfileSettingProjectActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
