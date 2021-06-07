@@ -1,6 +1,7 @@
 package id.ac.umn.team_up.ui.activity.recycleviews.message;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,12 +69,14 @@ public class MessageListAdapter extends RecyclerView.Adapter {
                 //message body
                 ((SentMessageHolder) holder).setTvMessageText(mMessageList.get(position).getMessage());
 
+                //Log.d("DATE",mMessageList.get(position).getCreatedAt().toString());
+
                 //date
-                ((SentMessageHolder) holder).setTvMessageDate(Utils.getDateforChat(mMessageList.get(position).getCreatedAt()));
+                //((SentMessageHolder) holder).setTvMessageDate(Utils.getDateforChat(mMessageList.get(position).getCreatedAt()));
 
 
                 //time
-                ((SentMessageHolder) holder).setTvMessageTime(Utils.getHourAndMinute(mMessageList.get(position).getCreatedAt()));
+                //((SentMessageHolder) holder).setTvMessageTime(Utils.getHourAndMinute(mMessageList.get(position).getCreatedAt()));
 
 
                 break;
@@ -84,11 +87,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
                 //name
                 ((ReceivedMessageHolder) holder).setTvRecieveName(mMessageList.get(position).getFullName());
 
-                //date
-                ((ReceivedMessageHolder) holder).setTvRecieveDate(Utils.getDateforChat(mMessageList.get(position).getCreatedAt()));
-
-                //time
-                ((ReceivedMessageHolder) holder).setTvRecieveTime(Utils.getHourAndMinute(mMessageList.get(position).getCreatedAt()));
+//                //date
+//                ((ReceivedMessageHolder) holder).setTvRecieveDate(Utils.getDateforChat(mMessageList.get(position).getCreatedAt()));
+//
+//                //time
+//                ((ReceivedMessageHolder) holder).setTvRecieveTime(Utils.getHourAndMinute(mMessageList.get(position).getCreatedAt()));
 
 
         }
@@ -106,17 +109,17 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         public SentMessageHolder(@NonNull View itemView) {
             super(itemView);
             tvMessageText = (TextView) itemView.findViewById(R.id.text_gchat_message_me);
-            tvMessageDate = (TextView) itemView.findViewById(R.id.text_gchat_date_me);
-            tvMessageTime = (TextView) itemView.findViewById(R.id.text_gchat_timestamp_me);
+            //tvMessageDate = (TextView) itemView.findViewById(R.id.text_gchat_date_me);
+           // tvMessageTime = (TextView) itemView.findViewById(R.id.text_gchat_timestamp_me);
         }
 
         public void setTvMessageText(String Message){
             this.tvMessageText.setText(Message);
         }
 
-        public void setTvMessageDate(String date){ this.tvMessageDate.setText(date);}
-
-        public void setTvMessageTime(String time){ this.tvMessageTime.setText(time);}
+//        public void setTvMessageDate(String date){ this.tvMessageDate.setText(date);}
+//
+//        public void setTvMessageTime(String time){ this.tvMessageTime.setText(time);}
     }
 
     //from others
@@ -125,10 +128,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         public ReceivedMessageHolder(@NonNull View itemView) {
             super(itemView);
-            tvRecieveDate = itemView.findViewById(R.id.text_gchat_date_other);
+            //tvRecieveDate = itemView.findViewById(R.id.text_gchat_date_other);
             tvRecieveMessage = itemView.findViewById(R.id.text_gchat_message_other);
             tvRecieveName = itemView.findViewById(R.id.text_gchat_user_other);
-            tvRecieveTime = itemView.findViewById(R.id.text_gchat_timestamp_other);
+           // tvRecieveTime = itemView.findViewById(R.id.text_gchat_timestamp_other);
         }
 
         public void setTvRecieveMessage(String message){
@@ -139,9 +142,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             this.tvRecieveName.setText(fullname);
         }
 
-        public void setTvRecieveDate(String date){ this.tvRecieveDate.setText(date);}
-
-        public void setTvRecieveTime(String time) {this.tvRecieveTime.setText(time);}
+//        public void setTvRecieveDate(String date){ this.tvRecieveDate.setText(date);}
+//
+//        public void setTvRecieveTime(String time) {this.tvRecieveTime.setText(time);}
 
 
     }

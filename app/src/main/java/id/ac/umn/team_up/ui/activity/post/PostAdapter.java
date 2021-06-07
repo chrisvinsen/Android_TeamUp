@@ -67,7 +67,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
         Project project = mProjectsFilter.get(position);
         // Insert user profile
         holder.profile_name.setText(project.getAdminFullname());
-        if(project.getAdminPicture() != ""){
+        if(!project.getAdminPicture().isEmpty()){
             Picasso.get().load(project.getAdminPicture()).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(holder.profile_image);
         }
         else{
@@ -78,6 +78,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
         holder.post_time.setText(formatter.format(project.getCreatedAt()));
         holder.project_title.setText(project.getTitle());
         holder.project_description.setText(project.getDescription());
+        holder.project_location.setText(project.getLocation());
         // Hide all images
         holder.project_image1.getLayoutParams().height = 0;
         holder.project_image2.getLayoutParams().height = 0;
@@ -159,7 +160,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
                 SharedPreferences sharedPref = Utils.getSharedPref(mContext.getApplicationContext());
 
                 // Put member into map
-                Map<String, String> member = new HashMap<>();
+                Map<String, Object> member = new HashMap<>();
                 member.put("userId", mAuth.getUid());
                 member.put("projectId", project.getId());
 
@@ -169,6 +170,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
                 member.put("fullName", fullname);
                 member.put("role", "Member");
                 member.put("picture", picture);
+                member.put("isMember", false);
 
                 // Set map into collection
                 memberRef.document().set(member)
@@ -209,13 +211,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
                 filteredList.addAll(mProjects);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                Log.d("filtera1", "1");
-                Log.d("filter", filterPattern);
 
                 for (Project item : mProjects) {
                     if (item.getTitle().toLowerCase().contains(filterPattern)) {
-                        Log.d("filtera23", filterPattern);
-                        Log.d("filtera2", item.getTitle().toLowerCase());
                         filteredList.add(item);
                     }
                     else if(item.getDescription().toLowerCase().contains(filterPattern)){
@@ -247,6 +245,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
         public TextView post_time;
         public TextView project_title;
         public TextView project_description;
+        public TextView project_location;
         public ImageView project_image1;
         public ImageView project_image2;
         public ImageView project_image3;
@@ -263,6 +262,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
             post_time = itemView.findViewById(R.id.post_time);
             project_title = itemView.findViewById(R.id.project_title);
             project_description = itemView.findViewById(R.id.project_description);
+            project_location = itemView.findViewById(R.id.project_location);
             project_image1 = itemView.findViewById(R.id.project_image1);
             project_image2 = itemView.findViewById(R.id.project_image2);
             project_image3 = itemView.findViewById(R.id.project_image3);

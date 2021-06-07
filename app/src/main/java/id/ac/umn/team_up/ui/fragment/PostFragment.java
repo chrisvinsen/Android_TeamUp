@@ -177,7 +177,7 @@ public class PostFragment extends Fragment implements LocationListener {
             Log.e("map values", entry.getKey() + ": " + entry.getValue().toString());
         }
         profile_fullname.setText(fullname);
-        if(picture != "" && picture != null){
+        if(picture.isEmpty() && picture != null){
             Picasso.get().load(new File(picture)).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(profile_picture);
         }
         else{
@@ -205,6 +205,7 @@ public class PostFragment extends Fragment implements LocationListener {
                 // Get title and description
                 final String title = project_title.getText().toString();
                 final String description = project_description.getText().toString();
+                final String location = project_location.getText().toString();
                 boolean isAllFilled = true;
 
                 if (title.isEmpty()) {
@@ -213,6 +214,10 @@ public class PostFragment extends Fragment implements LocationListener {
                 }
                 if (description.isEmpty()) {
                     project_description.setError("Project description must be filled");
+                    isAllFilled = false;
+                }
+                if (location.isEmpty()) {
+                    project_location.setError("Location must be filled");
                     isAllFilled = false;
                 }
                 // Do function if all input are filled
@@ -224,7 +229,7 @@ public class PostFragment extends Fragment implements LocationListener {
                     Log.d("data", "description: " + project_description.getText().toString());
                     Toast.makeText(getActivity(), "Uploading Post....", Toast.LENGTH_SHORT).show();
                     // Post Project
-                    postProject(title, description);
+                    postProject(title, description, location);
                 } else {
                     Toast.makeText(getActivity(), "Please fill all required data", Toast.LENGTH_SHORT).show();
                 }
@@ -321,7 +326,7 @@ public class PostFragment extends Fragment implements LocationListener {
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
-    private void postProject(String title, String description){
+    private void postProject(String title, String description, String location){
         // If image are inserted
         if(!image_uri.isEmpty()){
             // Loop through all inserted image
@@ -352,7 +357,7 @@ public class PostFragment extends Fragment implements LocationListener {
                                         // Post project after all image are inserted
                                         if(upload_url.size() == image_uri.size()){
                                             Toast.makeText(getActivity(), "Uploaded Image Successful", Toast.LENGTH_SHORT).show();
-                                            ProjectController.postProject((AppCompatActivity) getActivity(), title, description, upload_url);
+                                            ProjectController.postProject((AppCompatActivity) getActivity(), title, description, location, upload_url);
                                             Log.d("upload", uri.toString());
                                         }
                                     }
@@ -378,7 +383,7 @@ public class PostFragment extends Fragment implements LocationListener {
         // If image are not inserted
         else{
             Log.d("upload", "No image");
-            ProjectController.postProject((AppCompatActivity) getActivity(), title, description, upload_url);
+            ProjectController.postProject((AppCompatActivity) getActivity(), title, description, location, upload_url);
         }
     }
 
