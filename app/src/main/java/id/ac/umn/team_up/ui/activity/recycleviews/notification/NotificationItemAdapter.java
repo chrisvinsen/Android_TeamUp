@@ -62,6 +62,13 @@ public class  NotificationItemAdapter extends RecyclerView.Adapter<NotificationA
                 }
             });
 
+            holder.btnAcc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NotificationController.onAccept(reqMember.get(position));
+                }
+            });
+
 
 //        holder.getNameFrom().setText(this.arrProject.get(position).getRecentMessageSender());
 //        holder.getNotifHead().setText(this.arrProject.get(position).getRecentMessage());

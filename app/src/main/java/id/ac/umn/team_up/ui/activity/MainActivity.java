@@ -14,6 +14,7 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.controllers.NotificationController;
 import id.ac.umn.team_up.ui.fragment.main_activity.HomeFragment;
 import id.ac.umn.team_up.ui.fragment.main_activity.NotificationFragment;
 import id.ac.umn.team_up.ui.fragment.main_activity.PostFragment;
@@ -107,5 +108,12 @@ public class MainActivity extends AppCompatActivity {
     public void endTheProject(View view) {
 //        String projectId = "6AKu0PSo41AeRZ5UjPh6";
 //        List<ProjectMember>
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        NotificationController.loadProjectMemberRequestNotification(getApplicationContext());
+        NotificationController.getProject(getApplicationContext());
     }
 }

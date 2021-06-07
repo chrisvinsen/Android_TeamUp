@@ -67,7 +67,7 @@ public class ProjectController {
 
     // For home
     private static PostAdapter post_adapter;
-    private static List<Project> projects;
+    public static List<Project> projects;
     private static DocumentSnapshot lastResult;
     private static ProgressBar progress_bar;
     private static NestedScrollView nested_scroll_view;
