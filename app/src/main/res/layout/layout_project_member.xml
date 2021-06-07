@@ -9,17 +9,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp">
-        <androidx.cardview.widget.CardView
+
+        <ImageView
+            android:id="@+id/project_member_icon"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            app:cardCornerRadius="250dp"
-            android:layout_gravity="center">
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/ic_profile"/>
 
-                android:scaleType="centerCrop"/>
-        </androidx.cardview.widget.CardView>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
