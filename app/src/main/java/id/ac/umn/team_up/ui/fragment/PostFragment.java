@@ -45,6 +45,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -168,7 +169,7 @@ public class PostFragment extends Fragment implements LocationListener {
 
         // Set profile
         String fullname = sharedPref.getString("ufirstname", "") + " " + sharedPref.getString("ulastname", "");
-        String picture = sharedPref.getString("upicture", "");
+        String picture = sharedPref.getString("ulocalpicture", "");
         Log.e("FULLNAME", sharedPref.getString("ufirstname", "") + " " + sharedPref.getString("ulastname", ""));
         Map<String, ?> allEntries = sharedPref.getAll();
         Log.e("map size", String.valueOf(allEntries.size()));
@@ -177,7 +178,7 @@ public class PostFragment extends Fragment implements LocationListener {
         }
         profile_fullname.setText(fullname);
         if(picture != "" && picture != null){
-            Picasso.get().load(picture).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(profile_picture);
+            Picasso.get().load(new File(picture)).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(profile_picture);
         }
         else{
             Picasso.get().load(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(profile_picture);
