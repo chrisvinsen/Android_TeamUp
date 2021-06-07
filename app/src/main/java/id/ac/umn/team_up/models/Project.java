@@ -10,7 +10,7 @@ import java.util.List;
 
 
 public class Project implements Serializable {
-    private String id, adminId, adminFullname, adminPicture, description, groupIcon, title;
+    private String id, adminId, adminFullname, adminPicture, description, groupIcon, title, location;
     private boolean isOngoing;
     private List<String> images;
     private List<String> members;
@@ -33,7 +33,7 @@ public class Project implements Serializable {
         //empty constructor
     }
 
-    public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, List<String> images, boolean isOngoing, List<String> members, List<String> membersRequest, List<String> toDoList, String createdAt, @Nullable Date endedAt, @Nullable String recentMessage, @Nullable Date sentAt,@Nullable String recentMessageSender){
+    public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, String location, List<String> images, boolean isOngoing, List<String> members, List<String> membersRequest, List<String> toDoList, String createdAt, @Nullable Date endedAt, @Nullable String recentMessage, @Nullable Date sentAt,@Nullable String recentMessageSender){
         this.id = id;
         this.adminId = adminId;
         this.adminFullname = adminFullname;
@@ -52,8 +52,31 @@ public class Project implements Serializable {
         this.recentMessage = recentMessageSender;
         Long t = Long.parseLong(createdAt);
         this.createdAt = new Date(t*1000);
+        this.location = location;
     }
 
+    public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, String location, List<String> images, boolean isOngoing, List<String> members, List<String> toDoList, String createdAt, @Nullable Date endedAt, @Nullable String recentMessage, @Nullable Date sentAt, @Nullable String recentMessageSender){
+        this.id = id;
+        this.adminId = adminId;
+        this.adminFullname = adminFullname;
+        this.adminPicture = adminPicture;
+        this.description = description;
+        this.groupIcon = groupIcon;
+        this.title = title;
+        this.images = images;
+        this.members = members;
+        this.toDoList = toDoList;
+        this.isOngoing = isOngoing;
+        this.endedAt = endedAt;
+        this.recentMessage = recentMessage;
+        this.sentAt = sentAt;
+        this.recentMessageSender = recentMessageSender;
+        Long t = Long.parseLong(createdAt);
+        this.createdAt = new Date(t*1000);
+        this.location = location;
+    }
+
+    // Placeholder without location
     public Project(String id, String adminId, String adminFullname, String adminPicture, String description, String groupIcon, String title, List<String> images, boolean isOngoing, List<String> members, List<String> toDoList, String createdAt, @Nullable Date endedAt, @Nullable String recentMessage, @Nullable Date sentAt, @Nullable String recentMessageSender){
         this.id = id;
         this.adminId = adminId;
@@ -72,6 +95,7 @@ public class Project implements Serializable {
         this.recentMessageSender = recentMessageSender;
         Long t = Long.parseLong(createdAt);
         this.createdAt = new Date(t*1000);
+        this.location = "Jakarta, Indonesia";
     }
 
     // Get method
@@ -89,6 +113,9 @@ public class Project implements Serializable {
     }
     public String getDescription(){
         return description;
+    }
+    public String getLocation(){
+        return location;
     }
     public String getGroupIcon(){
         return groupIcon;

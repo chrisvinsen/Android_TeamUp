@@ -157,6 +157,7 @@ public class ProjectController {
         member.put("isAdmin", true);
         member.put("picture", picture);
         member.put("isMember", true);
+        member.put("projectName", project_title);
         member.put("adminId", mAuth.getUid());
 
         // Set map into collection

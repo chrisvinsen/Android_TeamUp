@@ -12,6 +12,16 @@ public class ProjectMember implements Serializable {
     private String picture;
     private String adminId;
     private boolean isMember;
+    private String projectName;
+    private String documentId;
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
 
     @Nullable
     private boolean isAdmin;
@@ -19,15 +29,22 @@ public class ProjectMember implements Serializable {
     public ProjectMember() {
     }
 
+    public String getProjectName() {
+        return projectName;
+    }
 
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
 
-    public ProjectMember(String userId, String role, String fullName, String projectId, String picture, boolean isMember) {
+    public ProjectMember(String userId, String role, String fullName, String projectId, String picture, boolean isMember, String projectName) {
         this.userId = userId;
         this.role = role;
         this.fullName = fullName;
         this.projectId = projectId;
         this.picture = picture;
         this.isMember = isMember;
+        this.projectName = projectName;
     }
 
     public ProjectMember(String userId, String role, String fullName, String projectId, String picture, boolean isMember, boolean isAdmin) {

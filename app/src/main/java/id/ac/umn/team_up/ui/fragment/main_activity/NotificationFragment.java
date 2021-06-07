@@ -3,14 +3,17 @@ package id.ac.umn.team_up.ui.fragment.main_activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.NotificationController;
+import id.ac.umn.team_up.ui.activity.recycleviews.notification.NotificationItemAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,11 +85,13 @@ public class NotificationFragment extends Fragment {
         rvNotification = view.findViewById(R.id.rvNotificationItem);
 
         //setting the recyclerview
-        NotificationController.getRecentMessage(rvNotification, view.getContext());
+        NotificationController.setRecyclerview(rvNotification, view.getContext());
+        //NotificationController.getRecentMessage(rvNotification, view.getContext());
+        Log.d("PROJECTREQ", String.valueOf(NotificationController.reqMember.size()));
 
-//        rvNotification.setHasFixedSize(true);
-//        rvNotification.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//        rvNotification.setAdapter(new NotificationItemAdapter(view.getContext()));
+        rvNotification.setHasFixedSize(true);
+        rvNotification.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rvNotification.setAdapter(new NotificationItemAdapter(view.getContext(),NotificationController.reqMember));
         return view;
     }
 }
