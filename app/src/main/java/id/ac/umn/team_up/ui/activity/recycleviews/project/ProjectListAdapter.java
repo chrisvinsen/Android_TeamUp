@@ -11,6 +11,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.Project;
@@ -19,6 +22,7 @@ import id.ac.umn.team_up.ui.CircleTransform;
 public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, ProjectsViewHolder> {
 //    private final Context c;
     private AppCompatActivity app;
+    public static List<Project> dataProject = new ArrayList<Project>();
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -59,6 +63,7 @@ public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, Projec
 
     @Override
     protected void onBindViewHolder(@NonNull ProjectsViewHolder holder, int position, @NonNull Project model) {
+        dataProject.add(model);
         holder.setGroupID(model.getId());
         holder.setTvProjectListName(model.getTitle());
         holder.setprojectDesc(model.getDescription());

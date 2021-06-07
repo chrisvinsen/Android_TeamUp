@@ -170,7 +170,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
                 member.put("fullName", fullname);
                 member.put("role", "Member");
                 member.put("picture", picture);
+                member.put("adminId", project.getAdminId());
                 member.put("isMember", false);
+                member.put("projectName", project.getTitle());
 
                 // Set map into collection
                 memberRef.document().set(member)

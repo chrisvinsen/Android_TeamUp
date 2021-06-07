@@ -87,12 +87,26 @@ public class NotificationFragment extends Fragment {
         //init recyclerview
         rvNotification = view.findViewById(R.id.rvNotificationItem);
 
-        //setting the recyclerview
-        NotificationController.getRecentMessage(rvNotification, view.getContext());
+        //adapter
+        NotificationItemAdapter adapter = new NotificationItemAdapter(view.getContext(), NotificationController.reqMember);
 
-//        rvNotification.setHasFixedSize(true);
-//        rvNotification.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//        rvNotification.setAdapter(new NotificationItemAdapter(view.getContext()));
+        //setting the recyclerview
+        NotificationController.setRecyclerview(rvNotification, view.getContext(), adapter);
+
+        //NotificationController.getRecentMessage(rvNotification, view.getContext());
+
+        Log.d("PROJECTREQ", String.valueOf(NotificationController.reqMember.size()));
+
+        rvNotification.setHasFixedSize(true);
+        rvNotification.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rvNotification.setAdapter(adapter);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //NotificationController.loadProjectMemberRequestNotification();
+
     }
 }
