@@ -1,36 +1,24 @@
 package id.ac.umn.team_up.ui.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import id.ac.umn.team_up.R;
-import id.ac.umn.team_up.Utils;
-import id.ac.umn.team_up.controllers.UserController;
-import id.ac.umn.team_up.models.Project;
-import id.ac.umn.team_up.models.User;
-import id.ac.umn.team_up.ui.fragment.HomeFragment;
-import id.ac.umn.team_up.ui.fragment.NotificationFragment;
-import id.ac.umn.team_up.ui.fragment.PostFragment;
-import id.ac.umn.team_up.ui.fragment.ProfileFragment;
-import id.ac.umn.team_up.ui.fragment.ProjectFragment;
-import id.ac.umn.team_up.ui.fragment.RegisterFragment;
-
-import static java.security.AccessController.getContext;
+import id.ac.umn.team_up.ui.fragment.main_activity.HomeFragment;
+import id.ac.umn.team_up.ui.fragment.main_activity.NotificationFragment;
+import id.ac.umn.team_up.ui.fragment.main_activity.PostFragment;
+import id.ac.umn.team_up.ui.fragment.main_activity.ProfileFragment;
+import id.ac.umn.team_up.ui.fragment.main_activity.ProjectFragment;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
@@ -114,5 +102,10 @@ public class MainActivity extends AppCompatActivity {
         bundle.putBoolean("isOngoing", isOngoing);
         fragment.setArguments(bundle);
         openFragment(fragment);
+    }
+
+    public void endTheProject(View view) {
+//        String projectId = "6AKu0PSo41AeRZ5UjPh6";
+//        List<ProjectMember>
     }
 }

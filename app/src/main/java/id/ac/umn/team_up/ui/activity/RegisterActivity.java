@@ -9,8 +9,8 @@ import android.os.Bundle;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.ui.RegisterCommunicator;
-import id.ac.umn.team_up.ui.fragment.RegisterContdFragment;
-import id.ac.umn.team_up.ui.fragment.RegisterFragment;
+import id.ac.umn.team_up.ui.fragment.register_activity.RegisterContdFragment;
+import id.ac.umn.team_up.ui.fragment.register_activity.RegisterFragment;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterCommunicator {
     final String FIRSTNAME = "first_name";

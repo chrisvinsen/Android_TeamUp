@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import java.lang.reflect.Field;
@@ -25,6 +26,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import id.ac.umn.team_up.models.User;
 
@@ -147,5 +149,13 @@ public class Utils {
     public static String getHourAndMinute(Date date){
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
         return dateFormat.format(date);
+    }
+
+    public <T> void setList(String key, List<T> list, SharedPreferences.Editor editor) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+
+        editor.putString(key, json);
+        editor.commit();
     }
 }

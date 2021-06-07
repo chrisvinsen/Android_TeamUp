@@ -1,34 +1,24 @@
-package id.ac.umn.team_up.ui.fragment;
+package id.ac.umn.team_up.ui.fragment.main_activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import id.ac.umn.team_up.R;
@@ -36,7 +26,7 @@ import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.ui.CircleTransform;
-import id.ac.umn.team_up.ui.activity.post.PostAdapter;
+import id.ac.umn.team_up.ui.activity.recycleviews.post.PostAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
