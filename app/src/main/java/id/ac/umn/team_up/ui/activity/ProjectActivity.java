@@ -42,11 +42,11 @@ public class ProjectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_project);
 
         btnTodoList = findViewById(R.id.btnTodoList);
         btnChat = findViewById(R.id.btnChat);
-        btnProjectMember = findViewById(R.id.btnProjectMember);
+//        btnProjectMember = findViewById(R.id.btnProjectMember);
 
         Intent intent = getIntent();
         this.projectID = intent.getStringExtra("groupID");
@@ -117,9 +117,9 @@ public class ProjectActivity extends AppCompatActivity {
                         openFragment(new MembersFragment().newInstance(projectID, ""));
                         return true;
                     case R.id.project_settings:
-                        HashMap<String,String> projectInfo = ProjectController.getProjectTitleAndDescription(projectID);
-                        Log.e("HASHMAP", projectInfo.get("title"));
-                        openFragment(new SettingsFragment().newInstance(projectInfo.get("title"), projectInfo.get("description")));
+//                        HashMap<String,String> projectInfo = ProjectController.getProjectTitleAndDescription(projectID);
+//                        Log.e("HASHMAP", projectInfo.get("title"));
+//                        openFragment(new SettingsFragment().newInstance(projectInfo.get("title"), projectInfo.get("description")));
                         return true;
                     default:
                         return false;
@@ -131,5 +131,9 @@ public class ProjectActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         finish();
+    }
+
+    public void endTheProject(View view) {
+        ProjectController.endProject(projectID);
     }
 }

@@ -89,7 +89,7 @@ public class ChatFragment extends Fragment {
         userId = UserController.getUserId();
 
 
-        MessageController.getMessage(rvMessage,view,userId,mParam1);
+        MessageController.getMessage(rvMessage,view,userId,mParam1, getContext());
 
         //setOnClick
         btnSendMessage.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +97,7 @@ public class ChatFragment extends Fragment {
             public void onClick(View v) {
 
 //                Message message = new Message(mParam1, userId,edChat.getText(),  )
-                MessageController.sentMessage(mParam1,mParam2, userId, edChat.getText().toString(),null);//groupid, userId, message
+                MessageController.sentMessage(mParam1,mParam2, userId, edChat.getText().toString(),null, getContext());//groupid, userId, message
                 edChat.setText("");
 
             }
