@@ -76,6 +76,7 @@ public class MessageController {
         prefEditor.putLong("createdAt", currDate.getTime()).apply();
 
         Map<String, Object> message = new HashMap<>();
+
         //time id
         AtomicLong LAST_TIME_MS = new AtomicLong();
         long now = System.currentTimeMillis();
@@ -101,13 +102,13 @@ public class MessageController {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        statusSending = true;
                         Log.d("SUCCESS","sending message sucess");
                     }
                 });
 
 
     }
+
 
     //getMessage
     public static void getMessage(RecyclerView rv, View v, String userId, String projectId, Context context){
@@ -147,13 +148,8 @@ public class MessageController {
                             messageList.add(message);
                         }
                     }
-
-
                     mMessageAdapter.notifyDataSetChanged();
                     linearLayoutManager.scrollToPosition(messageList.size()-1);
-                    // statusSending = true;
-//                    if(progressDialog.isShowing())
-//                        progressDialog.dismiss();
                 }
 
             }
@@ -161,6 +157,7 @@ public class MessageController {
 
 
     }
+
 
     public static void listenToRecentMessageChanges(Context c){
         messagesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
