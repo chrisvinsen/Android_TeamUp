@@ -3,12 +3,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.project_activity.SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/project_title"/>
+
+        <EditText
+            android:id="@+id/project_fragment_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/input_box"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/project_description"/>
+
+        <EditText
+            android:id="@+id/project_fragment_description"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginVertical="10dp"
+            android:padding="10dp"
+            android:gravity="top"
+            android:background="@drawable/input_box"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+            <Button
+                android:id="@+id/btn_end_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/end_project"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:backgroundTint="@color/persian_red"
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btn_save_changes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save_changes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </FrameLayout>

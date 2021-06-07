@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,7 +16,10 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.ui.fragment.project_activity.ChatFragment;
 import id.ac.umn.team_up.ui.fragment.project_activity.MembersFragment;
 import id.ac.umn.team_up.ui.fragment.project_activity.SettingsFragment;
@@ -68,14 +72,6 @@ public class ProjectActivity extends AppCompatActivity {
             }
         });
 
-        btnProjectMember.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                ProjectMemberIntent();
-            }
-        });
-
     }
 
     @Override
@@ -95,11 +91,6 @@ public class ProjectActivity extends AppCompatActivity {
 //                return super.onOptionsItemSelected(item);
 //        }
 //    }
-    private Intent ProjectMemberIntent() {
-        Intent intent = new Intent(this, ProjectMemberActivity.class);
-        intent.putExtra("projectId", this.projectID);
-        return intent;
-    }
 
     public void initView(){
         openFragment(new ChatFragment().newInstance(projectID,fullname));
@@ -126,7 +117,9 @@ public class ProjectActivity extends AppCompatActivity {
                         openFragment(new MembersFragment().newInstance(projectID, ""));
                         return true;
                     case R.id.project_settings:
-                        openFragment(new SettingsFragment().newInstance(projectID, ""));
+                        HashMap<String,String> projectInfo = ProjectController.getProjectTitleAndDescription(projectID);
+                        Log.e("HASHMAP", projectInfo.get("title"));
+                        openFragment(new SettingsFragment().newInstance(projectInfo.get("title"), projectInfo.get("description")));
                         return true;
                     default:
                         return false;
