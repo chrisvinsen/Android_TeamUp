@@ -8,6 +8,7 @@ import android.os.Handler;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.MessageController;
+import id.ac.umn.team_up.controllers.NotificationController;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.ui.activity.recycleviews.notification.NotificationItemAdapter;

@@ -31,15 +31,8 @@ import id.ac.umn.team_up.ui.fragment.NotificationFragment;
 import id.ac.umn.team_up.ui.fragment.PostFragment;
 import id.ac.umn.team_up.ui.fragment.ProfileFragment;
 import id.ac.umn.team_up.ui.fragment.ProjectFragment;
-import id.ac.umn.team_up.ui.fragment.RegisterFragment;
 
-import static java.security.AccessController.getContext;
-import id.ac.umn.team_up.controllers.NotificationController;
-import id.ac.umn.team_up.ui.fragment.main_activity.HomeFragment;
-import id.ac.umn.team_up.ui.fragment.main_activity.NotificationFragment;
-import id.ac.umn.team_up.ui.fragment.main_activity.PostFragment;
-import id.ac.umn.team_up.ui.fragment.main_activity.ProfileFragment;
-import id.ac.umn.team_up.ui.fragment.main_activity.ProjectFragment;
+
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
