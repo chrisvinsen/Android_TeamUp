@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,15 +113,26 @@ public class HomeFragment extends Fragment {
                             search_edit.setText("");
                         }
                     });
+                    // Refresh posts
                     ProjectController.getProjectPost(recycler_view, view);
+                    // Change user profile picture
+                    SharedPreferences sharedPref = Utils.getSharedPref(getActivity().getApplicationContext());
+                    String picture = sharedPref.getString("ulocalpicture", "");
+                    if(picture != "" && picture != null){
+                        Picasso.get().load(new File(picture)).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into((ImageView) view.findViewById(R.id.profile_picture_beside_search));
+                    }
+                    else{
+                        Picasso.get().load(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into((ImageView) view.findViewById(R.id.profile_picture_beside_search));
+                    }
+
                     pullToRefresh.setRefreshing(false);
                 }
             });
 
             SharedPreferences sharedPref = Utils.getSharedPref(getActivity().getApplicationContext());
-            String picture = sharedPref.getString("upicture", "");
+            String picture = sharedPref.getString("ulocalpicture", "");
             if(picture != "" && picture != null){
-                Picasso.get().load(picture).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into((ImageView) view.findViewById(R.id.profile_picture_beside_search));
+                Picasso.get().load(new File(picture)).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into((ImageView) view.findViewById(R.id.profile_picture_beside_search));
             }
             else{
                 Picasso.get().load(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into((ImageView) view.findViewById(R.id.profile_picture_beside_search));
