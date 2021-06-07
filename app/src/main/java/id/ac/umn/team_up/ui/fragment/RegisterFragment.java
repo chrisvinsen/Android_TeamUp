@@ -1,4 +1,4 @@
-package id.ac.umn.team_up.ui.fragment.register_activity;
+package id.ac.umn.team_up.ui.fragment;
 
 import android.os.Bundle;
 

@@ -15,7 +15,7 @@
         <activity android:name=".ui.activity.ProjectSettingsActivity"></activity>
         <activity android:name=".ui.activity.PeerAssessmentActivity" />
         <activity android:name=".ui.activity.ProjectMemberActivity"></activity>
-        <activity android:name=".ui.activity.ProjectActivity" />
+        <activity android:name=".ui.activity.ChatActivity" />
         <activity android:name=".ui.activity.ProfileSettingActivity" />
         <activity android:name=".ui.activity.ForgotPasswordActivity" />
         <activity android:name=".ui.activity.ProfileSettingSkillActivity" />

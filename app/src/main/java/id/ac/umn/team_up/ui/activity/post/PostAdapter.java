@@ -1,6 +1,7 @@
-package id.ac.umn.team_up.ui.activity.recycleviews.post;
+package id.ac.umn.team_up.ui.activity.post;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.ui.CircleTransform;
+import id.ac.umn.team_up.ui.activity.MainActivity;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> implements Filterable {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -157,7 +159,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
                 SharedPreferences sharedPref = Utils.getSharedPref(mContext.getApplicationContext());
 
                 // Put member into map
-                Map<String, Object> member = new HashMap<>();
+                Map<String, String> member = new HashMap<>();
                 member.put("userId", mAuth.getUid());
                 member.put("projectId", project.getId());
 
@@ -167,8 +169,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> im
                 member.put("fullName", fullname);
                 member.put("role", "Member");
                 member.put("picture", picture);
-                member.put("adminId", project.getAdminId());
-                member.put("isMember", false);
 
                 // Set map into collection
                 memberRef.document().set(member)

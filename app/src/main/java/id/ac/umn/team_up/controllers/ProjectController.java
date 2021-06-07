@@ -1,5 +1,6 @@
 package id.ac.umn.team_up.controllers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,7 +47,7 @@ import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.models.ProjectMember;
 import id.ac.umn.team_up.models.ToDoList;
 import id.ac.umn.team_up.ui.activity.MainActivity;
-import id.ac.umn.team_up.ui.activity.recycleviews.post.PostAdapter;
+import id.ac.umn.team_up.ui.activity.post.PostAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.projectmember.ProjectMemberAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.todolist.TodoListAdapter;
@@ -151,14 +152,12 @@ public class ProjectController {
                 });
 
         // Put member into map
-        Map<String, Object> member = new HashMap<>();
+        Map<String, String> member = new HashMap<>();
         member.put("userId", mAuth.getUid());
         member.put("projectId", document_id);
         member.put("fullName", fullname);
-        member.put("isAdmin", true);
+        member.put("role", "Admin");
         member.put("picture", picture);
-        member.put("isMember", true);
-        member.put("adminId", mAuth.getUid());
 
         // Set map into collection
         memberRef.document().set(member)
@@ -449,5 +448,6 @@ public class ProjectController {
                 rvProjectMember.setAdapter(mProjectMemberAdapter);
             }
         });
+
     }
 }

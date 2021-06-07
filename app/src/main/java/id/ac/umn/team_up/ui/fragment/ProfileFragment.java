@@ -1,4 +1,4 @@
-package id.ac.umn.team_up.ui.fragment.main_activity;
+package id.ac.umn.team_up.ui.fragment;
 
 import android.app.Activity;
 import android.content.ContentResolver;

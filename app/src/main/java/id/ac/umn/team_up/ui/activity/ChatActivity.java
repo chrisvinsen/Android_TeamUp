@@ -1,5 +1,7 @@
 package id.ac.umn.team_up.ui.activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -7,6 +9,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,12 +19,11 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import id.ac.umn.team_up.R;
-import id.ac.umn.team_up.ui.fragment.project_activity.ChatFragment;
-import id.ac.umn.team_up.ui.fragment.project_activity.MembersFragment;
-import id.ac.umn.team_up.ui.fragment.project_activity.SettingsFragment;
-import id.ac.umn.team_up.ui.fragment.project_activity.TodolistFragment;
+import id.ac.umn.team_up.models.ProjectMember;
+import id.ac.umn.team_up.ui.fragment.ChatFragment;
+import id.ac.umn.team_up.ui.fragment.TodolistFragment;
 
-public class ProjectActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
     private Fragment fragment;
     private FragmentManager fragmentManager = getFragmentManager();
@@ -123,10 +125,12 @@ public class ProjectActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.project_members:
-                        openFragment(new MembersFragment().newInstance(projectID, ""));
+                        Intent intent = ProjectMemberIntent();
+                        startActivityForResult(intent, 1);
                         return true;
                     case R.id.project_settings:
-                        openFragment(new SettingsFragment().newInstance(projectID, ""));
+                        Intent intentSettings = new Intent(ChatActivity.this, ProjectSettingsActivity.class);
+                        startActivityForResult(intentSettings, 1);
                         return true;
                     default:
                         return false;
