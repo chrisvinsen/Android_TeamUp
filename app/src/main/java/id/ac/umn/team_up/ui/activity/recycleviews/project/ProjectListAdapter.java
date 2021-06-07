@@ -61,6 +61,7 @@ public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, Projec
     protected void onBindViewHolder(@NonNull ProjectsViewHolder holder, int position, @NonNull Project model) {
         holder.setGroupID(model.getId());
         holder.setTvProjectListName(model.getTitle());
+        holder.setprojectDesc(model.getDescription());
 //        Message recentMessage = MessageController.getRecentMessage(model.getId(), app.getApplicationContext()), this);
 //        Log.e("RECENTMESSAGEONADAPTER", recentMessage.getMessage());
         if(model.getRecentMessage() != null){
