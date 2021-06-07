@@ -422,33 +422,22 @@ public class ProjectController {
             }
         });
     }
-
-    public static HashMap<String,String> getProjectTitleAndDescription(String projectId){
-        HashMap<String, String> projectInformation = new HashMap<>();
+    public static void updateProjectSetting(String projectId, String title, String desc){
+        DocumentReference projectRef = projectsRef.document(projectId);
         projectsRef.document(projectId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.e("SUCCESS", "ye");
+                if(task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.e("DOCUMENT DATA", String.valueOf(document.getData()));
+                    if(document.exists()){
                         Project project = document.toObject(Project.class);
-                        if(project.getTitle() != null){
-                            Log.e("PROJECTTITLE", project.getTitle());
-                        } else {
-                            Log.e("NULL", "title is null");
-                        }
-                        projectInformation.put("description", project.getDescription());
-                        projectInformation.put("title", project.getTitle());
-                    } else {
-                        Log.d("NOTFOUND", "document not found");
+                        project.setTitle(title);
+                        project.setDescription(desc);
+                        projectRef.set(project, SetOptions.merge());
+
                     }
-                } else {
-                    Log.d("ERROR", "get failed with ", task.getException());
                 }
             }
         });
-        return projectInformation;
     }
 }

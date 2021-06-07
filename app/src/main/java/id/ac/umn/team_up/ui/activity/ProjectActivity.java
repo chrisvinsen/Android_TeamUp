@@ -117,9 +117,7 @@ public class ProjectActivity extends AppCompatActivity {
                         openFragment(new MembersFragment().newInstance(projectID, ""));
                         return true;
                     case R.id.project_settings:
-//                        HashMap<String,String> projectInfo = ProjectController.getProjectTitleAndDescription(projectID);
-//                        Log.e("HASHMAP", projectInfo.get("title"));
-                        openFragment(new SettingsFragment().newInstance(projectID, projectTitle, projectDesc));
+                        openFragment(new SettingsFragment().newInstance(projectID, projectTitle, projectDesc, fullname));
                         return true;
                     default:
                         return false;
