@@ -1,5 +1,6 @@
 package id.ac.umn.team_up.controllers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,13 +47,15 @@ import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.models.ProjectMember;
 import id.ac.umn.team_up.models.ToDoList;
 import id.ac.umn.team_up.ui.activity.MainActivity;
-import id.ac.umn.team_up.ui.activity.recycleviews.post.PostAdapter;
+import id.ac.umn.team_up.ui.activity.post.PostAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.projectmember.ProjectMemberAdapter;
 import id.ac.umn.team_up.ui.activity.recycleviews.todolist.TodoListAdapter;
+import id.ac.umn.team_up.ui.adapter.ProfileProjectAdapter;
 
 public class ProjectController {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private static DatabaseReference db ;
     private static FirebaseFirestore db_firestore = FirebaseFirestore.getInstance();
     private static CollectionReference projectsRef = db_firestore.collection("ProjectDetails");
     private static CollectionReference memberRef = db_firestore.collection("ProjectMembers");
@@ -148,14 +151,12 @@ public class ProjectController {
                 });
 
         // Put member into map
-        Map<String, Object> member = new HashMap<>();
+        Map<String, String> member = new HashMap<>();
         member.put("userId", mAuth.getUid());
         member.put("projectId", document_id);
         member.put("fullName", fullname);
-        member.put("isAdmin", true);
+        member.put("role", "Admin");
         member.put("picture", picture);
-        member.put("isMember", true);
-        member.put("adminId", mAuth.getUid());
 
         // Set map into collection
         memberRef.document().set(member)
@@ -266,15 +267,19 @@ public class ProjectController {
         });
     }
 
-    public static FirestoreRecyclerOptions<Project> loadUsersProjectOptions(String userId, boolean isOngoing){
+    public static FirestoreRecyclerOptions<Project> loadUsersProjectOptions(String userId, boolean isOngoing, boolean isNotGoingOn){
         Query query;
         Log.e("USERID", userId);
-        if(isOngoing){
+        if (isOngoing && isNotGoingOn) {
+            query =  projectsRef.whereArrayContains("members", userId);
+        } else if (isOngoing) {
             query =  projectsRef.whereArrayContains("members", userId).whereEqualTo("isOngoing", true);
-        }
-        else{
+        } else if (isNotGoingOn){
             query =  projectsRef.whereArrayContains("members", userId).whereEqualTo("isOngoing", false);
+        } else {
+            query =  projectsRef.whereArrayContains("members", userId);
         }
+
         FirestoreRecyclerOptions<Project> options = new FirestoreRecyclerOptions.Builder<Project>()
                 .setQuery(query, Project.class)
                 .build();
@@ -297,7 +302,30 @@ public class ProjectController {
                         adapter.notifyDataSetChanged();
                         Log.e("LISTENTOPROJECTCHANGES", "added");
                     }
-                    if(dc.getType() == DocumentChange.Type.MODIFIED){
+                    if (dc.getType() == DocumentChange.Type.MODIFIED){
+                        adapter.notifyDataSetChanged();
+                        Log.e("LISTENTOPROJECTCHANGES", "modified");
+                    }
+                }
+            }
+        });
+    }
+
+    public static void listenToProfileProjectChanges(Context c, ProfileProjectAdapter adapter, String userId){
+        projectsRef.whereArrayContains("members", userId).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Utils.show(c, "Error listening to project changes");
+                    return;
+                }
+                for(DocumentChange dc: value.getDocumentChanges()) {
+//                    adapter.notifyDataSetChanged();
+                    if (dc.getType() == DocumentChange.Type.ADDED) {
+                        adapter.notifyDataSetChanged();
+                        Log.e("LISTENTOPROJECTCHANGES", "added");
+                    }
+                    if (dc.getType() == DocumentChange.Type.MODIFIED){
                         adapter.notifyDataSetChanged();
                         Log.e("LISTENTOPROJECTCHANGES", "modified");
                     }
@@ -419,35 +447,7 @@ public class ProjectController {
                 rvProjectMember.setAdapter(mProjectMemberAdapter);
             }
         });
-    }
 
-    public static HashMap<String,String> getProjectTitleAndDescription(String projectId){
-        HashMap<String, String> projectInformation = new HashMap<>();
-        projectsRef.document(projectId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.e("SUCCESS", "ye");
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.e("DOCUMENT DATA", String.valueOf(document.getData()));
-                        Project project = document.toObject(Project.class);
-                        if(project.getTitle() != null){
-                            Log.e("PROJECTTITLE", project.getTitle());
-                        } else {
-                            Log.e("NULL", "title is null");
-                        }
-                        projectInformation.put("description", project.getDescription());
-                        projectInformation.put("title", project.getTitle());
-                    } else {
-                        Log.d("NOTFOUND", "document not found");
-                    }
-                } else {
-                    Log.d("ERROR", "get failed with ", task.getException());
-                }
-            }
-        });
-        return projectInformation;
     }
 
     public static void endProject(String projectId){

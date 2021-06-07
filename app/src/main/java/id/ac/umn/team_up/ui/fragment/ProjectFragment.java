@@ -1,4 +1,4 @@
-package id.ac.umn.team_up.ui.fragment.main_activity;
+package id.ac.umn.team_up.ui.fragment;
 
 import android.os.Bundle;
 
@@ -33,10 +33,10 @@ public class ProjectFragment extends Fragment {
         View view;
         if(this.getArguments().getBoolean("isOngoing")) {
             view = inflater.inflate(R.layout.fragment_project, container, false);
-            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), true), (AppCompatActivity) getActivity() );
+            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), true, false), (AppCompatActivity) getActivity() );
         } else {
             view = inflater.inflate(R.layout.fragment_project_history, container, false);
-            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), false), (AppCompatActivity) getActivity());
+            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), false, true), (AppCompatActivity) getActivity());
         }
         ProjectController.listenToProjectChanges(view.getContext(), mAdapter, UserController.getUserId());
 //        MessageController.listenToRecentMessageChanges(view.getContext(), mAdapter);

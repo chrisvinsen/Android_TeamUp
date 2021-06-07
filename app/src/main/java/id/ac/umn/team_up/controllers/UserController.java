@@ -201,7 +201,7 @@ public class UserController {
                         prefEditor.putString("uskills", jsonSkill);
                         prefEditor.apply();
 
-                        if (afterLogin) {
+                        if (afterLogin && !currentUser.getPicture().equals("")) {
                             checkAvailabilityProfileImageOnInternalStorage(app, currentUser);
                         }
                     } else {

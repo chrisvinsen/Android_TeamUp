@@ -84,4 +84,9 @@ public class ProjectListAdapter extends FirestoreRecyclerAdapter<Project, Projec
         }
 
     }
+
+//    @Override
+//    public int getItemCount() {
+//        return this.projects.size();
+//    }
 }

@@ -1,5 +1,7 @@
 package id.ac.umn.team_up.ui.activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -16,16 +18,12 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import java.util.HashMap;
-
 import id.ac.umn.team_up.R;
-import id.ac.umn.team_up.controllers.ProjectController;
-import id.ac.umn.team_up.ui.fragment.project_activity.ChatFragment;
-import id.ac.umn.team_up.ui.fragment.project_activity.MembersFragment;
-import id.ac.umn.team_up.ui.fragment.project_activity.SettingsFragment;
-import id.ac.umn.team_up.ui.fragment.project_activity.TodolistFragment;
+import id.ac.umn.team_up.models.ProjectMember;
+import id.ac.umn.team_up.ui.fragment.ChatFragment;
+import id.ac.umn.team_up.ui.fragment.TodolistFragment;
 
-public class ProjectActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
     private Fragment fragment;
     private FragmentManager fragmentManager = getFragmentManager();
@@ -72,6 +70,14 @@ public class ProjectActivity extends AppCompatActivity {
             }
         });
 
+        btnProjectMember.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                ProjectMemberIntent();
+            }
+        });
+
     }
 
     @Override
@@ -91,6 +97,11 @@ public class ProjectActivity extends AppCompatActivity {
 //                return super.onOptionsItemSelected(item);
 //        }
 //    }
+    private Intent ProjectMemberIntent() {
+        Intent intent = new Intent(this, ProjectMemberActivity.class);
+        intent.putExtra("projectId", this.projectID);
+        return intent;
+    }
 
     public void initView(){
         openFragment(new ChatFragment().newInstance(projectID,fullname));
@@ -114,12 +125,15 @@ public class ProjectActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.project_members:
-                        openFragment(new MembersFragment().newInstance(projectID, ""));
+                        Intent intent = ProjectMemberIntent();
+                        startActivityForResult(intent, 1);
                         return true;
                     case R.id.project_settings:
 //                        HashMap<String,String> projectInfo = ProjectController.getProjectTitleAndDescription(projectID);
 //                        Log.e("HASHMAP", projectInfo.get("title"));
 //                        openFragment(new SettingsFragment().newInstance(projectInfo.get("title"), projectInfo.get("description")));
+                        Intent intentSettings = new Intent(ChatActivity.this, ProjectSettingsActivity.class);
+                        startActivityForResult(intentSettings, 1);
                         return true;
                     default:
                         return false;

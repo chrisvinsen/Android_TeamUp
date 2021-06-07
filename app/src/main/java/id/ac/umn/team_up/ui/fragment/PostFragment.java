@@ -1,4 +1,4 @@
-package id.ac.umn.team_up.ui.fragment.main_activity;
+package id.ac.umn.team_up.ui.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -36,6 +37,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -50,6 +53,7 @@ import java.util.Map;
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.controllers.ProjectController;
+import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.ui.CircleTransform;
 
 import static android.content.Context.LOCATION_SERVICE;

@@ -10,7 +10,6 @@ public class ProjectMember implements Serializable {
     private String fullName;
     private String projectId;
     private String picture;
-    private String adminId;
     private boolean isMember;
 
     @Nullable
@@ -94,17 +93,5 @@ public class ProjectMember implements Serializable {
 
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
-    }
-
-    public String getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(String adminId) {
-        this.adminId = adminId;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
     }
 }

@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -163,5 +164,18 @@ public class Project implements Serializable {
 
     public void setRecentM(@Nullable Message recentM) {
         this.recentM = recentM;
+    }
+
+    public String getDuration() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String start = formatter.format(createdAt);
+        String end;
+        if (endedAt != null) {
+            end = formatter.format(endedAt);
+        } else {
+            end = "Present";
+        }
+
+        return start + " - " + end;
     }
 }

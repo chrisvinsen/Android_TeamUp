@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragment.main_activity.ProfileFragment"
+    tools:context=".ui.fragment.ProfileFragment"
     android:orientation="vertical"
     >
 
@@ -265,70 +265,11 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProject"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/img_logo_up"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center"
-                        android:paddingStart="6dp"
-                        >
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/TextView.Small"
-                            android:text="Software House Startup"
-                            android:textStyle="bold"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/TextView.Small"
-                            android:text="Aug 2020 - Present (8 mos)"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/img_logo_up"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center"
-                        android:paddingStart="6dp"
-                        >
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/TextView.Small"
-                            android:text="Software House Startup"
-                            android:textStyle="bold"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/TextView.Small"
-                            android:text="Aug 2020 - Present (8 mos)"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
+                    android:layout_height="match_parent"/>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -361,7 +302,7 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                    android:id="@+id/rvSkills"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
