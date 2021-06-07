@@ -61,7 +61,6 @@ public class ProjectController {
     private static CollectionReference memberRef = db_firestore.collection("ProjectMembers");
     private static CollectionReference todolistRef = db_firestore.collection("ToDoList");
 
-
     private static ArrayList<Project> dataProject;
     private static ArrayList<ProjectMember> members;
 
@@ -449,5 +448,10 @@ public class ProjectController {
             }
         });
 
+    }
+
+    public static void endProject(String projectId){
+        projectsRef.document(projectId).update("isOngoing", false);
+        projectsRef.document(projectId).update("endedAt", FieldValue.serverTimestamp());
     }
 }

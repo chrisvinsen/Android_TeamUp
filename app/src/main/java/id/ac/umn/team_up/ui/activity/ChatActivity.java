@@ -19,6 +19,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.models.ProjectMember;
 import id.ac.umn.team_up.ui.fragment.ChatFragment;
 import id.ac.umn.team_up.ui.fragment.TodolistFragment;
@@ -40,11 +41,11 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_project);
 
         btnTodoList = findViewById(R.id.btnTodoList);
         btnChat = findViewById(R.id.btnChat);
-        btnProjectMember = findViewById(R.id.btnProjectMember);
+//        btnProjectMember = findViewById(R.id.btnProjectMember);
 
         Intent intent = getIntent();
         this.projectID = intent.getStringExtra("groupID");
@@ -70,13 +71,13 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        btnProjectMember.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                ProjectMemberIntent();
-            }
-        });
+//        btnProjectMember.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View view) {
+//                ProjectMemberIntent();
+//            }
+//        });
 
     }
 
@@ -129,6 +130,9 @@ public class ChatActivity extends AppCompatActivity {
                         startActivityForResult(intent, 1);
                         return true;
                     case R.id.project_settings:
+//                        HashMap<String,String> projectInfo = ProjectController.getProjectTitleAndDescription(projectID);
+//                        Log.e("HASHMAP", projectInfo.get("title"));
+//                        openFragment(new SettingsFragment().newInstance(projectInfo.get("title"), projectInfo.get("description")));
                         Intent intentSettings = new Intent(ChatActivity.this, ProjectSettingsActivity.class);
                         startActivityForResult(intentSettings, 1);
                         return true;
@@ -142,5 +146,9 @@ public class ChatActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         finish();
+    }
+
+    public void endTheProject(View view) {
+        ProjectController.endProject(projectID);
     }
 }

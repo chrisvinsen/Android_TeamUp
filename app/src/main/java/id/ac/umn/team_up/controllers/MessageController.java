@@ -3,6 +3,7 @@ package id.ac.umn.team_up.controllers;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
@@ -65,8 +66,13 @@ public class MessageController {
 
 
     //sendmessage
-    public static void sentMessage(String projectId, String fullname,String userId, String msg, String attachment){
+    public static void sentMessage(String projectId, String fullname,String userId, String msg, String attachment, Context context){
         FieldValue createdAt = FieldValue.serverTimestamp();
+        Date currDate = new Date(System.currentTimeMillis());
+
+        SharedPreferences sharedPref = Utils.getSharedPref(context);
+        SharedPreferences.Editor prefEditor = sharedPref.edit();
+        prefEditor.putLong("createdAt", currDate.getTime()).apply();
 
         Map<String, Object> message = new HashMap<>();
 
@@ -103,7 +109,7 @@ public class MessageController {
     }
 
     //getMessage
-    public static void getMessage(RecyclerView rv, View v, String userId, String projectId){
+    public static void getMessage(RecyclerView rv, View v, String userId, String projectId, Context context){
         ArrayList<Message> messageList = new ArrayList<Message>();
         Log.d("GroupID", projectId);
 //
@@ -121,7 +127,6 @@ public class MessageController {
         messagesRef.whereEqualTo("projectId",projectId).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
                 if(error != null){
 //                    if(progressDialog.isShowing())
 //                        progressDialog.dismiss();
@@ -130,12 +135,19 @@ public class MessageController {
                 }
                 for(DocumentChange dc : value.getDocumentChanges()){
                     if(dc.getType() == DocumentChange.Type.ADDED){
-                        messageList.add(dc.getDocument().toObject(Message.class));
+                        Message message = dc.getDocument().toObject(Message.class);
+                        Log.e("CREATEDAT", String.valueOf(message.getCreatedAt()));
+                        if(message.getCreatedAt() == null) {
+                            SharedPreferences sharedPref = Utils.getSharedPref(context);
+                            Date date = new Date(sharedPref.getLong("createdAt", 0));
+                            message.setCreatedAt(date);
+                            messageList.add(message);
+                        } else{
+                            messageList.add(message);
+                        }
                     }
                     mMessageAdapter.notifyDataSetChanged();
                     linearLayoutManager.scrollToPosition(messageList.size()-1);
-//                    if(progressDialog.isShowing())
-//                        progressDialog.dismiss();
                 }
 
             }

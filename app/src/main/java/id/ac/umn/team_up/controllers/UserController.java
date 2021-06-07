@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +21,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -49,6 +54,8 @@ public class UserController {
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static String userId;
     private static StorageReference storageRef = FirebaseStorage.getInstance().getReference("profile");
+    private static CollectionReference memberRef = FirebaseFirestore.getInstance().collection("ProjectMembers");
+    private static CollectionReference projectRef = FirebaseFirestore.getInstance().collection("ProjectDetails");
 
     public static void register(final AppCompatActivity app, final User user, String password) {
         mAuth.createUserWithEmailAndPassword(user.getEmail(), password)
@@ -201,7 +208,7 @@ public class UserController {
                         prefEditor.putString("uskills", jsonSkill);
                         prefEditor.apply();
 
-                        if (afterLogin && !currentUser.getPicture().equals("")) {
+                        if (afterLogin) {
                             checkAvailabilityProfileImageOnInternalStorage(app, currentUser);
                         }
                     } else {
@@ -286,6 +293,36 @@ public class UserController {
                             public void onSuccess(Uri uri) {
                                 currentUser.setPicture(uri.toString());
                                 updateUser(app, currentUser, false);
+
+                                // Update project member image
+                                memberRef.whereEqualTo("userId",getUserId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                memberRef.document(document.getId()).update("picture", uri.toString());
+                                                Log.e("TAG", document.getId() + " => " + document.getData());
+                                            }
+                                        } else {
+                                            Log.e("TAG", "Error getting documents.", task.getException());
+                                        }
+                                    }
+                                });
+
+                                // Update project details image
+                                projectRef.whereEqualTo("adminId",getUserId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                projectRef.document(document.getId()).update("adminPicture", uri.toString());
+                                                Log.e("TAG", document.getId() + " => " + document.getData());
+                                            }
+                                        } else {
+                                            Log.e("TAG", "Error getting documents.", task.getException());
+                                        }
+                                    }
+                                });
                             }
                         });
                     }

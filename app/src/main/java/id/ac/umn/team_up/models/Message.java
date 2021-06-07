@@ -11,6 +11,7 @@ public class Message {
     @Nullable
     private String attachment;
     private String message;
+
     private Date createdAt;
     private String fullName;
     //private String picURL;
@@ -52,6 +53,9 @@ public class Message {
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public void setFromId(String fromId) {

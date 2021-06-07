@@ -81,8 +81,6 @@ public class Utils {
         SimpleDateFormat day = new SimpleDateFormat("dd");
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
 
-
-
         return String.format("%s %s, %s",
                 month.format(date),
                 day.format(date),
