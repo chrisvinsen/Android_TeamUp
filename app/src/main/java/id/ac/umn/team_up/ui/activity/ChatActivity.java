@@ -23,6 +23,7 @@ import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.models.ProjectMember;
 import id.ac.umn.team_up.ui.fragment.ChatFragment;
 import id.ac.umn.team_up.ui.fragment.TodolistFragment;
+import id.ac.umn.team_up.ui.fragment.project_activity.SettingsFragment;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -143,9 +144,5 @@ public class ChatActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         finish();
-    }
-
-    public void endTheProject(View view) {
-        ProjectController.endProject(projectID);
     }
 }

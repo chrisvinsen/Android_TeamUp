@@ -14,10 +14,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.ProjectMember;
-import id.ac.umn.team_up.ui.activity.ProjectActivity;
+import id.ac.umn.team_up.ui.activity.ChatActivity;
+import id.ac.umn.team_up.ui.activity.MainActivity;
+//import id.ac.umn.team_up.ui.activity.ProjectActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,7 +97,11 @@ public class SettingsFragment extends Fragment {
         btnEndProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ProjectController.endProject(projectId);
                 Log.e("END PROJECT", "PROJECT PUTUS UDAH KEA PACARAN PASTI ADA YANG PUTUS");
+                Utils.show(getContext(), "Project has ended.");
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
         btnSaveChanges.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +110,7 @@ public class SettingsFragment extends Fragment {
                 title = edtTitle.getText().toString();
                 desc = edtDesctiption.getText().toString();
                 ProjectController.updateProjectSetting(projectId, title, desc);
-                Intent intent = new Intent(view.getContext(), ProjectActivity.class);
+                Intent intent = new Intent(view.getContext(), ChatActivity.class);
                 //sending project id
                 intent.putExtra("groupID", projectId);
                 intent.putExtra("projectDesc", projectDescription);
