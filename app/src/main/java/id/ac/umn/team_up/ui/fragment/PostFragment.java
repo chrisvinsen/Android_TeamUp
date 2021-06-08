@@ -142,7 +142,7 @@ public class PostFragment extends Fragment implements LocationListener {
         View view =  inflater.inflate(R.layout.fragment_post, container, false);
 
         // Get shared preference
-        SharedPreferences sharedPref = Utils.getSharedPref(view.getContext());
+        SharedPreferences sharedPref = Utils.getSharedPref(getActivity().getApplicationContext());
 
         // Connect variables to view
         profile_picture = (ImageView) view.findViewById(R.id.profile_picture);
@@ -177,7 +177,7 @@ public class PostFragment extends Fragment implements LocationListener {
             Log.e("map values", entry.getKey() + ": " + entry.getValue().toString());
         }
         profile_fullname.setText(fullname);
-        if(picture.isEmpty() && picture != null){
+        if(!picture.isEmpty() && picture != null){
             Picasso.get().load(new File(picture)).placeholder(R.mipmap.ic_launcher).transform(new CircleTransform()).into(profile_picture);
         }
         else{

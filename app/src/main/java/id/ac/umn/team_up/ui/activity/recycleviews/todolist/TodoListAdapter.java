@@ -20,6 +20,7 @@ import java.util.List;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.ProjectController;
+import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.models.ToDoList;
 
 public class TodoListAdapter extends RecyclerView.Adapter {
@@ -45,15 +46,11 @@ public class TodoListAdapter extends RecyclerView.Adapter {
         if(mTodoList.get(position).getStatus().equals("true")){
             ((TodolistHolder) holder).lybg.setBackgroundResource(R.drawable.selectedtdl);
             ((TodolistHolder) holder).checkboxImg.setBackgroundResource(R.drawable.ic_baseline_check_box_24);
-
-        }else{
-            ((TodolistHolder) holder).lybg.setBackgroundResource(R.drawable.unselectedtdl);
-            ((TodolistHolder) holder).checkboxImg.setBackgroundResource(R.drawable.ic_baseline_check_box_outline_blank_24);
-        }
-        if(mTodoList.get(position).getStatus().equals("true")){
             ((TodolistHolder) holder).tvTitle.setTextColor(ContextCompat.getColor(context, R.color.white));
             ((TodolistHolder) holder).tvDesc.setTextColor(ContextCompat.getColor(context, R.color.white));
         }else{
+            ((TodolistHolder) holder).lybg.setBackgroundResource(R.drawable.unselectedtdl);
+            ((TodolistHolder) holder).checkboxImg.setBackgroundResource(R.drawable.ic_baseline_check_box_outline_blank_24);
             ((TodolistHolder) holder).tvTitle.setTextColor(ContextCompat.getColor(context, R.color.black));
             ((TodolistHolder) holder).tvDesc.setTextColor(ContextCompat.getColor(context, R.color.black));
         }
@@ -105,11 +102,12 @@ public class TodoListAdapter extends RecyclerView.Adapter {
         }
         @Override
         public void onClick(View v) {
-            mposisi = getLayoutPosition();
-            mTdlList = mTodoList.get(mposisi);
             Log.e("tdlrv", "Clicked");
+            mposisi = getLayoutPosition();
+            Log.e("pos", String.valueOf(mposisi));
+            mTdlList = mTodoList.get(mposisi);
             Log.e("tdlrv", mTdlList.getStatus());
-            ProjectController.updateStatusTodolist(this.todolistId,this.status);
+            ProjectController.updateStatusTodolist(this.todolistId,this.status, mposisi);
         }
     }
 }

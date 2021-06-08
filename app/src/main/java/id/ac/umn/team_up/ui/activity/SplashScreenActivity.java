@@ -20,7 +20,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         new Handler().postDelayed(() -> {
             MessageController.listenToRecentMessageChanges(getApplicationContext());
-            NotificationController.loadProjectMemberRequestNotification(getApplicationContext());
 
             Intent intent;
             if (UserController.isLogin()) {

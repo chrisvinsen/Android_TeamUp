@@ -113,14 +113,20 @@ public class NotificationController {
 
     public static void loadProjectMemberRequestNotification(Context context){
         Log.e("STARTMEMBERREQ", "TRUE");
-        Log.e("USERIDNOTIF", mAuth.getUid());
+        if(mAuth.getUid() != null){
+            Log.e("USERIDNOTIF", mAuth.getUid());
+        }
+        else{
+            Log.e("USERIDNOTIF", "NULL");
+        }
+
         projectMembers.whereEqualTo("adminId", mAuth.getUid()).whereEqualTo("isMember", false)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         //reqMember = new ArrayList<ProjectMember>();
                         if(error != null){
-                            Utils.show(context, "Error listening to project changes");
+                            Log.e("loadProjectMemb", "Error listening to project changes");
                             return;
                         }
                         Log.e("Data","TRUE");
@@ -324,7 +330,7 @@ public class NotificationController {
             @Override
             public void onEvent(@Nullable  QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
-                    Utils.show(context, "Error listening to project changes");
+                    Log.e("getProject", "Error listening to project changes");
                     return;
                 }
                 for(DocumentChange dc : value.getDocumentChanges()){

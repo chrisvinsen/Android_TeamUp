@@ -22,6 +22,7 @@ import java.util.List;
 
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
+import id.ac.umn.team_up.controllers.NotificationController;
 import id.ac.umn.team_up.controllers.UserController;
 import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.models.ProjectMember;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NotificationController.loadProjectMemberRequestNotification(getApplicationContext());
 //        Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/roboto.xml");
 
         bottomNavigation = findViewById(R.id.bottom_navigation);

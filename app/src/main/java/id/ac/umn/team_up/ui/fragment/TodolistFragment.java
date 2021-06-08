@@ -13,9 +13,12 @@ import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.controllers.ProjectController;
 import id.ac.umn.team_up.models.Project;
+import id.ac.umn.team_up.models.ToDoList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +28,8 @@ import id.ac.umn.team_up.models.Project;
 public class TodolistFragment extends Fragment {
     private RecyclerView rvTodolist;
     private FloatingActionButton fabTodolist;
+    ArrayList<ToDoList> todoLists = new ArrayList<ToDoList>();
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -71,7 +76,7 @@ public class TodolistFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_todolist, container, false);
         rvTodolist = view.findViewById(R.id.rvTdlList);
         fabTodolist = view.findViewById(R.id.tdlFab);
-        ProjectController.getTodolist(rvTodolist, view, mParam1);
+        ProjectController.getTodolist(rvTodolist, view, mParam1, todoLists);
         fabTodolist.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -79,11 +84,16 @@ public class TodolistFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.chatActivityContainer, fragment);
-                //fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

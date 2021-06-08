@@ -1,21 +1,17 @@
 package id.ac.umn.team_up.controllers;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -31,8 +27,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.sql.Timestamp;
-import java.time.Duration;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,12 +37,8 @@ import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.Message;
 import id.ac.umn.team_up.models.Project;
 import id.ac.umn.team_up.ui.activity.recycleviews.message.MessageListAdapter;
-import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
 
 public class MessageController {
-
-    private String attachment, fistName, fromId, groupId, message;
-    private Timestamp createAt;
 
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static CollectionReference messagesRef = db.collection("MessageDetails");
@@ -74,6 +64,7 @@ public class MessageController {
         SharedPreferences sharedPref = Utils.getSharedPref(context);
         SharedPreferences.Editor prefEditor = sharedPref.edit();
         prefEditor.putLong("createdAt", currDate.getTime()).apply();
+        Log.e("date", String.valueOf(currDate.getTime()));
 
         Map<String, Object> message = new HashMap<>();
 
@@ -114,7 +105,7 @@ public class MessageController {
     public static void getMessage(RecyclerView rv, View v, String userId, String projectId, Context context){
         ArrayList<Message> messageList = new ArrayList<Message>();
         Log.d("GroupID", projectId);
-//
+
         //setting progress dialog for user experience
         ProgressDialog progressDialog = new ProgressDialog(v.getContext());
         progressDialog.setCancelable(false);
@@ -130,8 +121,6 @@ public class MessageController {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
-//                    if(progressDialog.isShowing())
-//                        progressDialog.dismiss();
                     Log.e("MESSAGEREF","error");
                     return;
                 }
@@ -142,6 +131,7 @@ public class MessageController {
                         if(message.getCreatedAt() == null) {
                             SharedPreferences sharedPref = Utils.getSharedPref(context);
                             Date date = new Date(sharedPref.getLong("createdAt", 0));
+                            Log.e("msg_sent", Utils.dateToString(date));
                             message.setCreatedAt(date);
                             messageList.add(message);
                         } else{
@@ -164,7 +154,7 @@ public class MessageController {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if(error != null){
-                            Utils.show(c, "Error getting recent message");
+                            Log.e("listenToRecentMsgChng", "Error getting recent message");
                             return;
                         }
                         for(DocumentChange dc: value.getDocumentChanges()){

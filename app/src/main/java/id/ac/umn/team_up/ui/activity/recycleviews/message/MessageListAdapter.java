@@ -1,6 +1,7 @@
 package id.ac.umn.team_up.ui.activity.recycleviews.message;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,15 @@ public class MessageListAdapter extends RecyclerView.Adapter {
                 ((SentMessageHolder) holder).setTvMessageText(mMessageList.get(position).getMessage());
 
                 //date
+                if (position != 0) {
+                    String yest = Utils.getDateforChat(mMessageList.get(position-1).getCreatedAt());
+                    String now = Utils.getDateforChat(mMessageList.get(position).getCreatedAt());
+                    Log.e("msg", yest + " vs " + now);
+                    if (yest.equals(now)) {
+                        Log.e("msg", "equals");
+                        ((SentMessageHolder) holder).setDateGone();
+                    }
+                }
                 ((SentMessageHolder) holder).setTvMessageDate(Utils.getDateforChat(mMessageList.get(position).getCreatedAt()));
 
 
@@ -85,6 +95,15 @@ public class MessageListAdapter extends RecyclerView.Adapter {
                 ((ReceivedMessageHolder) holder).setTvRecieveName(mMessageList.get(position).getFullName());
 
                 //date
+                if (position != 0) {
+                    String yest = Utils.getDateforChat(mMessageList.get(position-1).getCreatedAt());
+                    String now = Utils.getDateforChat(mMessageList.get(position).getCreatedAt());
+                    Log.e("msg", yest + " vs " + now);
+                    if (yest.equals(now)) {
+                        Log.e("msg", "equals");
+                        ((ReceivedMessageHolder) holder).setDateGone();
+                    }
+                }
                 ((ReceivedMessageHolder) holder).setTvRecieveDate(Utils.getDateforChat(mMessageList.get(position).getCreatedAt()));
 
                 //time
@@ -117,6 +136,11 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         public void setTvMessageDate(String date){ this.tvMessageDate.setText(date);}
 
         public void setTvMessageTime(String time){ this.tvMessageTime.setText(time);}
+
+        public void setDateGone() {
+            Log.e("msg", "GONE");
+            this.tvMessageDate.setVisibility(View.GONE);
+        }
     }
 
     //from others
@@ -143,7 +167,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
         public void setTvRecieveTime(String time) {this.tvRecieveTime.setText(time);}
 
-
+        public void setDateGone() {
+            Log.e("msg", "GONE");
+            this.tvRecieveDate.setVisibility(View.GONE);
+        }
     }
 
 

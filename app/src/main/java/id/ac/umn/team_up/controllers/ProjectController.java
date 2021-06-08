@@ -74,6 +74,8 @@ public class ProjectController {
     private static NestedScrollView nested_scroll_view;
     private static Task<QuerySnapshot> load_task;
 
+    static int position_todolist = -1;
+
     public static void postProject(final AppCompatActivity app, String project_title, String project_description, String project_location, List<String> upload_url){
         // Get Shared Preference
         SharedPreferences sharedPref = Utils.getSharedPref(app);
@@ -106,7 +108,11 @@ public class ProjectController {
         project.put("adminId", mAuth.getUid());
         project.put("adminFullname", fullname);
         project.put("adminPicture", picture);
-        project.put("groupIcon", "");
+        String group_icon = "";
+        if (upload_url.size() > 0) {
+            group_icon = upload_url.get(0);
+        }
+        project.put("groupIcon", group_icon);
         project.put("images", upload_url);
         project.put("isOngoing", true);
         project.put("members", members);
@@ -130,28 +136,28 @@ public class ProjectController {
 
 
 
-        // Put to do list into map
-        Map<String, String> todolist = new HashMap<>();
-        todolist.put("title", "Title of your to do list");
-        todolist.put("description", "Description of your to do list");
-        todolist.put("status", "false");
-        todolist.put("todolistId", todolist_id);
-        todolist.put("projectId", document_id);
-
-        // Set map into collection
-        todolistRef.document(todolist_id).set(todolist)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Utils.show(app, "Something went wrong, please try again later.");
-                    }
-                });
+//        // Put to do list into map
+//        Map<String, String> todolist = new HashMap<>();
+//        todolist.put("title", "Title of your to do list");
+//        todolist.put("description", "Description of your to do list");
+//        todolist.put("status", "false");
+//        todolist.put("todolistId", todolist_id);
+//        todolist.put("projectId", document_id);
+//
+//        // Set map into collection
+//        todolistRef.document(todolist_id).set(todolist)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Utils.show(app, "Something went wrong, please try again later.");
+//                    }
+//                });
 
         // Put member into map
         Map<String, Object> member = new HashMap<>();
@@ -300,7 +306,7 @@ public class ProjectController {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
-                    Utils.show(c, "Error listening to project changes");
+                    Log.e("listenProjectChngs", "Error listening to project changes");
                     return;
                 }
                 for(DocumentChange dc: value.getDocumentChanges()) {
@@ -323,7 +329,7 @@ public class ProjectController {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
-                    Utils.show(c, "Error listening to project changes");
+                    Log.e("listenProfProjc", "Error listening to project changes");
                     return;
                 }
                 for(DocumentChange dc: value.getDocumentChanges()) {
@@ -366,27 +372,38 @@ public class ProjectController {
                     }
                 });
     }
-    public static void getTodolist(RecyclerView rvTdl, View v, String projectId){
+    public static void getTodolist(RecyclerView rvTdl, View v, String projectId, ArrayList<ToDoList> todoLists){
 
         Log.d("PROJECTIDTDL", projectId);
         todolistRef.whereEqualTo("projectId", projectId).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                ArrayList<ToDoList> todoLists = new ArrayList<>();
                 if(error != null){
                     Log.e("TODOLISTREF","error");
                     return;
                 }
                 for(DocumentChange dc : value.getDocumentChanges()){
-
-
-
-                    todoLists.add(dc.getDocument().toObject(ToDoList.class));
+                    if(dc.getType() == DocumentChange.Type.ADDED) {
+                        Log.e("todo", "ADDED");
+                        todoLists.add(0, dc.getDocument().toObject(ToDoList.class));
+                    }
+                    if (dc.getType() == DocumentChange.Type.MODIFIED) {
+                        Log.e("todo", "MODIFIED");
+                        Log.e("todo", String.valueOf(position_todolist));
+                        if (position_todolist != -1) {
+                            todoLists.remove(position_todolist);
+                            if (dc.getDocument().toObject(ToDoList.class).getStatus().equals("false")) {
+                                todoLists.add(0, dc.getDocument().toObject(ToDoList.class));
+                            } else {
+                                todoLists.add(dc.getDocument().toObject(ToDoList.class));
+                            }
+                        }
+                    }
                 }
                 TodoListAdapter mTodolistAdapter;
                 mTodolistAdapter = new TodoListAdapter(v.getContext(), todoLists);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(v.getContext());
-                rvTdl.setHasFixedSize(true);
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 rvTdl.setLayoutManager(linearLayoutManager);
                 rvTdl.setAdapter(mTodolistAdapter);
             }
@@ -406,10 +423,12 @@ public class ProjectController {
 
         Log.e("ADDTODOLISTID", todolist_id);
 
+        position_todolist = -1;
+
         todolistRef.document(todolist_id).set(todolist);
     }
 
-    public static void updateStatusTodolist(String todolistId, String status){
+    public static void updateStatusTodolist(String todolistId, String status, int position){
         DocumentReference tdlRef = todolistRef.document(todolistId);
         todolistRef.document(todolistId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -418,6 +437,8 @@ public class ProjectController {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
                         ToDoList toDoList = document.toObject(ToDoList.class);
+                        position_todolist = position;
+                        Log.e("todo", "set pos " + position_todolist);
                         if(toDoList.getStatus().equals("true")){
                             toDoList.setStatus("false");
                         }else{

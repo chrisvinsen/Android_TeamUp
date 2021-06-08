@@ -42,7 +42,7 @@
         android:id="@+id/project_list_chat_time"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="19:21"
+        android:text=""
         android:gravity="center_vertical"
         android:textSize="12sp"
         android:paddingLeft="10dp"/>
