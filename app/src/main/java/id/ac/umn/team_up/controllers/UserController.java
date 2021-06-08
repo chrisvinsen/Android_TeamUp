@@ -1,5 +1,9 @@
 package id.ac.umn.team_up.controllers;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -7,10 +11,13 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,10 +49,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Map;
 
+import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.User;
 import id.ac.umn.team_up.ui.activity.LoginActivity;
 import id.ac.umn.team_up.ui.activity.MainActivity;
+import id.ac.umn.team_up.ui.activity.SplashScreenActivity;
 import id.ac.umn.team_up.ui.activity.WelcomeActivity;
 
 public class UserController {
@@ -71,6 +80,21 @@ public class UserController {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
+                                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app.getApplicationContext(), "My Notif");
+                                            mBuilder.setSmallIcon(R.drawable.img_logo_up);
+                                            mBuilder.setContentTitle("Welcome to the club " + user.getFirstName() + "!");
+                                            mBuilder.setContentText("Let's login and find your partner now!");
+                                            mBuilder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(app.getApplicationContext());
+                                            managerCompat.notify(1, mBuilder.build());
+
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                                NotificationChannel channel = new NotificationChannel("My Notif", "My Notif", NotificationManager.IMPORTANCE_DEFAULT);
+                                                NotificationManager manager = app.getSystemService(NotificationManager.class);
+                                                manager.createNotificationChannel(channel);
+                                            }
+
                                             final Intent intent = new Intent(app, LoginActivity.class);
                                             app.startActivity(intent);
                                             Utils.show(app, "Registration Successfully! Log in now.");
@@ -99,13 +123,29 @@ public class UserController {
                             Utils.show(app, "Login Successfully!");
                             setCurrentUser(app,true);
 
-                            final Intent intent = new Intent(app, MainActivity.class);
-                            app.startActivity(intent);
+                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app.getApplicationContext(), "My Notif");
+                            mBuilder.setSmallIcon(R.drawable.img_logo_up);
+                            mBuilder.setContentTitle("Welcome to Team Up!");
+                            mBuilder.setContentText("Let's find your partner now!");
+                            mBuilder.setAutoCancel(true);
+
+                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(app.getApplicationContext());
+                            managerCompat.notify(1, mBuilder.build());
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                NotificationChannel channel = new NotificationChannel("My Notif", "My Notif", NotificationManager.IMPORTANCE_DEFAULT);
+                                NotificationManager manager = app.getSystemService(NotificationManager.class);
+                                manager.createNotificationChannel(channel);
+                            }
+
+                            final Intent intentt = new Intent(app, MainActivity.class);
+                            app.startActivity(intentt);
                         } else {
                             Utils.show(app, "Login Failed! Incorrect Email or Password.");
                         }
                     }
                 });
+
     }
 
     public static void logout(final AppCompatActivity app) {
