@@ -177,8 +177,9 @@ public class ProjectController {
                     @Override
                     public void onSuccess(Void aVoid) {
                         final Intent intent = new Intent(app, MainActivity.class);
+                        intent.putExtra("frgToLoad", "home");
                         app.startActivity(intent);
-                        Utils.show(app, "Your project has been successfully created, pull down to refresh!");
+                        Utils.show(app, "Your project has been successfully created!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
