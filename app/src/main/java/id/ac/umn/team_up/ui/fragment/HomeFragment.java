@@ -101,6 +101,13 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+            if(mParam1.equals("1")){
+                view = null;
+            }
+        }
         if(view == null){
             // Inflate the layout for this fragment
             view = inflater.inflate(R.layout.fragment_home, container, false);

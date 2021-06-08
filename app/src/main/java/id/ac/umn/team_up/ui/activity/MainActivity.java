@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NotificationController.loadProjectMemberRequestNotification(getApplicationContext());
 //        Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/roboto.xml");
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
@@ -60,9 +59,14 @@ public class MainActivity extends AppCompatActivity {
                     openFragment(new ProfileFragment());
                     bottomNavigation.setSelectedItemId(R.id.navigation_profile);
                     break;
+                case "home":
+                    openFragment(HomeFragment.newInstance("1", "1"));
+                    bottomNavigation.setSelectedItemId(R.id.navigation_home);
+                    break;
             }
         } else {
-            openFragment(HomeFragment.newInstance("", ""));
+            NotificationController.loadProjectMemberRequestNotification(getApplicationContext());
+            openFragment(HomeFragment.newInstance("1", "1"));
             bottomNavigation.setSelectedItemId(R.id.navigation_home);
         }
     }
