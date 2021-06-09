@@ -76,49 +76,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llRatings"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="bottom"
-            android:gravity="right"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="30dp"
-            android:layout_weight="6"
-            >
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_star_rate"
-                app:tint="@color/orange"
-                />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_star_rate"
-                app:tint="@color/orange"
-                />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_star_rate"
-                app:tint="@color/orange"
-                />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_star_rate"
-                app:tint="@color/orange"
-                />
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_star_rate"
-                />
-        </LinearLayout>
-
     </LinearLayout>
 
 
@@ -239,96 +196,20 @@
                 android:orientation="vertical"
                 android:paddingVertical="10dp"
                 >
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Project History"
-                        style="@style/TextView.Paragraph"
-                        android:textStyle="bold"
-                        />
-
-                    <ImageButton
-                        android:id="@+id/btnEditProject"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/ic_edit"
-                        android:tint="@color/orange"
-                        android:background="@color/transparent"
-                        android:layout_marginStart="8dp"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/img_logo_up"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center"
-                        android:paddingStart="6dp"
-                        >
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/TextView.Small"
-                            android:text="Software House Startup"
-                            android:textStyle="bold"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/TextView.Small"
-                            android:text="Aug 2020 - Present (8 mos)"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
+                    android:text="Project History"
+                    style="@style/TextView.Paragraph"
+                    android:textStyle="bold"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProject"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/img_logo_up"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center"
-                        android:paddingStart="6dp"
-                        >
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/TextView.Small"
-                            android:text="Software House Startup"
-                            android:textStyle="bold"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/TextView.Small"
-                            android:text="Aug 2020 - Present (8 mos)"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
+                    android:layout_height="match_parent"/>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -361,7 +242,7 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                    android:id="@+id/rvSkills"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >

@@ -2,7 +2,12 @@ package id.ac.umn.team_up;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Handler;
+import android.os.Looper;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -12,11 +17,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
+import java.lang.reflect.Field;
+import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import id.ac.umn.team_up.models.User;
 
@@ -66,6 +76,19 @@ public class Utils {
         return dateFormat.format(date);
     }
 
+    public static String getDateforChat(Date date) {
+        SimpleDateFormat month = new SimpleDateFormat("MMM");
+        SimpleDateFormat day = new SimpleDateFormat("dd");
+        SimpleDateFormat year = new SimpleDateFormat("yyyy");
+
+        return String.format("%s %s, %s",
+                month.format(date),
+                day.format(date),
+                year.format(date)
+                );
+    }
+
+
     public static void sendUserToActivity(Context c, User user, Class clazz) {
         Intent intent = new Intent(c, clazz);
         intent.putExtra("USER_KEY", user);
@@ -94,7 +117,43 @@ public class Utils {
         return FirebaseDatabase.getInstance().getReference();
     }
 
+    public static String sha256(String base) {
+        try{
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(base.getBytes("UTF-8"));
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if(hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+    
     public static SharedPreferences getSharedPref(Context c) {
         return c.getSharedPreferences(c.getPackageName(), Context.MODE_PRIVATE);
+    }
+
+    public static void delayForSomeSeconds(int milliseconds, Runnable function){
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(function, milliseconds);
+    }
+
+    public static String getHourAndMinute(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+        return dateFormat.format(date);
+    }
+
+    public <T> void setList(String key, List<T> list, SharedPreferences.Editor editor) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+
+        editor.putString(key, json);
+        editor.commit();
     }
 }

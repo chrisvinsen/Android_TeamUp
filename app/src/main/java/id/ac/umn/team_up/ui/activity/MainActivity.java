@@ -13,19 +13,27 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
+
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.Utils;
+import id.ac.umn.team_up.controllers.NotificationController;
 import id.ac.umn.team_up.controllers.UserController;
+import id.ac.umn.team_up.models.Project;
+import id.ac.umn.team_up.models.ProjectMember;
 import id.ac.umn.team_up.models.User;
 import id.ac.umn.team_up.ui.fragment.HomeFragment;
 import id.ac.umn.team_up.ui.fragment.NotificationFragment;
 import id.ac.umn.team_up.ui.fragment.PostFragment;
 import id.ac.umn.team_up.ui.fragment.ProfileFragment;
 import id.ac.umn.team_up.ui.fragment.ProjectFragment;
-import id.ac.umn.team_up.ui.fragment.RegisterFragment;
+
+
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
@@ -36,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        Utils.overrideFont(getApplicationContext(), "SERIF", "fonts/roboto.xml");
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
@@ -49,9 +59,14 @@ public class MainActivity extends AppCompatActivity {
                     openFragment(new ProfileFragment());
                     bottomNavigation.setSelectedItemId(R.id.navigation_profile);
                     break;
+                case "home":
+                    openFragment(HomeFragment.newInstance("1", "1"));
+                    bottomNavigation.setSelectedItemId(R.id.navigation_home);
+                    break;
             }
         } else {
-            openFragment(HomeFragment.newInstance("", ""));
+            NotificationController.loadProjectMemberRequestNotification(getApplicationContext());
+            openFragment(HomeFragment.newInstance("1", "1"));
             bottomNavigation.setSelectedItemId(R.id.navigation_home);
         }
     }
@@ -74,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         case R.id.navigation_projects:
                             Log.d("menu", "projects");
-                            openFragment(ProjectFragment.newInstance("", ""));
+                            goToProjectList(true);
                             return true;
                         case R.id.navigation_posts:
                             Log.d("menu", "posts");
@@ -93,4 +108,32 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             };
+
+    public void goToProjectHistory(View view) {
+        goToProjectList(false);
+    }
+
+    public void goToOngoingProject(View view) {
+        goToProjectList(true);
+    }
+
+    public void goToProjectList(boolean isOngoing){
+        Fragment fragment = new ProjectFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isOngoing", isOngoing);
+        fragment.setArguments(bundle);
+        openFragment(fragment);
+    }
+
+    public void endTheProject(View view) {
+//        String projectId = "6AKu0PSo41AeRZ5UjPh6";
+//        List<ProjectMember>
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //NotificationController.loadProjectMemberRequestNotification(getApplicationContext());
+        //NotificationController.getProject(getApplicationContext());
+    }
 }

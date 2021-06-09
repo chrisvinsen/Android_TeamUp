@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="10dp"
+    >
+
+    <ImageView
+        android:id="@+id/projectImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/img_logo_up"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingStart="6dp"
+        >
+        <TextView
+            android:id="@+id/projectName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Small"
+            android:text="Software House Startup"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/projectDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Small"
+            android:text="Aug 2020 - Present (8 mos)"
+            />
+    </LinearLayout>
+
+</LinearLayout>

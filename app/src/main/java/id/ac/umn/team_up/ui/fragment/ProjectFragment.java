@@ -2,66 +2,62 @@ package id.ac.umn.team_up.ui.fragment;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import java.util.List;
 
 import id.ac.umn.team_up.R;
+import id.ac.umn.team_up.controllers.MessageController;
+import id.ac.umn.team_up.controllers.ProjectController;
+import id.ac.umn.team_up.controllers.UserController;
+import id.ac.umn.team_up.models.Message;
+import id.ac.umn.team_up.models.Project;
+import id.ac.umn.team_up.ui.activity.recycleviews.project.ProjectListAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProjectFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProjectFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ProjectFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProjectFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProjectFragment newInstance(String param1, String param2) {
-        ProjectFragment fragment = new ProjectFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private RecyclerView rvProjectList;
+    private ProjectListAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_project, container, false);
+        View view;
+        if(this.getArguments().getBoolean("isOngoing")) {
+            view = inflater.inflate(R.layout.fragment_project, container, false);
+            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), true, false), (AppCompatActivity) getActivity() );
+        } else {
+            view = inflater.inflate(R.layout.fragment_project_history, container, false);
+            mAdapter = new ProjectListAdapter(ProjectController.loadUsersProjectOptions(UserController.getUserId(), false, true), (AppCompatActivity) getActivity());
+        }
+        ProjectController.listenToProjectChanges(view.getContext(), mAdapter, UserController.getUserId());
+//        MessageController.listenToRecentMessageChanges(view.getContext(), mAdapter);
+        rvProjectList = view.findViewById(R.id.rvProject);
+        rvProjectList.setHasFixedSize(true);
+        rvProjectList.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvProjectList.setAdapter(mAdapter);
+        return view;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mAdapter.stopListening();
+    }
+
+
 }

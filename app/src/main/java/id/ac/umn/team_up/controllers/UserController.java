@@ -1,5 +1,9 @@
 package id.ac.umn.team_up.controllers;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -7,10 +11,13 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -21,9 +28,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -38,10 +49,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Map;
 
+import id.ac.umn.team_up.R;
 import id.ac.umn.team_up.Utils;
 import id.ac.umn.team_up.models.User;
 import id.ac.umn.team_up.ui.activity.LoginActivity;
 import id.ac.umn.team_up.ui.activity.MainActivity;
+import id.ac.umn.team_up.ui.activity.SplashScreenActivity;
 import id.ac.umn.team_up.ui.activity.WelcomeActivity;
 
 public class UserController {
@@ -50,6 +63,8 @@ public class UserController {
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static String userId;
     private static StorageReference storageRef = FirebaseStorage.getInstance().getReference("profile");
+    private static CollectionReference memberRef = FirebaseFirestore.getInstance().collection("ProjectMembers");
+    private static CollectionReference projectRef = FirebaseFirestore.getInstance().collection("ProjectDetails");
 
     public static void register(final AppCompatActivity app, final User user, String password) {
         mAuth.createUserWithEmailAndPassword(user.getEmail(), password)
@@ -65,6 +80,21 @@ public class UserController {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
+                                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app.getApplicationContext(), "My Notif");
+                                            mBuilder.setSmallIcon(R.drawable.img_logo_up);
+                                            mBuilder.setContentTitle("Welcome to the club " + user.getFirstName() + "!");
+                                            mBuilder.setContentText("Let's login and find your partner now!");
+                                            mBuilder.setAutoCancel(true);
+
+                                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(app.getApplicationContext());
+                                            managerCompat.notify(1, mBuilder.build());
+
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                                NotificationChannel channel = new NotificationChannel("My Notif", "My Notif", NotificationManager.IMPORTANCE_DEFAULT);
+                                                NotificationManager manager = app.getSystemService(NotificationManager.class);
+                                                manager.createNotificationChannel(channel);
+                                            }
+
                                             final Intent intent = new Intent(app, LoginActivity.class);
                                             app.startActivity(intent);
                                             Utils.show(app, "Registration Successfully! Log in now.");
@@ -93,13 +123,29 @@ public class UserController {
                             Utils.show(app, "Login Successfully!");
                             setCurrentUser(app,true);
 
-                            final Intent intent = new Intent(app, MainActivity.class);
-                            app.startActivity(intent);
+                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(app.getApplicationContext(), "My Notif");
+                            mBuilder.setSmallIcon(R.drawable.img_logo_up);
+                            mBuilder.setContentTitle("Welcome to Team Up!");
+                            mBuilder.setContentText("Let's find your partner now!");
+                            mBuilder.setAutoCancel(true);
+
+                            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(app.getApplicationContext());
+                            managerCompat.notify(1, mBuilder.build());
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                NotificationChannel channel = new NotificationChannel("My Notif", "My Notif", NotificationManager.IMPORTANCE_DEFAULT);
+                                NotificationManager manager = app.getSystemService(NotificationManager.class);
+                                manager.createNotificationChannel(channel);
+                            }
+
+                            final Intent intentt = new Intent(app, MainActivity.class);
+                            app.startActivity(intentt);
                         } else {
                             Utils.show(app, "Login Failed! Incorrect Email or Password.");
                         }
                     }
                 });
+
     }
 
     public static void logout(final AppCompatActivity app) {
@@ -202,8 +248,6 @@ public class UserController {
                         prefEditor.putString("uskills", jsonSkill);
                         prefEditor.apply();
 
-                        Log.d("set", currentUser.getFirstName());
-
                         if (afterLogin) {
                             checkAvailabilityProfileImageOnInternalStorage(app, currentUser);
                         }
@@ -289,6 +333,36 @@ public class UserController {
                             public void onSuccess(Uri uri) {
                                 currentUser.setPicture(uri.toString());
                                 updateUser(app, currentUser, false);
+
+                                // Update project member image
+                                memberRef.whereEqualTo("userId",getUserId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                memberRef.document(document.getId()).update("picture", uri.toString());
+                                                Log.e("TAG", document.getId() + " => " + document.getData());
+                                            }
+                                        } else {
+                                            Log.e("TAG", "Error getting documents.", task.getException());
+                                        }
+                                    }
+                                });
+
+                                // Update project details image
+                                projectRef.whereEqualTo("adminId",getUserId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                projectRef.document(document.getId()).update("adminPicture", uri.toString());
+                                                Log.e("TAG", document.getId() + " => " + document.getData());
+                                            }
+                                        } else {
+                                            Log.e("TAG", "Error getting documents.", task.getException());
+                                        }
+                                    }
+                                });
                             }
                         });
                     }

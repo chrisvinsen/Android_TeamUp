@@ -15,7 +15,9 @@
         <item name="textAppearanceButton">@style/Button</item>
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:typeface">sans</item>
     </style>
+
     <style name="Theme.TeamUp.White" parent="Theme.TeamUp">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
@@ -28,7 +30,9 @@
     </style>
 <!--    Text View-->
     <style name="TextView" parent="TextAppearance.AppCompat">
+<!--        <item name="android:fontFamily">@font/roboto</item>-->
         <item name="android:textSize">16sp</item>
+        <item name="android:typeface">sans</item>
     </style>
     <style name="TextView.Small" parent="TextView">
         <item name="android:textSize">12sp</item>
